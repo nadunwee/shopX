@@ -1,0 +1,115 @@
+/* Register Page Styles */
+.register-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f9f9f9;
+}
+
+.register-container {
+    background-color: white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+}
+
+.register-container h2 {
+    font-size: 1.8rem;
+    color: #4B0082;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    font-size: 14px;
+    color: #555;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+.register-actions {
+    margin-top: 20px;
+}
+
+.register-btn {
+    background-color: #4B0082;
+    color: white;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.register-btn:hover {
+    background-color: #3a0066;
+}
+
+.login-link {
+    color: #4B0082;
+    text-decoration: none;
+}
+
+.login-link:hover {
+    text-decoration: underline;
+}
+
+.landing-footer {
+    background-color: #fafafa;
+    padding: 40px 20px;
+    border-top: 1px solid #eee;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #777;
+}
+
+.landing-footer .landing-footer-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.landing-footer-logo {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #4B0082;
+    margin-bottom: 10px;
+}
+
+.landing-footer-links {
+    margin-bottom: 12px;
+}
+
+.landing-footer-links a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #666;
+    transition: color 0.3s ease;
+}
+
+.landing-footer-links a:hover {
+    color: #4B0082;
+}
+
+.landing-footer-copy {
+    font-size: 0.85rem;
+    color: #aaa;
+}
