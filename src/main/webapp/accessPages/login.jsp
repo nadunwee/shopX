@@ -11,7 +11,7 @@
 <main class="login-main">
   <div class="login-container">
     <h2>Login to ShopX</h2>
-    <form action="login-action.jsp" method="POST" class="login-form">
+    <form action="${pageContext.request.contextPath}/loginUser" method="POST" class="login-form">
       <div class="input-group">
         <label for="username">Username or Email</label>
         <input type="text" id="username" name="username" required>
