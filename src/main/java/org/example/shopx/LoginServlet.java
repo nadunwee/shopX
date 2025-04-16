@@ -7,7 +7,7 @@ import java.sql.*;
 
 public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String email = request.getParameter("username");
+        String username = request.getParameter("username");
         String password = request.getParameter("password");
 
         try (Connection conn = DBConnection.getConnection()) {
@@ -16,9 +16,9 @@ public class LoginServlet extends HttpServlet {
                 return;
             }
 
-            String query = "SELECT * FROM users WHERE email = ? AND password = ?";
+            String query = "SELECT * FROM users WHERE username = ? AND password = ?";
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                stmt.setString(1, email);
+                stmt.setString(1, username);
                 stmt.setString(2, password); // ⚠️ should use hashed password comparison!
 
                 ResultSet rs = stmt.executeQuery();
@@ -26,9 +26,9 @@ public class LoginServlet extends HttpServlet {
                 if (rs.next()) {
                     // Login success: create session
                     HttpSession session = request.getSession();
-//                    session.setAttribute("user", rs.getString("username"));
+                    session.setAttribute("username", rs.getString("username"));
 
-                    response.sendRedirect("home.jsp"); // Or your dashboard
+                    response.sendRedirect("homePage.jsp");
                 } else {
                     response.sendRedirect("accessPages/login.jsp?error=Invalid%20credentials");
                 }
