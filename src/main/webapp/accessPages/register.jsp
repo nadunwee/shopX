@@ -12,6 +12,7 @@
   <div class="register-container">
     <h2>Create Your Account</h2>
     <form action="${pageContext.request.contextPath}/registerUser" method="POST" class="register-form">
+      <input type="hidden" name="type" value="customer" />
       <div class="input-group">
         <label for="username">Username</label>
         <input type="text" id="username" name="username" required>

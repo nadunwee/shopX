@@ -175,35 +175,61 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 40px;
     background-color: #ffffff;
-    border-bottom: 1px solid #eee;
+    padding: 20px 40px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
-.landing-navbar .logo {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #4B0082;
+.landing-logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: black;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    letter-spacing: 1px;
+}
+.landing-logo.div {
+    color:#4B0082;
 }
 
-.landing-navbar .btn-dashboard {
-    background-color: transparent;
-    color: #4B0082;
-    border: 1px solid #4B0082;
-    padding: 8px 16px;
-    border-radius: 6px;
-    font-size: 0.9rem;
+.landing-btn-dashboard {
+    background-color: #4B0082;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 8px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 6px;
-    transition: all 0.3s ease;
+    gap: 8px;
+    transition: background-color 0.3s ease;
 }
 
-.landing-navbar .btn-dashboard:hover {
-    background-color: #4B0082;
-    color: #fff;
+.landing-btn-dashboard:hover {
+    background-color: #e05555;
 }
+
+.landing-btn-dashboard i {
+    font-size: 1.2rem;
+}
+
+@media (max-width: 600px) {
+    .landing-navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .landing-btn-dashboard {
+        margin-top: 10px;
+        width: 100%;
+        justify-content: center;
+    }
+}
+
 
 /* Hero section */
 .landing-hero {
@@ -371,4 +397,57 @@ body {
 .landing-product-info .price {
     color: #4b1e83;
     font-weight: bold;
+}
+
+/* === Why Choose Us Section === */
+
+.landing-why-choose {
+    padding: 60px 20px;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.landing-why-choose h2 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: #333;
+}
+
+.reasons-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.reason-card {
+    background-color: #fff;
+    padding: 30px 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    width: 280px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.reason-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+.reason-card i {
+    font-size: 3rem;
+    color: #ff6b6b;
+    margin-bottom: 15px;
+}
+
+.reason-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #222;
+}
+
+.reason-card p {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.6;
 }

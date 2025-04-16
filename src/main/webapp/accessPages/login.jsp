@@ -13,6 +13,14 @@
     <h2>Login to ShopX</h2>
     <form action="${pageContext.request.contextPath}/loginUser" method="POST" class="login-form">
       <div class="input-group">
+        <label for="type">Login As</label>
+        <select id="type" name="type" required>
+          <option value="customer">Customer</option>
+          <option value="vendor">Vendor</option>
+        </select>
+      </div>
+
+      <div class="input-group">
         <label for="username">Username or Email</label>
         <input type="text" id="username" name="username" required>
       </div>
@@ -28,19 +36,6 @@
     </form>
   </div>
 </main>
-
-<%--<footer class="landing-footer">--%>
-<%--  <div class="landing-footer-content">--%>
-<%--    <div class="landing-footer-logo">ShopX</div>--%>
-<%--    <div class="landing-footer-links">--%>
-<%--      <a href="#">About</a>--%>
-<%--      <a href="#">Contact</a>--%>
-<%--      <a href="#">Privacy</a>--%>
-<%--      <a href="#">Terms</a>--%>
-<%--    </div>--%>
-<%--    <p class="landing-footer-copy">&copy; 2025 ShopX. All rights reserved.</p>--%>
-<%--  </div>--%>
-<%--</footer>--%>
 
 </body>
 </html>

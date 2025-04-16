@@ -116,3 +116,22 @@
     font-size: 0.85rem;
     color: #aaa;
 }
+
+/* Select dropdown styling */
+.input-group select {
+    padding: 10px 12px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #fff;
+    color: #333;
+    transition: border-color 0.3s ease;
+    outline: none;
+    appearance: none;
+}
+
+/* Optional: Add hover/focus effect */
+.input-group select:focus {
+    border-color: #ff6b6b;
+    box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.2);
+}

@@ -9,6 +9,9 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        String type = request.getParameter("type"); // "customer" or "vendor"
+
+        String table = type.equals("vendor") ? "vendors" : "users";
 
         try (Connection conn = DBConnection.getConnection()) {
             if (conn == null) {
@@ -16,19 +19,24 @@ public class LoginServlet extends HttpServlet {
                 return;
             }
 
-            String query = "SELECT * FROM users WHERE username = ? AND password = ?";
+            String query = "SELECT * FROM " + table + " WHERE username = ? AND password = ?";
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
                 stmt.setString(1, username);
-                stmt.setString(2, password); // ⚠️ should use hashed password comparison!
+                stmt.setString(2, password); // ⚠️ should use hashed password comparison
 
                 ResultSet rs = stmt.executeQuery();
 
                 if (rs.next()) {
-                    // Login success: create session
                     HttpSession session = request.getSession();
                     session.setAttribute("username", rs.getString("username"));
+                    session.setAttribute("type", type); // Save the role in session
 
-                    response.sendRedirect("homePage.jsp");
+                    // Redirect based on role
+                    if (type.equals("vendor")) {
+                        response.sendRedirect("index.jsp");
+                    } else {
+                        response.sendRedirect("homePage.jsp");
+                    }
                 } else {
                     response.sendRedirect("accessPages/login.jsp?error=Invalid%20credentials");
                 }

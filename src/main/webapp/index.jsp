@@ -9,8 +9,8 @@
 <body>
 
 <header class="landing-navbar">
-    <div class="landing-logo">ShopX</div>
-    <button class="landing-btn-dashboard" onclick="location.href='dashboard.jsp'">
+    <div class="landing-logo">Shop <span class="logo-x">X</span></div>
+    <button class="landing-btn-dashboard" onclick="location.href='homePage.jsp'">
         <i class='bx bxs-dashboard'></i> Dashboard
     </button>
 </header>
@@ -22,6 +22,28 @@
         <i class='bx bx-store'></i> Start Shopping
     </button>
 </main>
+
+<section class="landing-why-choose">
+    <h2>Why Shop with Us?</h2>
+    <div class="reasons-grid">
+        <div class="reason-card">
+            <i class='bx bxs-gift'></i>
+            <h3>Unique Gifts</h3>
+            <p>Curated selections for every occasion.</p>
+        </div>
+        <div class="reason-card">
+            <i class='bx bx-shield-quarter'></i>
+            <h3>Secure Checkout</h3>
+            <p>Shop with peace of mind.</p>
+        </div>
+        <div class="reason-card">
+            <i class='bx bx-leaf'></i>
+            <h3>Sustainable</h3>
+            <p>Eco-friendly packaging & practices.</p>
+        </div>
+    </div>
+</section>
+
 
 <footer class="landing-footer">
     <div class="landing-footer-content">
