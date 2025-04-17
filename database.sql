@@ -16,3 +16,17 @@ CREATE TABLE vendors (
          business_id VARCHAR(50),
          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE products (
+          product_id INT AUTO_INCREMENT PRIMARY KEY,
+          name VARCHAR(255) NOT NULL,
+          price DECIMAL(10, 2) NOT NULL,
+          image VARCHAR(512),
+          stock INT DEFAULT 0,
+          additional_details TEXT,
+          category VARCHAR(100),
+          rating DECIMAL(2,1) DEFAULT 0.0,
+          vendor VARCHAR(255),
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);

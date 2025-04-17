@@ -1,0 +1,133 @@
+/* Reset & Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #ffffff;
+    color: #333;
+}
+
+/* Full-width Flex Layout */
+.product-full-width {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* Left Section: Image */
+.product-image-section {
+    flex: 1 1 40%;
+    background-color: #fafafa;
+    padding: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-product-image {
+    max-width: 90%;
+    height: auto;
+    border-radius: 12px;
+}
+
+/* Right Section: Details */
+.product-details-section {
+    flex: 1 1 60%;
+    padding: 60px 40px;
+    background-color: #ffffff;
+}
+
+.product-details-section h1 {
+    font-size: 32px;
+    color: #111;
+    margin-bottom: 12px;
+}
+
+.vendor-store-name {
+    font-size: 14px;
+}
+
+.price-tag {
+    font-size: 28px;
+    font-weight: bold;
+    color: #444;
+    margin: 12px 0;
+}
+
+.availability {
+    display: inline-block;
+    background: #eee6f7;
+    color: #6b4caf;
+    padding: 6px 14px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.add-to-cart-btn {
+    background: #f6cd44;
+    border: none;
+    padding: 14px 28px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin: 20px 0;
+}
+
+.add-to-cart-btn:hover {
+    background: #eabf2f;
+}
+
+.highlights {
+    list-style: none;
+    margin: 0 0 30px 0;
+}
+
+.highlights li {
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+/* Card Offers Grid */
+.card-offers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+}
+
+.card-box {
+    background: #f2f0fb;
+    padding: 16px;
+    text-align: center;
+    border-radius: 10px;
+    font-size: 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.card-box strong {
+    font-size: 16px;
+    color: #2d2d2d;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .product-full-width {
+        flex-direction: column;
+    }
+
+    .product-image-section,
+    .product-details-section {
+        flex: 1 1 100%;
+        padding: 30px;
+    }
+
+    .main-product-image {
+        width: 100%;
+    }
+}
