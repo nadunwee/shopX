@@ -50,34 +50,49 @@ body {
 
 .vendor-store-name {
     font-size: 14px;
+    color: #989898;
+    margin-bottom: 12px;
+}
+
+.product-name {
+    font-size: 27px;
+    font-weight: normal;
 }
 
 .price-tag {
-    font-size: 28px;
-    font-weight: bold;
+    font-size: 25px;
+    font-weight: normal;
     color: #444;
     margin: 12px 0;
 }
 
 .availability {
+    margin-top: 12px;
     display: inline-block;
     background: #eee6f7;
     color: #6b4caf;
     padding: 6px 14px;
-    border-radius: 6px;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
+}
+
+
+.btn-wrapper {
+    margin-top: 0; /* just for spacing consistency */
 }
 
 .add-to-cart-btn {
     background: #f6cd44;
     border: none;
     padding: 14px 28px;
-    font-size: 16px;
-    font-weight: 500;
-    border-radius: 8px;
+    font-size: 20px;
+    color: #604b16;
+    font-weight: 300;
     cursor: pointer;
     transition: background 0.2s;
-    margin: 20px 0;
+    margin-top: 10px;
+    width: 50%;
+    height: 11%;
+    margin-bottom: 30px;
 }
 
 .add-to-cart-btn:hover {
@@ -92,27 +107,32 @@ body {
 .highlights li {
     margin-bottom: 8px;
     font-size: 16px;
+    color: #4c4b4b;
+    font-weight: 100;
 }
 
-/* Card Offers Grid */
-.card-offers-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 16px;
+.category-heading {
+    margin-top: 21px;
+    margin-bottom: 14px;
+    font-size: 13px;
+    color: #7c7c7c;
 }
 
-.card-box {
-    background: #f2f0fb;
-    padding: 16px;
-    text-align: center;
-    border-radius: 10px;
-    font-size: 15px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+.category-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 12px;
 }
 
-.card-box strong {
-    font-size: 16px;
-    color: #2d2d2d;
+.category-tags .tag {
+    background-color: #eee6f7;
+    color: rgba(113, 90, 168, 0.89);
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
 }
 
 /* Responsive */

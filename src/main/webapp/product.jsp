@@ -1,49 +1,60 @@
+<%@ page import="java.sql.*" %>
+<%@ page import="org.example.shopx.DBConnection" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>CK One Shock Women</title>
+    <title>Product Details</title>
     <link rel="stylesheet" type="text/css" href="product.css">
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 
-<%--include the navbar--%>
 <%@ include file="/includes/navBar.jsp" %>
+
+<%
+    int productId = Integer.parseInt(request.getParameter("id"));
+    Connection conn = DBConnection.getConnection();
+    String sql = "SELECT * FROM products WHERE product_id = ?";
+    PreparedStatement stmt = conn.prepareStatement(sql);
+    stmt.setInt(1, productId);
+    ResultSet rs = stmt.executeQuery();
+
+    if (rs.next()) {
+%>
 
 <div class="product-full-width">
     <div class="product-image-section">
-        <img src="./photos/calvinForHer.png" alt="CK One Shock" class="main-product-image">
+        <img src="<%= rs.getString("image") %>" alt="<%= rs.getString("name") %>" class="main-product-image">
     </div>
 
     <div class="product-details-section">
-        <div class="vendor-store-name">calvin stores</div>
-        <h2>CALVIN KLEIN ONE SHOCK WOMEN EDT 100ML</h2>
-        <div class="price-tag">Rs. 21,900</div>
-        <div class="availability">Last 1 remaining</div><br>
+        <div class="vendor-store-name">shopX partner : <%= rs.getString("vendor") %></div>
+        <p class="product-name"><%= rs.getString("name") %></p>
+        <div class="price-tag">Rs. <%= rs.getBigDecimal("price") %></div>
+        <div class="availability"><%= rs.getString("stock") %></div>
 
-        <button class="add-to-cart-btn">🛒 Add to Cart</button>
+        <div class="btn-wrapper">
+            <button class="add-to-cart-btn">🛒 Add to Cart</button>
+        </div>
 
         <ul class="highlights">
             <li>✔️ Low cost islandwide delivery</li>
             <li>✔️ In Stock</li>
         </ul>
 
-        <h3>Card Offers</h3>
-        <div class="card-offers-grid">
-            <div class="card-box">
-                <p><strong>Rs.1,998/month</strong><br>Up to 12 months</p>
-            </div>
-            <div class="card-box">
-                <p><strong>Rs.1,122/month</strong><br>Up to 24 months</p>
-            </div>
-            <div class="card-box">
-                <p><strong>Rs.7,300/month</strong><br>Up to 3 months</p>
-            </div>
-            <div class="card-box">
-                <p><strong>Rs.1,058/month</strong><br>Up to 24 months</p>
-            </div>
+        <p class="category-heading">Belongs to shopping categories of:</p>
+        <div class="category-tags">
+            <span class="tag"><%= rs.getString("category") %></span>
         </div>
     </div>
 </div>
+
+<%
+    }
+    rs.close();
+    stmt.close();
+    conn.close();
+%>
+
 </body>
 </html>

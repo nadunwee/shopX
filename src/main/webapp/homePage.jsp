@@ -1,3 +1,7 @@
+<%@ page import="java.sql.ResultSet" %>
+<%@ page import="java.sql.PreparedStatement" %>
+<%@ page import="java.sql.Connection" %>
+<%@ page import="org.example.shopx.DBConnection" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -9,46 +13,44 @@
 </head>
 <body>
 
+<%
+    DBConnection DBUtil = null;
+    Connection conn = DBUtil.getConnection();
+    String sql = "SELECT * FROM products";
+    PreparedStatement stmt = conn.prepareStatement(sql);
+    ResultSet rs = stmt.executeQuery();
+%>
+
 <%--include the navbar--%>
 <%@ include file="/includes/navBar.jsp" %>
 
 <div class="product-section">
     <h2>Featured Products</h2>
     <div class="product-grid">
-        <div class="product-card">
-            <div class="product-image">
-                <img src="images/product1.jpg" alt="Product 1">
-                <span class="badge">Top Sellers</span>
+        <%
+            while (rs.next()) {
+                int productId = rs.getInt("product_id"); // Assuming there's a column 'id' in the products table
+        %>
+        <a href="product.jsp?id=<%= productId %>" class="product-card-link">
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="<%= rs.getString("image") %>" alt="<%= rs.getString("name") %>">
+                    <span class="badge">Top Sellers</span>
+                </div>
+                <div class="product-info">
+                    <p class="title"><%= rs.getString("name") %></p>
+                    <p class="price">Rs. <%= rs.getBigDecimal("price") %></p>
+                </div>
             </div>
-            <div class="product-info">
-                <p class="title">See Top Selling Avurudu Products</p>
-                <p class="price">From</p>
-            </div>
-        </div>
-
-        <div class="product-card">
-            <div class="product-image">
-                <img src="images/product2.jpg" alt="Product 2">
-                <span class="badge yellow">Best Seller</span>
-            </div>
-            <div class="product-info">
-                <p class="title">Sinhala New Year Betel Leaf Avurudu Celebration..</p>
-                <p class="price">Rs.4,970</p>
-            </div>
-        </div>
-
-        <div class="product-card">
-            <div class="product-image">
-                <img src="images/product3.jpg" alt="Product 3">
-                <span class="badge yellow">Best Seller</span>
-                <span class="discount">10% off</span>
-            </div>
-            <div class="product-info">
-                <p class="title">Avurudu Asiriya' Delight Box With Avurudu Betel...</p>
-                <p class="price">Rs.14,500</p>
-            </div>
-        </div>
+        </a>
+        <%
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+        %>
     </div>
+
 </div>
 
 </body>
