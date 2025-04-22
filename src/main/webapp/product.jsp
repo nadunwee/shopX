@@ -12,6 +12,7 @@
 <%@ include file="/includes/navBar.jsp" %>
 
 <%
+    String sessionUsername = (String) session.getAttribute("username");
     int productId = Integer.parseInt(request.getParameter("id"));
     Connection conn = DBConnection.getConnection();
     String sql = "SELECT * FROM products WHERE product_id = ?";
@@ -34,8 +35,13 @@
         <div class="availability"><%= rs.getString("stock") %></div>
 
         <div class="btn-wrapper">
-            <button class="add-to-cart-btn">🛒 Add to Cart</button>
+            <% if (sessionUsername != null) { %>
+            <a href="cart.jsp?add=<%= rs.getInt("product_id") %>" class="add-to-cart-btn">🛒 Add to Cart</a>
+            <% } else { %>
+            <a href="accessPages/login.jsp" class="add-to-cart-btn">🛒 Add to Cart</a>
+            <% } %>
         </div>
+
 
         <ul class="highlights">
             <li>✔️ Low cost islandwide delivery</li>
