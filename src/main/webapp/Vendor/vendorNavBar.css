@@ -1,0 +1,61 @@
+.main-layout {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    display: flex;
+    height: 100%;
+}
+
+.sidebar {
+    width: 200px;
+    background-color: #3b1769;
+    color: white;
+    padding-top: 20px;
+    position: sticky;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sidebar h2 {
+    margin-bottom: 30px;
+    font-size: 24px;
+
+}
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    padding: 15px 0;
+    width: 100%;
+    text-align: center;
+    display: block;
+}
+
+.sidebar .sideMenu:hover {
+    background-color: #4c2b84;
+}
+.sidebar .title:hover {
+    color: #975bf6;
+}
+
+.content {
+    margin-left: 200px;
+    flex: 1;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+.lang-select {
+    color: white;
+    cursor: pointer;
+}
+.sidebar #account{
+    margin-top: 250px;
+    color: #bf4fec;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 10px;
+    width: 100px;
+}
+.sidebar #account:hover{
+    background-color: #3b473b
+}
