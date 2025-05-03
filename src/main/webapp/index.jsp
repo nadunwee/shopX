@@ -10,13 +10,17 @@
 
 <header class="landing-navbar">
     <div class="landing-logo">Shop <span class="logo-x">X</span></div>
-    <button class="landing-btn-dashboard" onclick="location.href='homePage.jsp'">
-        <i class='bx bxs-dashboard'></i> Dashboard
-    </button>
+    <nav class="landing-nav-links">
+        <a href="homePage.jsp">Home</a>
+        <a href="shop.jsp">Shop</a>
+        <a href="vendorRegister.jsp">Become a Vendor</a>
+        <a href="#contact">Contact</a>
+    </nav>
 </header>
 
+
 <main class="landing-hero">
-    <h1>Welcome to ShopX</h1>
+    <h1>Welcome to ShopXx</h1>
     <p>Your curated destination for thoughtful gifts, seasonal treats, and more.</p>
     <button class="landing-start-btn" onclick="location.href='homePage.jsp'">
         <i class='bx bx-store'></i> Start Shopping
@@ -43,6 +47,17 @@
         </div>
     </div>
 </section>
+
+<section class="landing-vendor">
+    <div class="vendor-container">
+        <h2>Become a Vendor</h2>
+        <p>Join ShopX and reach thousands of customers looking for unique, quality products.</p>
+        <button class="vendor-register-btn" onclick="location.href='./accessPages/vendorRegistration.jsp'">
+            <i class='bx bx-user-plus'></i> Register as Vendor
+        </button>
+    </div>
+</section>
+®
 
 
 <footer class="landing-footer">

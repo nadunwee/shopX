@@ -14,8 +14,6 @@
   </div>
 
   <div class="right-section">
-    <div class="lang-select">Eng <i class='bx bx-chevron-down'></i></div>
-    <a href="#"><i class='bx bx-heart'></i></a>
     <a href="#"><i class='bx bx-cart'></i></a>
     <%
       String username = (String) session.getAttribute("username");

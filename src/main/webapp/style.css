@@ -9,7 +9,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #4b1e83; /* Purple */
+    background-color: #402970; /* Purple */
     padding: 20px 20px;
     color: white;
 }
@@ -68,7 +68,7 @@ body {
 .right-section a {
     color: white;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 23px;
 }
 
 .lang-select {
@@ -171,285 +171,214 @@ body {
 /* Landing Page Navbar */
 
 
+/* Base styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f5f3fa;
+    color: #2c2c2c;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Navbar */
 .landing-navbar {
+    background-color: #4b1e83;
+    color: white;
+    padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #ffffff;
-    padding: 20px 40px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    position: sticky;
-    top: 0;
-    z-index: 100;
 }
 
 .landing-logo {
     font-size: 1.8rem;
-    font-weight: 700;
-    color: black;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    letter-spacing: 1px;
+    font-weight: bold;
 }
-.landing-logo.div {
-    color:#4B0082;
-}
-
-.landing-btn-dashboard {
-    background-color: #4B0082;
-    color: #fff;
-    border: none;
-    padding: 12px 20px;
-    font-size: 1rem;
-    font-weight: 500;
-    border-radius: 8px;
-    cursor: pointer;
+.landing-nav-links {
     display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: background-color 0.3s ease;
+    gap: 1.5rem;
 }
 
-.landing-btn-dashboard:hover {
-    background-color: #e05555;
-}
-
-.landing-btn-dashboard i {
-    font-size: 1.2rem;
-}
-
-@media (max-width: 600px) {
-    .landing-navbar {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .landing-btn-dashboard {
-        margin-top: 10px;
-        width: 100%;
-        justify-content: center;
-    }
-}
-
-
-/* Hero section */
-.landing-hero {
-    text-align: center;
-    padding: 80px 20px;
-    background-color: #f9f9f9;
-}
-
-.landing-hero h1 {
-    font-size: 2.8rem;
-    color: #333;
-    margin-bottom: 16px;
-}
-
-.landing-hero p {
-    font-size: 1.1rem;
-    color: #666;
-    max-width: 600px;
-    margin: 0 auto 30px;
-}
-
-.landing-start-btn {
-    background-color: #4B0082;
-    color: #fff;
-    border: none;
-    padding: 12px 24px;
-    font-size: 1rem;
+.landing-nav-links a {
+    color: white;
     font-weight: 500;
-    border-radius: 6px;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: background-color 0.3s ease;
-}
-
-.landing-start-btn:hover {
-    background-color: #3a0066;
-}
-
-/* Footer */
-.landing-footer {
-    background-color: #fafafa;
-    padding: 40px 20px;
-    border-top: 1px solid #eee;
-    text-align: center;
-    font-size: 0.9rem;
-    color: #777;
-}
-
-.landing-footer .footer-content {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.landing-footer-logo {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: #4B0082;
-    margin-bottom: 10px;
-}
-
-.landing-footer-links {
-    margin-bottom: 12px;
-}
-
-.landing-footer-links a {
-    margin: 0 10px;
-    text-decoration: none;
-    color: #666;
     transition: color 0.3s ease;
 }
 
-.landing-footer-links a:hover {
-    color: #4B0082;
+.landing-nav-links a:hover {
+    color: #ffd369;
 }
 
-.landing-footer-copy {
-    font-size: 0.85rem;
-    color: #aaa;
+
+
+.logo-x {
+    color: #ffd369;
 }
 
-/* Featured Products Section */
-.landing-featured-products {
-    padding: 30px 40px;
-}
-
-.landing-featured-products h2 {
-    font-size: 28px;
+.landing-btn-dashboard {
+    background-color: #ffd369;
     color: #4b1e83;
-    margin-bottom: 20px;
-    border-left: 5px solid #ffdd00;
-    padding-left: 10px;
-}
-
-.landing-product-grid {
-    display: flex;
-    gap: 25px;
-    flex-wrap: wrap;
-}
-
-.landing-product-card {
-    background-color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
     border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-    width: 220px;
-    transition: 0.3s;
+    cursor: pointer;
+    transition: background 0.3s;
 }
 
-.landing-product-card:hover {
-    transform: translateY(-5px);
+.landing-btn-dashboard:hover {
+    background-color: #ffbd2d;
 }
 
-.landing-product-image {
-    position: relative;
-    height: 180px;
-    overflow: hidden;
-}
-
-.landing-product-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.landing-badge {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background: #ffc107;
-    color: #333;
-    font-size: 12px;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-weight: bold;
-}
-
-.landing-badge.yellow {
-    background: #f5dc3e;
-    color: #444;
-}
-
-.landing-discount {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    background: #444;
-    color: #fff;
-    font-size: 12px;
-    padding: 3px 8px;
-    border-radius: 3px;
-}
-
-.landing-product-info {
-    padding: 12px;
-}
-
-.landing-product-info .title {
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 5px;
-}
-
-.landing-product-info .price {
-    color: #4b1e83;
-    font-weight: bold;
-}
-
-/* === Why Choose Us Section === */
-
-.landing-why-choose {
-    padding: 60px 20px;
-    background-color: #f9f9f9;
+/* Hero Section */
+.landing-hero {
+    padding: 6rem 2rem;
+    background: linear-gradient(135deg, #4b1e83 30%, #8e44ad 100%);
     text-align: center;
+    color: white;
+}
+
+.landing-hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.landing-hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.landing-start-btn {
+    background-color: #ffd369;
+    color: #4b1e83;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.landing-start-btn:hover {
+    background-color: #ffbd2d;
+}
+
+/* Why Choose Section */
+.landing-why-choose {
+    padding: 4rem 2rem;
+    text-align: center;
+    background-color: #fff;
 }
 
 .landing-why-choose h2 {
-    font-size: 2.5rem;
-    margin-bottom: 40px;
-    color: #333;
+    font-size: 2rem;
+    color: #4b1e83;
 }
 
 .reasons-grid {
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
-    gap: 30px;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
 }
 
 .reason-card {
-    background-color: #fff;
-    padding: 30px 20px;
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-    width: 280px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #f8f1ff;
+    border-radius: 12px;
+    padding: 2rem;
+    width: 250px;
+    box-shadow: 0 3px 10px rgba(75, 30, 131, 0.1);
+    transition: transform 0.2s;
 }
 
 .reason-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
 }
 
 .reason-card i {
-    font-size: 3rem;
-    color: #ff6b6b;
-    margin-bottom: 15px;
+    font-size: 2.5rem;
+    color: #4b1e83;
+    margin-bottom: 1rem;
 }
 
 .reason-card h3 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-    color: #222;
+    color: #4b1e83;
 }
 
-.reason-card p {
+/* Vendor Section */
+.landing-vendor {
+    background-color: #e7d5fb;
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.vendor-container h2 {
+    font-size: 2rem;
+    color: #4b1e83;
+}
+
+.vendor-container p {
+    font-size: 1.1rem;
+    margin: 1rem auto 2rem;
+    color: #4b1e83;
+    max-width: 600px;
+}
+
+.vendor-register-btn {
+    background-color: #4b1e83;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
     font-size: 1rem;
-    color: #666;
-    line-height: 1.6;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.vendor-register-btn:hover {
+    background-color: #3d156d;
+}
+
+/* Footer */
+.landing-footer {
+    background-color: #4b1e83;
+    color: white;
+    padding: 2rem;
+    text-align: center;
+}
+
+.landing-footer-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.landing-footer-links {
+    margin-bottom: 1rem;
+}
+
+.landing-footer-links a {
+    color: #ffd369;
+    margin: 0 1rem;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.landing-footer-links a:hover {
+    color: #ffbd2d;
+}
+
+.landing-footer-copy {
+    font-size: 0.9rem;
+    color: #e0c9ff;
 }
 
 
