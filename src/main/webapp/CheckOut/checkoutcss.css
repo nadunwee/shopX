@@ -1,0 +1,59 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 20px;
+}
+
+.checkout-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+h2 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.cart-section,
+.address-section,
+.payment-section {
+    margin-bottom: 40px;
+}
+
+.cart-item {
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.change-address-btn,
+.proceed-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.change-address-btn:hover,
+.proceed-btn:hover {
+    background-color: #45a049;
+}
+
+.payment-section label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.payment-section input[type="radio"] {
+    margin-right: 10px;
+}
