@@ -22,7 +22,7 @@
 <main class="landing-hero">
     <h1>Welcome to ShopXx</h1>
     <p>Your curated destination for thoughtful gifts, seasonal treats, and more.</p>
-    <button class="landing-start-btn" onclick="location.href='homePage.jsp'">
+    <button class="landing-start-btn" onclick="location.href='/homePage.jsp'">
         <i class='bx bx-store'></i> Start Shopping
     </button>
 </main>
