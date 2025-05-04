@@ -4,10 +4,10 @@
     box-sizing: border-box;
     font-family: 'Segoe UI', sans-serif;
 }
+
 .main-layout {
     display: flex;
     min-height: 100vh;
-
 }
 
 .sidebar {
@@ -21,12 +21,12 @@
     height: 100vh;
     position: sticky;
     top: 0;
+    right: 0;
 }
 
 .sidebar h2 {
     margin-bottom: 30px;
     font-size: 24px;
-
 }
 
 .sidebar a {
@@ -41,28 +41,27 @@
 .sidebar .sideMenu:hover {
     background-color: #4c2b84;
 }
+
 .sidebar .title:hover {
     color: #975bf6;
 }
 
-.content {
-    margin-left: 200px;
-    flex: 1;
-    padding: 20px;
-    background-color: #f0f0f0;
-}
 .lang-select {
     color: white;
     cursor: pointer;
 }
-.sidebar #account{
+
+.sidebar #account {
     margin-top: 250px;
     color: #bf4fec;
     border-width: 2px;
     border-style: solid;
     border-radius: 10px;
     width: 100px;
+    text-align: center;
+    padding: 10px 0;
 }
-.sidebar #account:hover{
-    background-color: #3b473b
+
+.sidebar #account:hover {
+    background-color: #3b473b;
 }

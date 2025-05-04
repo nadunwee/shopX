@@ -14,8 +14,11 @@
 <body>
 
 <div class="main-layout">
-    <%@ include file="vendorNavBar.jsp" %>
-    <div class="main-content-area">
+
+    <div class="sidebar">
+        <%@ include file="vendorNavBar.jsp" %>
+    </div>
+    <div class="content">
         <div class="product-card">
             <img src="vendorIMG/vendorHomeIMG.jpeg" alt="vendorHomeIMG" id="vendorHomeIMG">
             <h2>Add New Product</h2>

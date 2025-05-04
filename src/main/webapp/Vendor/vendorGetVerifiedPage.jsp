@@ -12,8 +12,10 @@
     <title>Vendor Get Verified</title>
 </head>
 <body>
-<%@ include file="vendorNavBar.jsp" %>
-<div class="page-container">
+<div class="sidebar">
+    <%@ include file="vendorNavBar.jsp" %>
+</div>
+<div class="content">
     <div class="product-card">
         <img src="vendorIMG/verificationPageIMG.jpeg" alt="vendorGetVerifiedIMG" id="vendorGetVerifiedIMG">
         <h2>Do you like to be verified ?</h2>

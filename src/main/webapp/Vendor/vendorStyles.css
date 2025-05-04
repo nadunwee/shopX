@@ -13,39 +13,26 @@ body{
     box-sizing: border-box;
     background-color: #f9f9f9;
 }
-.main-content-area {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #f9f9f9;
-    padding: 50px 20px 0 20px;
-    box-sizing: border-box;
-}
-.main-content-center {
-    flex: 1;
+
+/*body and footer at this section*/
+.content {
+    background-color: #f0f0f0;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    padding-top: 50px;
-}
-.page-container {
-    margin-top: 0;
-    display: flex;
     flex-direction: column;
-    min-height: 100vh;
 }
+/*****************************************************/
 .product-card {
+    margin-left: 350px;
     background-color: white;
-    width: 500px;
     padding: 30px;
-    border: 2px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
     text-align: center;
-    margin-left: 300px;
-    margin-bottom: 30px;
-    flex: 1;
+    max-width: 400px;
+    width: 100%;
+    margin-top: 50px;
 }
-
 #vendorHomeIMG {
     width: 200px;
     margin-bottom: 20px;
@@ -71,26 +58,9 @@ h4{
 .add-btn:hover{
     background-color: #9026dc;
 }
-
-.product-section {
-    display: flex;
-    gap: 20px;
-}
-
-.product-item {
-    background-color: white;
-    padding: 10px;
-    border: 1px solid #ccc;
-    text-align: center;
-    width: 150px;
-}
-
-.product-item img {
-    width: 100%;
-    height: auto;
-}
- /*footer styles*/
+/********************************************************/
 footer.landing-footer {
+    margin-top: 130px;
     background-color: #fafafa;
     width: 100vw;
     padding: 40px 20px;
@@ -99,7 +69,7 @@ footer.landing-footer {
     font-size: 0.9rem;
     color: #777;
 }
-
+/*footer*/
 .landing-footer-content {
     max-width: 1000px;
     text-align: center;
@@ -131,6 +101,7 @@ footer.landing-footer {
     font-size: 0.85rem;
     color: #aaa;
 }
+/******************************************************/
 .product-add-form-card{
     background-color: white;
     width: 500px;
@@ -145,34 +116,23 @@ footer.landing-footer {
 form{
     text-align: left;
 }
+
 .vendor-actionBtn {
-    background-color: #4B0082;
+    background-color: #5c2cb1;
     color: white;
     border: none;
     padding: 10px 20px;
-    font-weight: bold;
+    border-radius: 6px;
+    font-size: 16px;
     cursor: pointer;
-    border-radius: 5px;
-    margin-top: 20px;
 }
 .vendor-actionBtn:hover{
     background-color: #9026dc;
 }
-.productView-card{
-    background-color: white;
-    width: 1000px;
-    padding: 30px;
-    border: 2px solid #ccc;
-    text-align: center;
-    margin-bottom: 30px;
-    margin-left: 50px;
-    margin-top: 50px;
-    flex: 1;
-}
+/********************************************************/
 .product-section {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+
 }
 .product-block{
     background-color: white;
@@ -180,26 +140,23 @@ form{
     padding: 30px;
     border: 2px solid #ccc;
     text-align: center;
-    margin-bottom: 30px;
-    margin-left: 50px;
-    margin-top: 50px;
     box-sizing: border-box;
 }
 .product-block:hover{
     transform: scale(1.05, 1.05);
     transition: transform 1s ease-out;
 }
-.product-section h2 {
+.mainTopic{
     font-size: 28px;
     color: #4b1e83;
-    margin-bottom: 20px;
-    border-left: 5px solid #ffdd00;
-    padding-left: 10px;
+    margin-top: 20px;
 }
 .product-grid {
     display: flex;
-    gap: 25px;
+    gap: 30px;
     flex-wrap: wrap;
+    margin-top: 50px;
+    margin-left: 100px;
 }
 
 .product-image {
@@ -213,35 +170,6 @@ form{
     height: 100%;
     object-fit: cover;
 }
-
-/*.badge {*/
-/*    position: absolute;*/
-/*    top: 10px;*/
-/*    left: 10px;*/
-/*    background: #ffc107;*/
-/*    color: #333;*/
-/*    font-size: 12px;*/
-/*    padding: 4px 8px;*/
-/*    border-radius: 4px;*/
-/*    font-weight: bold;*/
-/*}*/
-
-/*.badge.yellow {*/
-/*    background: #f5dc3e;*/
-/*    color: #444;*/
-/*}*/
-
-/*.discount {*/
-/*    position: absolute;*/
-/*    bottom: 10px;*/
-/*    right: 10px;*/
-/*    background: #444;*/
-/*    color: #fff;*/
-/*    font-size: 12px;*/
-/*    padding: 3px 8px;*/
-/*    border-radius: 3px;*/
-/*}*/
-
 .product-info {
     padding: 12px;
 }
@@ -256,10 +184,11 @@ form{
     color: #4b1e83;
     font-weight: bold;
 }
-.subInfo{
+.product-info .rating {
     font-size: 14px;
     color: #555;
     margin-bottom: 5px;
+    padding: 5px;
 }
 .subscription-image{
     width: 80px;
@@ -279,6 +208,8 @@ form{
 .vendor-deleteBtn:hover{
     background-color: #a70606;
 }
+
+/********************************************/
 .vendor-profile-image img {
     border-style: solid;
     border-width: 2px;

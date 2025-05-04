@@ -12,8 +12,10 @@
     <title>Vendor Home</title>
 </head>
 <body>
-<%@ include file="verifiedVendorNavBar.jsp" %>
-<div class="page-container">
+<div class="sidebar">
+    <%@ include file="vendorNavBar.jsp" %>
+</div>
+<div class="content">
     <div class="product-card">
         <img src="vendorIMG/vendorHomeIMG.jpeg" alt="vendorHomeIMG" id="vendorHomeIMG">
         <h2>Add New Product</h2>

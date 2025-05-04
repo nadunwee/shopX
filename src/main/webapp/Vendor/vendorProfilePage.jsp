@@ -12,8 +12,10 @@
     <title>Vendor Get Verified</title>
 </head>
 <body>
-<%@ include file="vendorNavBar.jsp" %>
-<div class="page-container">
+<div class="sidebar">
+    <%@ include file="vendorNavBar.jsp" %>
+</div>
+<div class="content">
         <h2 style="padding: 20px">Your Profile</h2>
     <div class="vendor-profile-section">
         <div class="vendor-profile-block">

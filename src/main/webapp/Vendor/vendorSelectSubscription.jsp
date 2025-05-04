@@ -12,8 +12,10 @@
   <title>Vendor Get Verified</title>
 </head>
 <body>
-<%@ include file="vendorNavBar.jsp" %>
-<div class="page-container">
+<div class="sidebar">
+  <%@ include file="vendorNavBar.jsp" %>
+</div>
+<div class="content">
   <div class="product-section">
     <h2 style="padding: 20px">Select a Subscription</h2>
     <div class="product-grid">

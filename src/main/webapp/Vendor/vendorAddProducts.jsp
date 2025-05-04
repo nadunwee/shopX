@@ -14,9 +14,12 @@
 <body>
 
 <div class="main-layout">
-    <%@ include file="vendorNavBar.jsp" %>
 
-    <div class="main-content-area">
+    <div class="sidebar">
+        <%@ include file="vendorNavBar.jsp" %>
+    </div>
+
+    <div class="content">
         <div class="product-add-form-card">
             <h2 style="padding: 15px; margin-bottom: 15px">Enter Item Details</h2>
             <form action="">

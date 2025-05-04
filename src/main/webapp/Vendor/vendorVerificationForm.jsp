@@ -12,8 +12,10 @@
     <title>Vendor Home</title>
 </head>
 <body>
-<%@ include file="vendorNavBar.jsp" %>
-<div class="page-container">
+<div class="sidebar">
+    <%@ include file="vendorNavBar.jsp" %>
+</div>
+<div class="content">
     <a href="./vendorSelectSubscription.jsp"><button type="button" class="vendor-actionBtn" name="backBtn" style="width: 100px; margin-left: 50px">Go Back</button></a>
     <div class="product-add-form-card" id="vendorVerificationForm">
         <h2 style="padding: 15px; margin-bottom: 15px">Enter Business Details</h2>

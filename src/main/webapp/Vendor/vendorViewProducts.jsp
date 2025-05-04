@@ -1,4 +1,9 @@
-+ <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="org.example.shopx.DBConnection" %>
+
+<%@ page import="java.sql.ResultSet" %>
+<%@ page import="java.sql.Connection" %>
+<%@ page import="java.sql.PreparedStatement" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,16 +16,26 @@
     <link rel="stylesheet" type="text/css" href="vendorNavBar.css">
     <title>Vendor View Products</title>
 </head>
+
+<%
+    DBConnection DBUtil = null;
+    Connection conn = DBUtil.getConnection();
+    String sql = "SELECT * FROM products";
+    PreparedStatement stmt = conn.prepareStatement(sql);
+    ResultSet rs = stmt.executeQuery();
+%>
+
 <body>
 
 <div class="main-layout">
-    <%@ include file="vendorNavBar.jsp" %>  <!-- Sidebar -->
+    <div class="sidebar">
+        <%@ include file="vendorNavBar.jsp" %>
+    </div>
 
-    <div class="main-content-area">
-        <div class="product-section">
-            <h2 style="padding: 20px">Published Products</h2>
+    <div class="content">
+        <h2 class="mainTopic" style=".mainTopic; margin-left: 20px">Published Products</h2>
             <div class="product-grid">
-                <%-- Example repeated product blocks (you can dynamically generate these later) --%>
+
                 <div class="product-block">
                     <div class="product-image">
                         <img src="#" alt="Product 1">
@@ -28,7 +43,7 @@
                     <div class="product-info">
                         <p class="title">See Top Selling Avurudu Products</p>
                         <p class="price">Rs. 5,280</p>
-                        <p class="rating">Overall rating: ★★★★☆</p>
+                        <p class="rating">Overall rating: 4/5</p>
                         <div class="action-buttons">
                             <a href="vendorSelectSubscription.jsp"><button class="vendor-actionBtn">Edit Details</button></a>
                             <a href="vendorSelectSubscription.jsp"><button class="vendor-deleteBtn">Delete Item</button></a>
@@ -36,10 +51,85 @@
                     </div>
                 </div>
 
-                <!-- Repeat the above .product-block for each product (as you already have) -->
-                <!-- Tip: Eventually replace these hardcoded blocks with dynamic JSP logic -->
+                <div class="product-block">
+                    <div class="product-image">
+                        <img src="#" alt="Product 1">
+                    </div>
+                    <div class="product-info">
+                        <p class="title">See Top Selling Avurudu Products</p>
+                        <p class="price">Rs. 5,280</p>
+                        <p class="rating">Overall rating: 4/5</p>
+                        <div class="action-buttons">
+                            <a href="vendorSelectSubscription.jsp"><button class="vendor-actionBtn">Edit Details</button></a>
+                            <a href="vendorSelectSubscription.jsp"><button class="vendor-deleteBtn">Delete Item</button></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-block">
+                    <div class="product-image">
+                        <img src="#" alt="Product 1">
+                    </div>
+                    <div class="product-info">
+                        <p class="title">See Top Selling Avurudu Products</p>
+                        <p class="price">Rs. 5,280</p>
+                        <p class="rating">Overall rating: 4/5</p>
+                        <div class="action-buttons">
+                            <a href="vendorSelectSubscription.jsp"><button class="vendor-actionBtn">Edit Details</button></a>
+                            <a href="vendorSelectSubscription.jsp"><button class="vendor-deleteBtn">Delete Item</button></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-block">
+                    <div class="product-image">
+                        <img src="#" alt="Product 1">
+                    </div>
+                    <div class="product-info">
+                        <p class="title">See Top Selling Avurudu Products</p>
+                        <p class="price">Rs. 5,280</p>
+                        <p class="rating">Overall rating: 4/5</p>
+                        <div class="action-buttons">
+                            <a href="vendorSelectSubscription.jsp"><button class="vendor-actionBtn">Edit Details</button></a>
+                            <a href="vendorSelectSubscription.jsp"><button class="vendor-deleteBtn">Delete Item</button></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-block">
+                    <div class="product-image">
+                        <img src="#" alt="Product 1">
+                    </div>
+                    <div class="product-info">
+                        <p class="title">See Top Selling Avurudu Products</p>
+                        <p class="price">Rs. 5,280</p>
+                        <p class="rating">Overall rating: 4/5</p>
+                        <div class="action-buttons">
+                            <a href="vendorSelectSubscription.jsp"><button class="vendor-actionBtn">Edit Details</button></a>
+                            <a href="vendorSelectSubscription.jsp"><button class="vendor-deleteBtn">Delete Item</button></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-block">
+                    <div class="product-image">
+                        <img src="#" alt="Product 1">
+                    </div>
+                    <div class="product-info">
+                        <p class="title">See Top Selling Avurudu Products</p>
+                        <p class="price">Rs. 5,280</p>
+                        <p class="rating">Overall rating: 4/5</p>
+                        <div class="action-buttons">
+                            <a href="#"><button class="vendor-actionBtn">Edit Details</button></a>
+                            <a href="#"><button class="vendor-deleteBtn">Delete Item</button></a>
+                        </div>
+                    </div>
+                </div>
+
+
+
             </div>
-        </div>
+
 
         <footer class="landing-footer">
             <div class="landing-footer-content">
