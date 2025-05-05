@@ -21,4 +21,14 @@
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/loginUser</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>vendorProfileUpdateServlet</servlet-name>
+        <servlet-class>org.example.shopx.vendorProfileUpdateServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>vendorProfileUpdateServlet</servlet-name>
+        <url-pattern>/vendorProfileUpdate</url-pattern>
+    </servlet-mapping>
+
 </web-app>

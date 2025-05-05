@@ -46,11 +46,6 @@
                 <input type="text" id="businessId" name="businessId">
             </div>
 
-            <div class="input-group">
-                <label for="profilePhoto">Profile Photo</label>
-                <input type="file" class="vendor-profile-image" name="vendor-profile-image" accept=".jpg,.jpeg,.png" required><br><br>
-            </div>
-
             <div class="register-actions">
                 <button type="submit" class="register-btn">Register as Vendor</button>
                 <p>Want to shop instead? <a href="register.jsp" class="login-link">Register as Customer</a></p>

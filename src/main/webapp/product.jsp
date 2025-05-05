@@ -47,7 +47,7 @@
             <%
                 String additionalDetails = rs.getString("additional_details");
                 if (additionalDetails != null && !additionalDetails.trim().isEmpty()) {
-                    String[] highlights = additionalDetails.split("\\r?\\n"); // or use "," if comma-separated
+                    String[] highlights = additionalDetails.split("\\r?\\n");
                     for (String highlight : highlights) {
             %>
             <li>✔️ <%= highlight.trim() %></li>

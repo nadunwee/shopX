@@ -21,7 +21,6 @@
     ResultSet rs = stmt.executeQuery();
 %>
 
-<%--include the navbar--%>
 <%@ include file="/includes/navBar.jsp" %>
 
 <div class="product-section">
@@ -29,7 +28,7 @@
     <div class="product-grid">
         <%
             while (rs.next()) {
-                int productId = rs.getInt("product_id"); // Assuming there's a column 'id' in the products table
+                int productId = rs.getInt("product_id");
         %>
         <a href="product.jsp?id=<%= productId %>" class="product-card-link">
             <div class="product-card">

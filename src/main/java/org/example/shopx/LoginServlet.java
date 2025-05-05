@@ -1,5 +1,4 @@
 package org.example.shopx;
-
 import jakarta.servlet.http.*;
 import jakarta.servlet.ServletException;
 import java.io.IOException;
