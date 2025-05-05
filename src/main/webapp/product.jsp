@@ -34,7 +34,7 @@
         <div class="price-tag">Rs. <%= rs.getBigDecimal("price") %></div>
         <div class="availability"><%= rs.getString("stock") %></div>
 
-        <div class="btn-wrapper">
+        <div class="btn-wrapper" style="margin-top: 10px">
             <% if (sessionUsername != null) { %>
             <a href="cart.jsp?add=<%= rs.getInt("product_id") %>" class="add-to-cart-btn">🛒 Add to Cart</a>
             <% } else { %>
@@ -43,9 +43,22 @@
         </div>
 
 
-        <ul class="highlights">
-            <li>✔️ Low cost islandwide delivery</li>
-            <li>✔️ In Stock</li>
+        <ul class="highlights" style="margin-top: 30px">
+            <%
+                String additionalDetails = rs.getString("additional_details");
+                if (additionalDetails != null && !additionalDetails.trim().isEmpty()) {
+                    String[] highlights = additionalDetails.split("\\r?\\n"); // or use "," if comma-separated
+                    for (String highlight : highlights) {
+            %>
+            <li>✔️ <%= highlight.trim() %></li>
+            <%
+                }
+            } else {
+            %>
+            <li>✔️ No additional highlights available</li>
+            <%
+                }
+            %>
         </ul>
 
         <p class="category-heading">Belongs to shopping categories of:</p>

@@ -16,10 +16,9 @@
   <div class="right-section">
     <a href="#"><i class='bx bx-cart'></i></a>
     <%
-      String username = (String) session.getAttribute("username");
-      if (username != null) {
+      if (session.getAttribute("username") != null) {
     %>
-    <a href="#"><i class='bx bx-user'></i> <%= username %></a>
+    <a href="./account.jsp"><i class='bx bx-user'></i> <%= session.getAttribute("username") %></a>
     <a href="LogoutServlet">Logout</a>
     <%
     } else {
