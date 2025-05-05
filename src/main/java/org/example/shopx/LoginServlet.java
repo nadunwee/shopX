@@ -33,7 +33,7 @@ public class LoginServlet extends HttpServlet {
 
                     // Redirect based on role
                     if (type.equals("vendor")) {
-                        response.sendRedirect("index.jsp");
+                        response.sendRedirect("Vendor/vendorHome.jsp");
                     } else {
                         response.sendRedirect("homePage.jsp");
                     }

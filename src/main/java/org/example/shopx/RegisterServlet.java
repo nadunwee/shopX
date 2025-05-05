@@ -29,9 +29,10 @@ public class RegisterServlet extends HttpServlet {
                 String storeName = request.getParameter("storeName");
                 String businessId = request.getParameter("businessId");
                 String vendorPassword = request.getParameter("vendorPassword");
+                String profileImage = request.getParameter("vendor-profile-image");
+
 
                 if (businessId == null || businessId.trim().isEmpty()) {
-                    // Handle optional logic or just leave it as null
                     businessId = null;
                 }
 
@@ -41,13 +42,14 @@ public class RegisterServlet extends HttpServlet {
                 System.out.println(vendorEmail);
 
                 // Example vendor insert (adjust table/columns as needed)
-                query = "INSERT INTO vendors (store_name, username, email, password, business_id) VALUES (?, ?, ?, ?, ?)";
+                query = "INSERT INTO vendors (store_name, username, email, password, business_id, profilePhoto) VALUES (?, ?, ?, ?, ?, ?)";
                 stmt = conn.prepareStatement(query);
                 stmt.setString(1, storeName);
                 stmt.setString(2, vendorUsername);
                 stmt.setString(3, vendorEmail);
                 stmt.setString(4, vendorPassword);
                 stmt.setString(5, businessId);
+                stmt.setString(6,profileImage);
 
             } else {
                 String username = request.getParameter("username");

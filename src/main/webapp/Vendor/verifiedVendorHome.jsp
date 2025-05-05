@@ -12,29 +12,33 @@
     <title>Vendor Home</title>
 </head>
 <body>
-<div class="sidebar">
-    <%@ include file="vendorNavBar.jsp" %>
-</div>
-<div class="content">
-    <div class="product-card">
-        <img src="vendorIMG/vendorHomeIMG.jpeg" alt="vendorHomeIMG" id="vendorHomeIMG">
-        <h2>Add New Product</h2>
-        <a href="vendorAddProducts.jsp"><button class="add-btn">Add New +</button></a>
-
+<div class="main-layout">
+    <div class="sidebar">
+        <%@ include file="vendorNavBar.jsp" %>
     </div>
+    <div class="content">
+        <div class="product-card">
+            <img src="vendorIMG/vendorHomeIMG.jpeg" alt="vendorHomeIMG" id="vendorHomeIMG">
+            <h2>Add New Product</h2>
+            <a href="vendorAddProducts.jsp">
+                <button class="add-btn">Add New +</button>
+            </a>
 
-    <footer class="landing-footer">
-        <div class="landing-footer-content">
-            <div class="landing-footer-logo">ShopX</div>
-            <div class="landing-footer-links">
-                <a href="#">About</a>
-                <a href="#">Contact</a>
-                <a href="#">Privacy</a>
-                <a href="#">Terms</a>
-            </div>
-            <p class="landing-footer-copy">&copy; 2025 ShopX. All rights reserved.</p>
         </div>
-    </footer>
+
+        <footer class="landing-footer">
+            <div class="landing-footer-content">
+                <div class="landing-footer-logo">ShopX</div>
+                <div class="landing-footer-links">
+                    <a href="#">About</a>
+                    <a href="#">Contact</a>
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                </div>
+                <p class="landing-footer-copy">&copy; 2025 ShopX. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
 </div>
 </body>
 </html>

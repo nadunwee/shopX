@@ -1,3 +1,8 @@
+<%@ page import="java.sql.Connection" %>
+<%@ page import="java.sql.PreparedStatement" %>
+<%@ page import="java.sql.ResultSet" %>
+<%@ page import="org.example.shopx.DBConnection" %>
+<%@ page import="java.sql.SQLException" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,11 +17,29 @@
     <title>Vendor Get Verified</title>
 </head>
 <body>
+
+<%
+    DBConnection DBUtil = null;
+    Connection conn = DBUtil.getConnection();
+    String sql = "SELECT * FROM vendors";
+    PreparedStatement stmt = conn.prepareStatement(sql);
+    ResultSet rs = stmt.executeQuery();
+    try {
+        session.setAttribute("username", rs.getString("username"));
+    } catch (SQLException e) {
+        throw new RuntimeException(e);
+    }
+
+%>
+
+<div class="main-layout">
 <div class="sidebar">
     <%@ include file="vendorNavBar.jsp" %>
 </div>
+
 <div class="content">
-        <h2 style="padding: 20px">Your Profile</h2>
+        <h2 class="mainTopic" style=".mainTopic; margin-left: 20px; padding: 10px" >Your Profile</h2>
+    <button type="button" class="vendor-actionBtn" name="backBtn" style="width: 100px; margin-left: 1000px; background-color: #CD7F32">Log Out</button>
     <div class="vendor-profile-section">
         <div class="vendor-profile-block">
             <div class="vendor-profile-image">
@@ -51,5 +74,6 @@
             </div>
         </footer>
     </div>
+</div>
 </body>
 </html>

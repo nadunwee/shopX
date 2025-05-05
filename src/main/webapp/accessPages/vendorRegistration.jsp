@@ -9,8 +9,9 @@
 <body>
 
 <main class="register-main">
-    <div class="register-container">
-        <h2>Vendor Registration</h2>
+    <h2 class="mainTopic" style="margin-left: 20px;font-size: 28px; color: #4b1e83; text-align: center">Vendor Registration</h2>
+    <div class="register-container" style="margin-left: 350px; padding: 50px; margin-bottom: 60px;">
+
         <form action="${pageContext.request.contextPath}/registerUser" method="POST" class="register-form">
 
             <input type="hidden" name="type" value="vendor">
@@ -43,6 +44,11 @@
             <div class="input-group">
                 <label for="businessId">Business ID (Optional)</label>
                 <input type="text" id="businessId" name="businessId">
+            </div>
+
+            <div class="input-group">
+                <label for="profilePhoto">Profile Photo</label>
+                <input type="file" class="vendor-profile-image" name="vendor-profile-image" accept=".jpg,.jpeg,.png" required><br><br>
             </div>
 
             <div class="register-actions">

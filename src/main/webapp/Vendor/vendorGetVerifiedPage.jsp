@@ -12,30 +12,33 @@
     <title>Vendor Get Verified</title>
 </head>
 <body>
-<div class="sidebar">
-    <%@ include file="vendorNavBar.jsp" %>
-</div>
-<div class="content">
-    <div class="product-card">
-        <img src="vendorIMG/verificationPageIMG.jpeg" alt="vendorGetVerifiedIMG" id="vendorGetVerifiedIMG">
-        <h2>Do you like to be verified ?</h2>
-        <h4>Be verified and experience our exclusive features</h4>
-        <a href="vendorSelectSubscription.jsp"><button class="vendor-actionBtn">Get Verified</button></a>
-
+<div class="main-layout">
+    <div class="sidebar">
+        <%@ include file="vendorNavBar.jsp" %>
     </div>
+    <div class="content">
+        <div class="product-card">
+            <img src="vendorIMG/verificationPageIMG.jpeg" alt="vendorGetVerifiedIMG" id="vendorGetVerifiedIMG">
+            <h2>Do you like to be verified ?</h2>
+            <h4>Be verified and experience our exclusive features</h4>
+            <a href="vendorSelectSubscription.jsp"><button class="vendor-actionBtn">Get Verified</button></a>
 
-    <footer class="landing-footer">
-        <div class="landing-footer-content">
-            <div class="landing-footer-logo">ShopX</div>
-            <div class="landing-footer-links">
-                <a href="#">About</a>
-                <a href="#">Contact</a>
-                <a href="#">Privacy</a>
-                <a href="#">Terms</a>
-            </div>
-            <p class="landing-footer-copy">&copy; 2025 ShopX. All rights reserved.</p>
         </div>
-    </footer>
+
+        <footer class="landing-footer">
+            <div class="landing-footer-content">
+                <div class="landing-footer-logo">ShopX</div>
+                <div class="landing-footer-links">
+                    <a href="#">About</a>
+                    <a href="#">Contact</a>
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                </div>
+                <p class="landing-footer-copy">&copy; 2025 ShopX. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
 </div>
+
 </body>
 </html>

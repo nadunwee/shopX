@@ -15,6 +15,7 @@ CREATE TABLE vendors (
          password VARCHAR(255) NOT NULL,
          business_id VARCHAR(50),
          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+         profilePhoto LONGBLOB
 );
 
 CREATE TABLE products (
