@@ -8,11 +8,20 @@ import java.sql.*;
 
 public class vendorProfileDeleteServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         String username = (String) request.getSession().getAttribute("username");
 
         try (Connection conn = DBConnection.getConnection()) {
-            String query = "DELETE from vendors WHERE username = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            // delete vendorpendingverifications cause of fk const.
+            String deleteVerificationQuery = "DELETE FROM vendorpendingverifications WHERE vendorID = (SELECT id FROM vendors WHERE username = ?)";
+            try (PreparedStatement stmt = conn.prepareStatement(deleteVerificationQuery)) {
+                stmt.setString(1, username);
+                stmt.executeUpdate();
+            }
+
+            // then, delete vendor acc
+            String deleteVendorQuery = "DELETE FROM vendors WHERE username = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(deleteVendorQuery)) {
                 stmt.setString(1, username);
                 stmt.executeUpdate();
             }
