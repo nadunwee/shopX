@@ -28,7 +28,7 @@ public class UserServlet extends HttpServlet {
                 stmt.close();
                 conn.close();
 
-                response.sendRedirect("account.jsp");  // redirect back to account page
+                response.sendRedirect("account.jsp");
             } catch (Exception e) {
                 e.printStackTrace();
                 response.getWriter().println("Error updating profile");
@@ -47,7 +47,6 @@ public class UserServlet extends HttpServlet {
                 stmt.close();
                 conn.close();
 
-                // Invalidate session if user deleted their own account
                 HttpSession session = request.getSession(false);
                 if (session != null) {
                     session.invalidate();

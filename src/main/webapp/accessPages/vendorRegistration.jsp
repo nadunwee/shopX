@@ -12,7 +12,7 @@
     <h2 class="mainTopic" style="margin-left: 20px;font-size: 28px; color: #4b1e83; text-align: center">Vendor Registration</h2>
     <div class="register-container" style="margin-left: 350px; padding: 50px; margin-bottom: 60px;">
 
-        <form action="${pageContext.request.contextPath}/registerUser" method="POST" class="register-form">
+        <form action="${pageContext.request.contextPath}/registerUser" method="POST" class="register-form" enctype="multipart/form-data">
 
             <input type="hidden" name="type" value="vendor">
 
@@ -44,6 +44,11 @@
             <div class="input-group">
                 <label for="businessId">Business ID (Optional)</label>
                 <input type="text" id="businessId" name="businessId">
+            </div>
+
+            <div class="input-group">
+                <label for="businessId">Upload Logo</label>
+                <input type="file" id="vendorLogo" name="vendorLogo">
             </div>
 
             <div class="register-actions">

@@ -321,4 +321,11 @@ span{
     cursor: pointer;
 }
 
+.vendorLOGO{
+    border: 1px solid #ccc;
+    width: 80px;
+    height: 80px;
+    margin-left: 150px;
+}
+
 

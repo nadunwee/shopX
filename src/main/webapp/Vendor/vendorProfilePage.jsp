@@ -110,13 +110,13 @@
         <div class="vendor-profile-section">
             <div class="vendor-profile-block">
                 <div class="vendor-profile-info">
-                    <p class="vendorProfileStoreName" style="margin-bottom: 30px"><span class="vendorProfileStoreName"><%= rs.getString("store_name") %></span></p>
+                    <img src="../photos/<%= rs.getString("imageFileName") %>" class="vendorLOGO" alt="">
+                    <p class="vendorProfileStoreName" style="margin-bottom: 30px; margin-left: 109px"><span class="vendorProfileStoreName"><%= rs.getString("store_name") %></span></p>
                     <p class="vendorProfileUserName">User Name : <span class="vendorProfileUserName"><%= rs.getString("username") %></span></p>
                     <p class="vendorProfileBusinessID">Business ID : <span class="vendorProfileBusinessID"><%= rs.getString("business_id") %></span></p>
                     <p class="vendorProfileEmail">Email : <span class="vendorProfileEmail"><%= rs.getString("email") %></span></p>
                     <p class="vendorProfileDate">Joined at : <span class="vendorProfileCreatedDate"><%= rs.getString("created_at").split(" ")[0] %></span></p>
                 </div>
-
                 <div class="vendor-profileActionBtns">
                     <button id="editBtn" class="vendor-actionBtn" value="edit" name="edit" style="margin-right: 150px">Edit Details</button>
                     <button id="vendor-deleteBtn" class="vendor-deleteBtn" value="delete" name="delete" >Delete Account</button>
