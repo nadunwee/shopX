@@ -31,4 +31,31 @@
         <url-pattern>/vendorProfileUpdate</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>vendorProfileDeleteServlet</servlet-name>
+        <servlet-class>org.example.shopx.vendorProfileDeleteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>vendorProfileDeleteServlet</servlet-name>
+        <url-pattern>/vendorProfileDelete</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>vendorSubscriptionServlet</servlet-name>
+        <servlet-class>org.example.shopx.vendorSubscriptionServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>vendorSubscriptionServlet</servlet-name>
+        <url-pattern>/vendorSubscription</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>vendorPaymentDetailsServlet</servlet-name>
+        <servlet-class>org.example.shopx.vendorPaymentDetailsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>vendorPaymentDetailsServlet</servlet-name>
+        <url-pattern>/vendorPaymentDetails</url-pattern>
+    </servlet-mapping>
+
 </web-app>

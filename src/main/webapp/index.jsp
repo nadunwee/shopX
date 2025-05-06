@@ -20,7 +20,7 @@
 
 
 <main class="landing-hero">
-    <h1>Welcome to ShopXx</h1>
+    <h1>Welcome to ShopX</h1>
     <p>Your curated destination for thoughtful gifts, seasonal treats, and more.</p>
     <button class="landing-start-btn" onclick="location.href='/homePage.jsp'">
         <i class='bx bx-store'></i> Start Shopping
@@ -57,8 +57,18 @@
         </button>
     </div>
 </section>
-®
 
+<%
+    String deleteMsg = (String) session.getAttribute("deleteSuccess");
+    if (deleteMsg != null) {
+%>
+<script>
+    alert("<%= deleteMsg %>");
+</script>
+<%
+        session.removeAttribute("deleteSuccess");
+    }
+%>
 
 <footer class="landing-footer">
     <div class="landing-footer-content">

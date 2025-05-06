@@ -21,7 +21,21 @@
             <img src="vendorIMG/verificationPageIMG.jpeg" alt="vendorGetVerifiedIMG" id="vendorGetVerifiedIMG">
             <h2>Do you like to be verified ?</h2>
             <h4>Be verified and experience our exclusive features</h4>
-            <a href="vendorSelectSubscription.jsp"><button class="vendor-actionBtn">Get Verified</button></a>
+
+            <%
+                String status = (String) session.getAttribute("verificationStatus");
+                boolean isPending = "pending".equals(status);
+            %>
+
+            <%
+                if (isPending) {
+            %>
+            <p style="color: orange; font-weight: bold; padding: 8px">Your Verification Is Pending.</p>
+            <%
+                }
+            %>
+
+            <a href="vendorSelectSubscription.jsp"><button class="vendor-actionBtn" <%= isPending ? "disabled" : "" %>>Get Verified</button></a>
 
         </div>
 

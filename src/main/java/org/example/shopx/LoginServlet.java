@@ -30,9 +30,26 @@ public class LoginServlet extends HttpServlet {
                     session.setAttribute("username", rs.getString("username"));
                     session.setAttribute("type", type);
 
-                    // Redirect based on role
                     if (type.equals("vendor")) {
+                        int vendorID = rs.getInt("id");
+                        session.setAttribute("vendorID", vendorID);
+
+                        String query2 = "SELECT * FROM vendorpendingverifications WHERE vendorID = ?";
+                        try (PreparedStatement stmt2 = conn.prepareStatement(query2)) {
+                            stmt2.setInt(1, vendorID);
+                            ResultSet rs2 = stmt2.executeQuery();
+                            if (rs2.next()) {
+                                session.setAttribute("verificationStatus", rs2.getString("verificationStatus"));
+                            } else {
+                                session.setAttribute("verificationStatus", "Not Verified");
+                                System.out.println("No Verification Status");
+                            }
+                        } catch (SQLException e) {
+                            System.out.println("Error when verification status checking: " + e.getMessage());
+                        }
+
                         response.sendRedirect("Vendor/vendorHome.jsp");
+
                     } else {
                         response.sendRedirect("homePage.jsp");
                     }

@@ -41,10 +41,43 @@
 </head>
 
 <script>
+    //edit modal
     document.addEventListener("DOMContentLoaded", function () {
         const modal = document.getElementById("editModal");
         const btn = document.getElementById("editBtn");
-        const span = document.querySelector(".close");
+        const closeButtons = document.querySelectorAll(".close");
+
+        closeButtons.forEach(function (btn) {
+            btn.addEventListener("click", function () {
+                btn.closest(".modal").style.display = "none";
+            });
+        });
+
+        btn.onclick = function () {
+            modal.style.display = "block";
+        }
+
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    });
+    //delete modal
+    document.addEventListener("DOMContentLoaded", function () {
+        const modal = document.getElementById("deleteModal");
+        const btn = document.getElementById("vendor-deleteBtn");
+        const closeButtons = document.querySelectorAll(".close");
+
+        closeButtons.forEach(function (btn) {
+            btn.addEventListener("click", function () {
+                btn.closest(".modal").style.display = "none";
+            });
+        });
 
         btn.onclick = function () {
             modal.style.display = "block";
@@ -77,15 +110,16 @@
         <div class="vendor-profile-section">
             <div class="vendor-profile-block">
                 <div class="vendor-profile-info">
-                    <p class="vendorProfileName" style="margin-bottom: 30px"><span class="vendorProfileName"><%= rs.getString("store_name") %></span></p>
-                    <p class="vendorProfileAddress">User Name : <span class="vendorProfileAddress"><%= rs.getString("username") %></span></p>
-                    <p class="vendorProfileContactNo">Business ID : <span class="vendorProfileContactNo"><%= rs.getString("business_id") %></span></p>
+                    <p class="vendorProfileStoreName" style="margin-bottom: 30px"><span class="vendorProfileStoreName"><%= rs.getString("store_name") %></span></p>
+                    <p class="vendorProfileUserName">User Name : <span class="vendorProfileUserName"><%= rs.getString("username") %></span></p>
+                    <p class="vendorProfileBusinessID">Business ID : <span class="vendorProfileBusinessID"><%= rs.getString("business_id") %></span></p>
                     <p class="vendorProfileEmail">Email : <span class="vendorProfileEmail"><%= rs.getString("email") %></span></p>
+                    <p class="vendorProfileDate">Joined at : <span class="vendorProfileCreatedDate"><%= rs.getString("created_at").split(" ")[0] %></span></p>
                 </div>
 
                 <div class="vendor-profileActionBtns">
                     <button id="editBtn" class="vendor-actionBtn" value="edit" name="edit" style="margin-right: 150px">Edit Details</button>
-                    <button class="vendor-deleteBtn" value="delete" name="delete" >Delete Account</button>
+                    <button id="vendor-deleteBtn" class="vendor-deleteBtn" value="delete" name="delete" >Delete Account</button>
                 </div>
 
                 <div id="editModal" class="modal">
@@ -102,6 +136,33 @@
                                 <input style="margin-left: 75px" type="email" name="email" value="<%= rs.getString("email") %>"><br>
                             </div>
                             <button type="submit" class="vendor-actionBtn">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="deleteModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h2>Are You Sure ?</h2>
+                        <h4 style="color: #e74c3c; font-family: 'Century',serif; margin-bottom: 8px">You about to permanently delete your data from ShopX</h4>
+                        <form action="${pageContext.request.contextPath}/vendorProfileDelete" method="post">
+                            <div class="input-group">
+                                <label>Store Name:</label>
+                                <input type="text" name="store_name" value="<%= rs.getString("store_name") %>" readonly><br>
+                            </div>
+                            <div class="input-group">
+                                <label>User Name:</label>
+                                <input type="text" name="username" value="<%= rs.getString("username") %>" readonly><br>
+                            </div>
+                            <div class="input-group">
+                                <label>Business ID:</label>
+                                <input type="text" name="business_id" value="<%= rs.getString("business_id") %>" readonly><br>
+                            </div>
+                            <div class="input-group">
+                                <label>Email:</label>
+                                <input style="margin-left: 75px" type="email" name="email" value="<%= rs.getString("email") %>" readonly><br>
+                            </div>
+                            <button type="submit" class="vendor-deleteBtn">Delete Account</button>
                         </form>
                     </div>
                 </div>

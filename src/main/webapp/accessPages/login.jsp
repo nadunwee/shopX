@@ -31,7 +31,7 @@
             <option value="vendor">Vendor</option>
           </select>
         </div>
-        <input type="text" name="username" placeholder="Enter email" required>
+        <input type="text" name="username" placeholder="Enter user name" required>
         <input type="password" name="password" placeholder="Password" required>
         <button type="submit" class="login-btn">Login</button>
         <div class="login-links">

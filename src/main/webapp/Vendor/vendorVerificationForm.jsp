@@ -1,3 +1,4 @@
+<%@ page import="java.sql.SQLOutput" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +10,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" type="text/css" href="vendorStyles.css">
     <link rel="stylesheet" type="text/css" href="vendorNavBar.css">
-    <title>Vendor Home</title>
+    <title>Vendor Subscription Form</title>
 </head>
 <body>
 <div class="main-layout">
@@ -25,6 +26,14 @@
         <div class="product-add-form-card" id="vendorVerificationForm">
             <h2 class="mainTopic" style=".mainTopic; padding: 20px">Enter Business Details</h2>
             <div class="selectedSubDisplay" style="margin-bottom: 25px;">
+                <%
+                    String selectedSub = request.getParameter("sub");
+                    if (selectedSub != null) {
+                        session.setAttribute("subscriptionType", selectedSub);
+                    }
+                    System.out.println(selectedSub);
+                %>
+
                 <%
                     String sub = request.getParameter("sub");
                     if ("gold".equals(sub)) {
@@ -43,23 +52,23 @@
                 %>
             </div>
 
-            <form action="">
+            <form action="${pageContext.request.contextPath}/vendorSubscription" method="POST" class="subscription-form">
                 <label>Legal company name :</label>
                 <input type="text" id="companyName" name="companyName" required><br><br>
 
                 <label>Business address :</label>
-                <input type="text" id="businessAdrs" name="businessAdrs" required><br><br>
+                <input type="text" id="businessAddress" name="businessAddress" required><br><br>
 
                 <label>Business email :</label>
-                <input type="text" id="email" name="email" required><br><br>
+                <input type="text" id="businessEmail" name="businessEmail" required><br><br>
 
                 <label>Business Contact No. :</label>
-                <input type="tel" id="contactNo" name="contactNo" required><br><br>
+                <input type="tel" id="businessContactNo" name="businessContactNo" required><br><br>
 
                 <label>Business Registration No. :</label>
-                <input type="text" id="regNo" name="regNo" required><br><br>
+                <input type="text" id="businessRegNo" name="businessRegNo" required><br><br>
 
-                <button type="submit" class="vendor-actionBtn" name="submitBtn">Submit</button>
+                <button type="submit" class="vendor-actionBtn" name="submitBtn">Proceed To Pay</button>
             </form>
 
         </div>

@@ -11,7 +11,7 @@ import java.sql.*;
 public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Get user type
-        String userType = request.getParameter("type"); // "vendor" or "customer"
+        String userType = request.getParameter("type");
 
         try (Connection conn = DBConnection.getConnection()) {
             if (conn == null) {
@@ -41,7 +41,7 @@ public class RegisterServlet extends HttpServlet {
                 System.out.println(vendorEmail);
 
                 // Example vendor insert (adjust table/columns as needed)
-                query = "INSERT INTO vendors (store_name, username, email, password, business_id) VALUES (?, ?, ?, ?, ?, ?)";
+                query = "INSERT INTO vendors (store_name, username, email, password, business_id) VALUES (?, ?, ?, ?, ?)";
                 stmt = conn.prepareStatement(query);
                 stmt.setString(1, storeName);
                 stmt.setString(2, vendorUsername);
