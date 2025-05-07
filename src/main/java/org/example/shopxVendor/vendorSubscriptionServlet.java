@@ -1,7 +1,9 @@
-package org.example.shopx;
+package org.example.shopxVendor;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
+import org.example.shopx.DBConnection;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

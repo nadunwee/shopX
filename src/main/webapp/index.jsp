@@ -13,7 +13,6 @@
     <nav class="landing-nav-links">
         <a href="homePage.jsp">Home</a>
         <a href="shop.jsp">Shop</a>
-        <a href="vendorRegister.jsp">Become a Vendor</a>
         <a href="#contact">Contact</a>
     </nav>
 </header>

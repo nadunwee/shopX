@@ -22,23 +22,23 @@
     <div class="content">
         <div class="product-add-form-card">
             <h2 style="padding: 15px; margin-bottom: 15px">Enter Item Details</h2>
-            <form action="">
+            <form action="${pageContext.request.contextPath}/vendorAddProducts" method="post" enctype="multipart/form-data">
                 <label>Product Name :</label>
                 <input type="text" id="productName" name="productName" required><br><br>
 
                 <label>Category :</label>
                 <select name="category" id="category" required>
-                    <option value="Select">Select</option>
-                    <option value="Food">Food</option>
-                    <option value="Clothes">Clothes</option>
-                    <option value="Perfumes">Perfumes</option>
-                    <option value="Flowers">Flowers</option>
+                    <option name="none" value="none">None</option>
+                    <option name="food" value="food">Food</option>
+                    <option name="clothes" value="clothes">Clothes</option>
+                    <option name="perfumes" value="perfumes">Perfumes</option>
+                    <option name="flowers" value="flowers">Flowers</option>
                 </select><br><br>
 
                 <label>Description :</label><br>
                 <textarea name="description" id="description" cols="45" rows="5" required></textarea><br><br>
 
-                <label>Upload Product Images (JPG/PNG, Max 2MB):</label>
+                <label>Upload Product Image :(JPG/PNG, Max 2MB):</label>
                 <input type="file" name="productImage" accept=".jpg,.jpeg,.png" required><br><br>
 
                 <label>Price :</label>

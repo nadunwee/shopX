@@ -24,7 +24,7 @@
 
     <servlet>
         <servlet-name>vendorProfileUpdateServlet</servlet-name>
-        <servlet-class>org.example.shopx.vendorProfileUpdateServlet</servlet-class>
+        <servlet-class>org.example.shopxVendor.vendorProfileUpdateServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>vendorProfileUpdateServlet</servlet-name>
@@ -33,7 +33,7 @@
 
     <servlet>
         <servlet-name>vendorProfileDeleteServlet</servlet-name>
-        <servlet-class>org.example.shopx.vendorProfileDeleteServlet</servlet-class>
+        <servlet-class>org.example.shopxVendor.vendorProfileDeleteServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>vendorProfileDeleteServlet</servlet-name>
@@ -42,7 +42,7 @@
 
     <servlet>
         <servlet-name>vendorSubscriptionServlet</servlet-name>
-        <servlet-class>org.example.shopx.vendorSubscriptionServlet</servlet-class>
+        <servlet-class>org.example.shopxVendor.vendorSubscriptionServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>vendorSubscriptionServlet</servlet-name>
@@ -51,11 +51,35 @@
 
     <servlet>
         <servlet-name>vendorPaymentDetailsServlet</servlet-name>
-        <servlet-class>org.example.shopx.vendorPaymentDetailsServlet</servlet-class>
+        <servlet-class>org.example.shopxVendor.vendorPaymentDetailsServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>vendorPaymentDetailsServlet</servlet-name>
         <url-pattern>/vendorPaymentDetails</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>vendorAddProductsServlet</servlet-name>
+        <servlet-class>org.example.shopxVendor.vendorAddProductsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>vendorAddProductsServlet</servlet-name>
+        <url-pattern>/vendorAddProducts</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>vendorProductUpdateServlet</servlet-name>
+        <servlet-class>org.example.shopxVendor.vendorProductUpdateServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>vendorProductUpdateServlet</servlet-name>
+        <url-pattern>/vendorProductUpdate</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>vendorProductDeleteServlet</servlet-name>
+        <servlet-class>org.example.shopxVendor.vendorProductDeleteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>vendorProductDeleteServlet</servlet-name>
+        <url-pattern>/vendorProductDelete</url-pattern>
     </servlet-mapping>
 
 </web-app>

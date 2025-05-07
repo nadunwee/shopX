@@ -13,12 +13,13 @@ body {
 
 .register-container {
     display: flex;
-    width: 900px;
-    height: 700px;
+    width: 600px;
+    height: 800px;
     background-color: white;
     border-radius: 12px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+    border: 1px solid #bf4fec;
 }
 
 /* Left side */

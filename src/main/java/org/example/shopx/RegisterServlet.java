@@ -29,8 +29,9 @@ public class RegisterServlet extends HttpServlet {
                 // Vendor specific fields
                 String vendorEmail = request.getParameter("vendorEmail");
                 String vendorUsername = request.getParameter("vendorUsername");
+                String vendorDOB = request.getParameter("vendorDOB");
                 String storeName = request.getParameter("storeName");
-                String businessId = request.getParameter("businessId");
+                String vendorAddress = request.getParameter("vendorAddress");
                 String vendorPassword = request.getParameter("vendorPassword");
 
                 //uploading a photo and displaying in a page//////////////////////////////////////////////
@@ -50,23 +51,21 @@ public class RegisterServlet extends HttpServlet {
                     e.printStackTrace();
                 }
                 ////////////////////////////////////////////////////////////////////////////////////////////
-                if (businessId == null || businessId.trim().isEmpty()) {
-                    businessId = null;
-                }
 
                 System.out.println(storeName);
-                System.out.println(businessId);
+                System.out.println(vendorAddress);
                 System.out.println(vendorUsername);
                 System.out.println(vendorEmail);
 
-                query = "INSERT INTO vendors (store_name, username, email, password, business_id, imageFileName) VALUES (?, ?, ?, ?, ?, ?)";
+                query = "INSERT INTO vendors (store_name, username, vendorDOB, email, password, vendorAddress, imageFileName) VALUES (?, ?, ?, ?, ?, ?, ?)";
                 stmt = conn.prepareStatement(query);
                 stmt.setString(1, storeName);
                 stmt.setString(2, vendorUsername);
-                stmt.setString(3, vendorEmail);
-                stmt.setString(4, vendorPassword);
-                stmt.setString(5, businessId);
-                stmt.setString(6, imageFileName);
+                stmt.setString(3, vendorDOB);
+                stmt.setString(4, vendorEmail);
+                stmt.setString(5, vendorPassword);
+                stmt.setString(6, vendorAddress);
+                stmt.setString(7, imageFileName);
             } else {
                 String username = request.getParameter("username");
                 String email = request.getParameter("email");

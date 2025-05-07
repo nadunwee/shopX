@@ -33,12 +33,12 @@
         <a href="product.jsp?id=<%= productId %>" class="product-card-link">
             <div class="product-card">
                 <div class="product-image">
-                    <img src="<%= rs.getString("image") %>" alt="<%= rs.getString("name") %>">
+                    <img src="<%= request.getContextPath() + "/photos/" + rs.getString("productImageFileName") %>" alt="<%= rs.getString("name") %>">
                     <span class="badge">Top Sellers</span>
                 </div>
                 <div class="product-info">
                     <p class="title"><%= rs.getString("name") %></p>
-                    <p class="price">Rs. <%= rs.getBigDecimal("price") %></p>
+                    <p class="price">Rs. <%= rs.getFloat("price") %></p>
                 </div>
             </div>
         </a>

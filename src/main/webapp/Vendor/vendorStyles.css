@@ -69,7 +69,7 @@ footer.landing-footer {
     font-size: 0.9rem;
     color: #777;
 }
-/*footer*/
+
 .landing-footer-content {
     max-width: 1000px;
     text-align: center;
@@ -139,10 +139,10 @@ form{
 .product-block{
     background-color: white;
     width: 300px;
+    height: 450px;
     padding: 30px;
     border: 2px solid #ccc;
     text-align: center;
-    box-sizing: border-box;
     border-radius: 20px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
@@ -154,6 +154,7 @@ form{
     font-size: 28px;
     color: #4b1e83;
     margin-top: 20px;
+    margin-bottom: 10px;
 }
 .product-grid {
     display: flex;
@@ -173,6 +174,7 @@ form{
     width: 100%;
     height: 100%;
     object-fit: cover;
+    overflow: hidden;
 }
 .product-info {
     padding: 12px;
@@ -215,16 +217,16 @@ form{
 
 /********************************************/
 .vendor-profile-block{
-    background-color: white;
+    background-color: #f2def6;
     width: 800px;
-    height: 500px;
+    height: 680px;
     padding: 30px;
-    border: 2px solid #ccc;
+    border: 2px solid #a508e3;
     text-align: center;
     margin-left: 150px;
     box-sizing: border-box;
     border-radius: 70px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 .vendor-profile-info {
     font-family: "Segoe UI Black", serif;
@@ -254,6 +256,7 @@ input {
     border-radius: 6px;
     font-size: 16px;
     background-color: #f0f0ff;
+
 }
 select {
     padding: 12px;
@@ -269,16 +272,34 @@ span{
     font-size: 20px;
     padding: 10px;
     margin-top: 20px;
+    text-align: left;
 }
 .vendorProfileStoreName span{
     font-family: "Calibri", serif;
-    font-weight: normal;
+    font-weight: bold;
     font-size: 30px;
     margin-bottom: 50px;
+    margin-left: 75px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
 }
 .vendor-actionBtn:hover{
     background-color: #9026dc;
 }
+
+.vendorLOGO{
+    border: 1px solid #db0baf;
+    border-radius: 80px;
+    width: 130px;
+    height: 130px;
+    margin-left: 145px;
+    object-fit: cover;
+    overflow: hidden;
+}
+
 .modal {
     display: none;
     position: fixed;
@@ -321,11 +342,6 @@ span{
     cursor: pointer;
 }
 
-.vendorLOGO{
-    border: 1px solid #ccc;
-    width: 80px;
-    height: 80px;
-    margin-left: 150px;
-}
+
 
 

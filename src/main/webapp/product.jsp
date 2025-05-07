@@ -25,7 +25,7 @@
 
 <div class="product-full-width">
     <div class="product-image-section">
-        <img src="<%= rs.getString("image") %>" alt="<%= rs.getString("name") %>" class="main-product-image">
+        <img src="<%= request.getContextPath() + "/photos/" + rs.getString("productImageFileName") %>" alt="<%= rs.getString("name") %>" class="main-product-image">
     </div>
 
     <div class="product-details-section">

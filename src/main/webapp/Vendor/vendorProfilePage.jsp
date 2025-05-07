@@ -66,6 +66,7 @@
                 modal.style.display = "none";
             }
         }
+
     });
     //delete modal
     document.addEventListener("DOMContentLoaded", function () {
@@ -110,16 +111,18 @@
         <div class="vendor-profile-section">
             <div class="vendor-profile-block">
                 <div class="vendor-profile-info">
-                    <img src="../photos/<%= rs.getString("imageFileName") %>" class="vendorLOGO" alt="">
-                    <p class="vendorProfileStoreName" style="margin-bottom: 30px; margin-left: 109px"><span class="vendorProfileStoreName"><%= rs.getString("store_name") %></span></p>
+<%--                    reading data from the up, go to the top--%>
+                    <img src="../photos/<%= rs.getString("imageFileName") %>" class="vendorLOGO" alt="logo">
+                    <p class="vendorProfileStoreName" style="margin-bottom: 30px;  "><span class="vendorProfileStoreName"><%= rs.getString("store_name") %></span></p>
                     <p class="vendorProfileUserName">User Name : <span class="vendorProfileUserName"><%= rs.getString("username") %></span></p>
-                    <p class="vendorProfileBusinessID">Business ID : <span class="vendorProfileBusinessID"><%= rs.getString("business_id") %></span></p>
+                    <p class="vendorProfileDOB">Date Of Birth : <span class="vendorProfileDOB"><%= rs.getString("vendorDOB") %></span></p>
+                    <p class="vendorProfileAddress">Address : <span class="vendorProfileAddress"><%= rs.getString("vendorAddress") %></span></p>
                     <p class="vendorProfileEmail">Email : <span class="vendorProfileEmail"><%= rs.getString("email") %></span></p>
                     <p class="vendorProfileDate">Joined at : <span class="vendorProfileCreatedDate"><%= rs.getString("created_at").split(" ")[0] %></span></p>
                 </div>
                 <div class="vendor-profileActionBtns">
-                    <button id="editBtn" class="vendor-actionBtn" value="edit" name="edit" style="margin-right: 150px">Edit Details</button>
-                    <button id="vendor-deleteBtn" class="vendor-deleteBtn" value="delete" name="delete" >Delete Account</button>
+                    <button  class="vendor-actionBtn" value="edit" name="edit" style="margin-right: 150px">Edit Details</button>
+                    <button  class="vendor-deleteBtn" value="delete" name="delete" >Delete Account</button>
                 </div>
 
                 <div id="editModal" class="modal">
@@ -130,6 +133,14 @@
                             <div class="input-group">
                                 <label>Store Name:</label>
                                 <input type="text" name="store_name" value="<%= rs.getString("store_name") %>"><br>
+                            </div>
+                            <div class="input-group">
+                                <label>Date Of Birth:</label>
+                                <input type="text" name="vendorDOB" value="<%= rs.getString("vendorDOB") %>"><br>
+                            </div>
+                            <div class="input-group">
+                                <label>Address:</label>
+                                <input type="text" name="vendorAddress" value="<%= rs.getString("vendorAddress") %>"><br>
                             </div>
                             <div class="input-group">
                                 <label>Email:</label>
@@ -151,12 +162,12 @@
                                 <input type="text" name="store_name" value="<%= rs.getString("store_name") %>" readonly><br>
                             </div>
                             <div class="input-group">
-                                <label>User Name:</label>
-                                <input type="text" name="username" value="<%= rs.getString("username") %>" readonly><br>
+                                <label>Date Of Birth:</label>
+                                <input type="text" name="username" value="<%= rs.getString("vendorDOB") %>" readonly><br>
                             </div>
                             <div class="input-group">
                                 <label>Business ID:</label>
-                                <input type="text" name="business_id" value="<%= rs.getString("business_id") %>" readonly><br>
+                                <input type="text" name="vendorAddress" value="<%= rs.getString("vendorAddress") %>" readonly><br>
                             </div>
                             <div class="input-group">
                                 <label>Email:</label>
@@ -189,10 +200,6 @@
         }
     } catch (SQLException e) {
         e.printStackTrace();
-    } finally {
-        try { if (rs != null) rs.close(); } catch (Exception e) { e.printStackTrace(); }
-        try { if (stmt != null) stmt.close(); } catch (Exception e) { e.printStackTrace(); }
-        try { if (conn != null) conn.close(); } catch (Exception e) { e.printStackTrace(); }
     }
 %>
 

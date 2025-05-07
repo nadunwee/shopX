@@ -27,6 +27,11 @@
             </div>
 
             <div class="input-group">
+                <label for="vendorDOB">Date Of Birth</label>
+                <input type="date" id="vendorDOB" name="vendorDOB" required>
+            </div>
+
+            <div class="input-group">
                 <label for="vendorEmail">Email</label>
                 <input type="email" id="vendorEmail" name="vendorEmail" required>
             </div>
@@ -42,13 +47,13 @@
             </div>
 
             <div class="input-group">
-                <label for="businessId">Business ID (Optional)</label>
-                <input type="text" id="businessId" name="businessId">
+                <label for="vendorAddress">Address</label>
+                <input type="text" id="vendorAddress" name="vendorAddress" required>
             </div>
 
             <div class="input-group">
-                <label for="businessId">Upload Logo</label>
-                <input type="file" id="vendorLogo" name="vendorLogo">
+                <label for="vendorLogo">Upload Logo</label>
+                <input type="file" id="vendorLogo" name="vendorLogo" required>
             </div>
 
             <div class="register-actions">
