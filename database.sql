@@ -6,20 +6,20 @@ CREATE TABLE users (
        email VARCHAR(100) NOT NULL,
        password VARCHAR(255) NOT NULL
 );
-
-CREATE TABLE products (
-          product_id INT AUTO_INCREMENT PRIMARY KEY,
-          name VARCHAR(255) NOT NULL,
-          price DECIMAL(10, 2) NOT NULL,
-          image VARCHAR(512),
-          stock INT DEFAULT 0,
-          additional_details TEXT,
-          category VARCHAR(100),
-          rating DECIMAL(2,1) DEFAULT 0.0,
-          vendor VARCHAR(255),
-          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-          updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
+# changed some columns by Aroshana
+CREATE TABLE `products` (
+            `product_id` int(11) NOT NULL,
+            `name` varchar(255) NOT NULL,
+            `vendorID` int(11) NOT NULL,
+            `price` float(10,2) NOT NULL,
+            `productImageFileName` varchar(512) DEFAULT NULL,
+            `stock` int(11) DEFAULT 0,
+            `additional_details` text DEFAULT NULL,
+            `category` varchar(100) DEFAULT NULL,
+            `rating` float(2,1) DEFAULT 0.0,
+            `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+            `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE cart (
           id INT AUTO_INCREMENT PRIMARY KEY,
@@ -36,15 +36,17 @@ CREATE TABLE cart (
 
 # vendor's tables
 
-CREATE TABLE vendors (
-         id INT AUTO_INCREMENT PRIMARY KEY,
-         store_name VARCHAR(100) NOT NULL,
-         username VARCHAR(50) NOT NULL UNIQUE,
-         email VARCHAR(100) NOT NULL UNIQUE,
-         password VARCHAR(255) NOT NULL,
-         business_id VARCHAR(50),
-         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+CREATE TABLE `vendors` (
+       `id` int(11) NOT NULL,
+       `store_name` varchar(100) NOT NULL,
+       `username` varchar(50) NOT NULL,
+       `vendorDOB` date DEFAULT NULL,
+       `email` varchar(100) NOT NULL,
+       `password` varchar(255) NOT NULL,
+       `vendorAddress` varchar(50) DEFAULT NULL,
+       `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+       `imageFileName` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE vendorpendingverifications (
         verificationID int(11) NOT NULL,
