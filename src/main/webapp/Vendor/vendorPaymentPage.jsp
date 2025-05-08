@@ -49,22 +49,36 @@
             </div>
 
             <form action="${pageContext.request.contextPath}/vendorPaymentDetails" method="POST" class="subPayment-form">
-                <label>Card Type :</label>
-                <select id="cardType" name="cardType" style="padding: 5px; background-color: #f0f0ff; border-radius: 5px; border: 1px solid #ccc;" required><br><br>
-                  <option name="cardType" value="visa">VISA</option>
-                  <option name="cardType" value="master">MASTER CARD</option>
-                </select><br><br>
-                <label>Card No :</label>
-                <input type="text" id="cardNo" name="cardNo" required><br><br>
 
-                <label>Expiry Date :</label>
-                <input type="date" id="cardEXP" name="cardEXP" required><br><br>
+                <div class="form-row">
+                    <label for="cardType">Card Type :</label>
+                    <select id="cardType" name="cardType" required>
+                        <option value="visa">VISA</option>
+                        <option value="master">MASTER CARD</option>
+                    </select>
+                </div>
 
-                <label>CVN :</label>
-                <input type="text" id="cardCVN" name="cardCVN" required><br><br>
+                <div class="form-row">
+                    <label for="cardNo">Card No :</label>
+                    <input type="text" id="cardNo" name="cardNo" required>
+                </div>
 
-                <button type="submit" class="vendor-actionBtn" name="submitBtn">Submit Your Request</button>
+                <div class="form-row">
+                    <label for="cardEXP">Expiry Date :</label>
+                    <input type="date" id="cardEXP" name="cardEXP" required>
+                </div>
+
+                <div class="form-row">
+                    <label for="cardCVN">CVN :</label>
+                    <input type="text" id="cardCVN" name="cardCVN" required>
+                </div>
+
+                <div class="form-row" style="justify-content: flex-end;">
+                    <button type="submit" class="vendor-actionBtn" name="submitBtn" style="width: 200px;">Submit Your Request</button>
+                </div>
+
             </form>
+
 
         </div>
 

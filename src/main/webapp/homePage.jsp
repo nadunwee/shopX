@@ -30,7 +30,7 @@
             while (rs.next()) {
                 int productId = rs.getInt("product_id");
         %>
-        <a href="product.jsp?id=<%= productId %>" class="product-card-link">
+        <a href="product.jsp?product_id=<%= rs.getInt("product_id") %>" class="product-card-link">
             <div class="product-card">
                 <div class="product-image">
                     <img src="<%= request.getContextPath() + "/photos/" + rs.getString("productImageFileName") %>" alt="<%= rs.getString("name") %>">

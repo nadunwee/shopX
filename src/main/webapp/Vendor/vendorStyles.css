@@ -5,20 +5,17 @@
     font-family: 'Segoe UI', sans-serif;
 }
 body{
-    margin-top: 0;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-    box-sizing: border-box;
     background-color: #f9f9f9;
 }
-
 /*body and footer at this section*/
 .content {
     background-color: #f0f0f0;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     flex-direction: column;
 }
 /*****************************************************/
@@ -32,6 +29,7 @@ body{
     max-width: 500px;
     width: 100%;
     margin-top: 50px;
+    margin-bottom: 30px;
 }
 #vendorHomeIMG {
     width: 200px;
@@ -60,7 +58,7 @@ h4{
 }
 /********************************************************/
 footer.landing-footer {
-    margin-top: 90px;
+    margin-top: auto;
     background-color: #fafafa;
     width: 100vw;
     padding: 40px 20px;
@@ -125,43 +123,88 @@ form{
     border: none;
     padding: 10px 20px;
     border-radius: 6px;
-    font-size: 16px;
+    font-size: 14px;
     cursor: pointer;
+    font-family: "Segoe UI Black", serif;
+    width: 150px;
+    height: 40px;
+}
+.vendor-actionBtn:hover{
+    background-color: #9026dc;
+}
+
+.vendor-LogoutBtn {
+    background-color: #5c2cb1;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: "Segoe UI Black", serif;
+    width: 150px;
+    height: 40px;
 }
 .vendor-actionBtn:hover{
     background-color: #9026dc;
 }
 /********************************************************/
-.product-section {
-    display: flex;
+/*.product-section {*/
+/*    display: flex;*/
+/*}*/
 
+.product-table {
+    border-collapse: collapse;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #3a1468;
+    margin-left: 100px;
+    padding: 80px;
+    width: 1000px;
+    margin-top: 50px;
+    background-color: #eae0ec;
 }
+.product-table th, .product-table td {
+    border-style: solid;
+    border-width: 2px;
+    border-color: #3a1468;
+    padding: 10px;
+}
+
+.product-table th {
+    background-color: #f4f4f4;
+}
+/*for the sub selection comps*/
 .product-block{
     background-color: white;
     width: 300px;
-    height: 450px;
+    height: 600px;
     padding: 30px;
     border: 2px solid #ccc;
     text-align: center;
     border-radius: 20px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
 }
 .product-block:hover{
     transform: scale(1.05, 1.05);
     transition: transform 1s ease-out;
 }
+.product-grid {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    margin-top: 50px;
+    margin-left: 100px;
+    justify-content: flex-start;
+}
+
+
 .mainTopic{
     font-size: 28px;
     color: #4b1e83;
     margin-top: 20px;
     margin-bottom: 10px;
-}
-.product-grid {
-    display: flex;
-    gap: 30px;
-    flex-wrap: wrap;
-    margin-top: 50px;
-    margin-left: 100px;
 }
 
 .product-image {
@@ -206,10 +249,13 @@ form{
     color: white;
     border: none;
     padding: 10px 20px;
-    font-weight: bold;
+    font-size: 14px;
     cursor: pointer;
     border-radius: 5px;
     margin-top: 20px;
+    font-family: "Segoe UI Black", serif;
+    width: 150px;
+    height: 40px;
 }
 .vendor-deleteBtn:hover{
     background-color: #a70606;
@@ -219,36 +265,58 @@ form{
 .vendor-profile-block{
     background-color: #f2def6;
     width: 800px;
-    height: 680px;
+    height: 700px;
     padding: 30px;
+    margin-bottom: 30px;
     border: 2px solid #a508e3;
     text-align: center;
     margin-left: 150px;
     box-sizing: border-box;
     border-radius: 70px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+
 }
 .vendor-profile-info {
     font-family: "Segoe UI Black", serif;
     font-weight: bold;
     padding: 12px;
-    margin-left: 150px;
+    margin-left: 40px;
     text-align: left;
-}
-.vendor-profile-info p{
-    padding: 12px;
-    font-size: 18px;
-    margin-left: 90px;
 }
 .vendor-profile-section {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
 }
-.vendor-profileActionBtns{
-    margin-top: 70px;
-
+.form-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0;
+    gap: 20px;
+    padding-bottom: 10px;
 }
+
+.form-row label {
+    flex: 1;
+    font-weight: normal;
+    text-align: left;
+    font-family: "Segoe UI", serif;
+}
+
+.form-row input,
+.form-row select,
+.form-row textarea {
+    flex: 2;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+textarea {
+    resize: vertical;
+}
+
 
 input {
     padding: 12px;
@@ -256,7 +324,6 @@ input {
     border-radius: 6px;
     font-size: 16px;
     background-color: #f0f0ff;
-
 }
 select {
     padding: 12px;
@@ -279,12 +346,35 @@ span{
     font-weight: bold;
     font-size: 30px;
     margin-bottom: 50px;
+    margin-top: 50px;
     margin-left: 75px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
+}
+.vendorProfileRow {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 10px;
+    margin: 10px 0;
+    font-family: Arial, sans-serif;
+    border-bottom: 1px solid #3a1468;
+}
+
+.vendorProfileLabel {
+    flex: 1;
+    font-weight: bold;
+    color: #333;
+    text-align: left;
+    margin-top: 20px;
+}
+
+.vendorProfileValue {
+    flex: 1;
+    text-align: right;
+    color: #555;
 }
 .vendor-actionBtn:hover{
     background-color: #9026dc;
@@ -295,7 +385,7 @@ span{
     border-radius: 80px;
     width: 130px;
     height: 130px;
-    margin-left: 145px;
+    margin-left: 5px;
     object-fit: cover;
     overflow: hidden;
 }
@@ -303,36 +393,56 @@ span{
 .modal {
     display: none;
     position: fixed;
-    z-index: 999;
-    padding-top: 50px;
+    padding-top: 10px;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0,0,0,0.4);
+    margin-bottom: 30px;
+    font-family: 'Segoe UI', sans-serif;
 }
-
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 .modal-content {
     background-color: white;
     margin: auto;
     padding: 30px;
     border: 1px solid #888;
-    width: 40%;
+    width: 80%;
+    max-width: 600px;
     border-radius: 10px;
 }
-.modal-content h2{
-    padding: 20px;
-}
-.modal-content .input-group{
+.modal-content .input-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
     padding: 10px;
 }
-.modal-content button{
-    margin-left: 160px;
-    margin-top: 40px;
+
+.modal-content .input-group label {
+    flex: 1;
+    text-align: left;
+    font-weight: bold;
+    font-size: 14px;
 }
-.modal-content input{
-    margin-left: 30px;
+
+.modal-content .input-group input,
+.modal-content .input-group textarea,
+.modal-content .input-group select {
+    flex: 2;
+    margin-left: 20px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    background-color: #f0f0ff;
 }
+
 
 .close {
     color: red;
@@ -341,6 +451,7 @@ span{
     font-weight: bold;
     cursor: pointer;
 }
+
 
 
 

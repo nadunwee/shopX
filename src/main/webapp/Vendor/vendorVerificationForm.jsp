@@ -53,23 +53,36 @@
             </div>
 
             <form action="${pageContext.request.contextPath}/vendorSubscription" method="POST" class="subscription-form">
-                <label>Legal company name :</label>
-                <input type="text" id="companyName" name="companyName" required><br><br>
+                <div class="form-row">
+                    <label for="companyName">Legal company name :</label>
+                    <input type="text" id="companyName" name="companyName" required>
+                </div>
 
-                <label>Business address :</label>
-                <input type="text" id="businessAddress" name="businessAddress" required><br><br>
+                <div class="form-row">
+                    <label for="businessAddress">Business address :</label>
+                    <input type="text" id="businessAddress" name="businessAddress" required>
+                </div>
 
-                <label>Business email :</label>
-                <input type="text" id="businessEmail" name="businessEmail" required><br><br>
+                <div class="form-row">
+                    <label for="businessEmail">Business email :</label>
+                    <input type="email" id="businessEmail" name="businessEmail" required>
+                </div>
 
-                <label>Business Contact No. :</label>
-                <input type="tel" id="businessContactNo" name="businessContactNo" required><br><br>
+                <div class="form-row">
+                    <label for="businessContactNo">Business Contact No. :</label>
+                    <input type="tel" id="businessContactNo" name="businessContactNo" required>
+                </div>
 
-                <label>Business Registration No. :</label>
-                <input type="text" id="businessRegNo" name="businessRegNo" required><br><br>
+                <div class="form-row">
+                    <label for="businessRegNo">Business Registration No. :</label>
+                    <input type="text" id="businessRegNo" name="businessRegNo" required>
+                </div>
 
-                <button type="submit" class="vendor-actionBtn" name="submitBtn">Proceed To Pay</button>
+                <div class="form-row" style="justify-content: flex-end;">
+                    <button type="submit" class="vendor-actionBtn" name="submitBtn">Proceed To Pay</button>
+                </div>
             </form>
+
 
         </div>
 

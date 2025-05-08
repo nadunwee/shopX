@@ -10,17 +10,23 @@ import java.sql.*;
 public class vendorProductDeleteServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        int vendorID;
         HttpSession session = request.getSession(false);
-        int vendorID = (session != null) ? (int) session.getAttribute("vendorID") : null;
+        if (session != null) {
+            vendorID = (Integer) session.getAttribute("vendorID");
+        }else{
+                System.out.println("<h2>Error: You are not logged in as a vendor.</h2>");
+                return;
+        }
+
         String name = request.getParameter("name");
-//        int product_id = Integer.parseInt(request.getParameter("product_id"));
+        int product_id = Integer.parseInt(request.getParameter("product_id"));
 
         try (Connection conn = DBConnection.getConnection()) {
-            //Get the image filename for the vendor
             String productImageFileName = null;
-            String getImageQuery = "SELECT productImageFileName FROM products WHERE name = ?";
+            String getImageQuery = "SELECT productImageFileName FROM products WHERE product_id = ?";
             try (PreparedStatement stmt = conn.prepareStatement(getImageQuery)) {
-                stmt.setString(1, name);
+                stmt.setInt(1, product_id);
                 ResultSet rs = stmt.executeQuery();
                 if (rs.next()) {
                     productImageFileName = rs.getString("productImageFileName");
@@ -28,10 +34,10 @@ public class vendorProductDeleteServlet extends HttpServlet {
             }
 
             // Delete from products table
-            String deleteVendorQuery = "DELETE FROM products WHERE name = ? AND vendorID = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(deleteVendorQuery)) {
-                stmt.setString(1, name);
-                stmt.setInt(1, vendorID);
+            String deleteProductsQuery = "DELETE FROM products WHERE product_id = ? AND vendorID = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(deleteProductsQuery)) {
+                stmt.setInt(1, product_id);
+                stmt.setInt(2, vendorID);
                 stmt.executeUpdate();
             }
 
@@ -49,8 +55,7 @@ public class vendorProductDeleteServlet extends HttpServlet {
         }
 
         request.getSession().setAttribute("deleteSuccess", "You have successfully deleted the product.");
-        response.sendRedirect("index.jsp");
-        request.getSession().invalidate();
+        response.sendRedirect("Vendor/vendorViewProducts.jsp");
     }
 
 }

@@ -31,18 +31,6 @@
     <title>Vendor View Products</title>
 </head>
 
-<script>
-    //edit modal
-    function openModal(id) {
-        document.getElementById(id).style.display = "block";
-    }
-
-    function closeModal(id) {
-        document.getElementById(id).style.display = "none";
-    }
-
-</script>
-
 <body>
 
 <div class="main-layout">
@@ -52,101 +40,154 @@
 
     <div class="content">
         <h2 class="mainTopic" style=".mainTopic; margin-left: 20px; padding: 10px">Published Products</h2>
-        <div class="product-grid">
+
+        <table class="product-table" >
+            <thead>
+            <tr>
+                <th>Image</th>
+                <th>Product ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Price (Rs)</th>
+                <th>Stock</th>
+                <th>Rating</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
             <%
                 while (rs.next()) {
-                    session.setAttribute("vendorID", rs.getInt("vendorID"));
-                    int productId = rs.getInt("product_id");
             %>
-            <div class="product-block">
-                <div class="product-image">
+            <tr style="text-align: center;">
+                <td>
                     <img src="<%= request.getContextPath() + "/photos/" + rs.getString("productImageFileName") %>"
-                         alt="<%= rs.getString("name") %>">
-                </div>
-                <div class="product-info">
-                    <p class="title"><%= rs.getString("name") %>
-                    </p>
-                    <p class="price">Rs. <%= rs.getFloat("price") %>
-                    </p>
-                    <p class="rating">Overall rating: <%= rs.getFloat("rating") %>
-                    </p>
-                    <div class="action-buttons">
-                        <button class="vendor-actionBtn" id="editModal-<%= rs.getInt("product_id") %>"
-                                onclick="openModal('editModal-<%= rs.getInt("product_id") %>')">Edit Details
-                        </button>
-                        <button class="vendor-deleteBtn" id="deleteModal-<%= rs.getString("name") %>"
-                                onclick="openModal('deleteModal-<%= rs.getString("name") %>')">Delete Item
-                        </button>
-                    </div>
-                </div>
-            </div>
+                         alt="<%= rs.getString("name") %>" width="100">
+                </td>
+                <td><%= rs.getString("product_id") %>
+                </td>
+                <td><%= rs.getString("name") %>
+                </td>
+                <td><%= rs.getString("additional_details") %>
+                </td>
+                <td><%= rs.getString("category") %>
+                </td>
+                <td><%= rs.getFloat("price") %>
+                </td>
+                <td><%= rs.getInt("stock") %>
+                </td>
+                <td><%= rs.getFloat("rating") %>
+                </td>
+                <td>
+                    <button class="vendor-actionBtn" id="editBtn-<%= rs.getString("product_id") %>" >Edit</button>
+                    <button class="vendor-deleteBtn" id="vendor-deleteBtn-<%= rs.getString("product_id") %>">Delete
+                    </button>
+                </td>
+            </tr>
 
-
-            <div id="editModal-<%= rs.getString("name") %>" class="modal">
+            <!-- Edit Modal -->
+            <div id="editModal-<%= rs.getInt("product_id") %>" class="modal">
                 <div class="modal-content">
-                    <span class="close" onclick="closeModal('editModal-<%= rs.getString("name") %>')">&times;</span>
+                    <span class="close">&times;</span><br>
                     <h2>Edit Your Details</h2>
-                    <form action="${pageContext.request.contextPath}/vendorProductUpdate" method="post"
-                          enctype="multipart/form-data">
-                        <input type="hidden" name="name" value="<%= rs.getInt("product_id") %>">
+                    <form action="${pageContext.request.contextPath}/vendorProductUpdate?product_id=<%= rs.getInt("product_id") %>" method="post" enctype="multipart/form-data">
+                        <div class="input-group">
+                            <label>Product ID:</label>
+                            <input class="editInput" type="text" name="product_id" value="<%= rs.getInt("product_id") %>" readonly><br>
+                        </div>
                         <div class="input-group">
                             <label>Product Name:</label>
-                            <input type="text" name="name" value="<%= rs.getString("name") %>"><br>
+                            <input class="editInput" type="text" name="name" value="<%= rs.getString("name") %>"><br>
                         </div>
                         <div class="input-group">
                             <label>Price:</label>
-                            <input type="text" name="price" value="<%= rs.getFloat("price") %>"><br>
+                            <input class="editInput" type="text" name="price" value="<%= rs.getFloat("price") %>"><br>
                         </div>
                         <div class="input-group">
                             <label>Stock:</label>
-                            <input type="text" name="stock" value="<%= rs.getInt("stock") %>"><br>
+                            <input class="editInput" type="text" name="stock" value="<%= rs.getInt("stock") %>"><br>
                         </div>
                         <div class="input-group">
                             <label>Description:</label>
-                            <textarea name="additionalDetails"><%= rs.getString("additionalDetails") %></textarea><br>
+                            <textarea name="additionalDetails"><%= rs.getString("additional_details") %></textarea><br>
                         </div>
                         <div class="input-group">
                             <label>Update Product Image:</label>
-                            <input type="file" name="productImage" accept=".jpg,.jpeg,.png" required><br><br>
+                            <input class="editInput" type="file" name="productImage" accept=".jpg,.jpeg,.png"><br><br>
                         </div>
                         <button type="submit" class="vendor-actionBtn">Save Changes</button>
                     </form>
                 </div>
             </div>
 
-        </div>
-        <div id="deleteModal-<%= rs.getString("name") %>" class="modal">
-            <div class="modal-content">
-                <span class="close" onclick="closeModal('deleteModal-<%= rs.getString("name") %>')">&times;</span>
-                <h2>Are You Sure?</h2>
-                <form action="${pageContext.request.contextPath}/vendorProductDelete" method="post">
-                    <input type="hidden" name="product_id" value="<%= rs.getString("name") %>">
-                    <div class="input-group">
-                        <label>Product Name:</label>
-                        <input type="text" name="name" value="<%= rs.getString("name") %>" readonly><br>
-                    </div>
-                    <button type="submit" class="vendor-deleteBtn">Delete Item</button>
-                </form>
+            <!-- Delete Modal -->
+            <div id="deleteModal-<%= rs.getInt("product_id") %>" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Are You Sure?</h2>
+                    <form action="${pageContext.request.contextPath}/vendorProductDelete?product_id=<%= rs.getInt("product_id") %>"
+                          method="post">
+                        <div class="input-group">
+                            <label>Product ID:</label>
+                            <input type="text" name="product_id" value="<%= rs.getInt("product_id") %>" readonly><br>
+                        </div>
+                        <div class="input-group">
+                            <label>Product Name:</label>
+                            <input type="text" name="name" value="<%= rs.getString("name") %>" readonly><br>
+                        </div>
+                        <button type="submit" class="vendor-deleteBtn">Delete Item</button>
+                    </form>
+                </div>
             </div>
-        </div>
-        <%
-            }
-        %>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const editBtn = document.getElementById("editBtn-<%= rs.getString("product_id") %>");
+                    const editModal = document.getElementById("editModal-<%= rs.getInt("product_id") %>");
+
+                    const deleteBtn = document.getElementById("vendor-deleteBtn-<%= rs.getString("product_id") %>");
+                    const deleteModal = document.getElementById("deleteModal-<%= rs.getInt("product_id") %>");
+
+                    const closeButtons = document.querySelectorAll(".close");
+
+                    closeButtons.forEach(function (btn) {
+                        btn.addEventListener("click", function () {
+                            btn.closest(".modal").style.display = "none";
+                        });
+                    });
+
+                    editBtn.onclick = () => editModal.style.display = "block";
+                    deleteBtn.onclick = () => deleteModal.style.display = "block";
+
+                    window.onclick = function (event) {
+                        if (event.target === editModal) editModal.style.display = "none";
+                        if (event.target === deleteModal) deleteModal.style.display = "none";
+                    };
+                });
+            </script>
+            <%
+                }
+            %>
+            </tbody>
+        </table>
+
+
+        <footer class="landing-footer">
+            <div class="landing-footer-content">
+                <div class="landing-footer-logo">ShopX</div>
+                <div class="landing-footer-links">
+                    <a href="#">About</a>
+                    <a href="#">Contact</a>
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                </div>
+                <p class="landing-footer-copy">&copy; 2025 ShopX. All rights reserved.</p>
+            </div>
+        </footer>
     </div>
-    <footer class="landing-footer">
-        <div class="landing-footer-content">
-            <div class="landing-footer-logo">ShopX</div>
-            <div class="landing-footer-links">
-                <a href="#">About</a>
-                <a href="#">Contact</a>
-                <a href="#">Privacy</a>
-                <a href="#">Terms</a>
-            </div>
-            <p class="landing-footer-copy">&copy; 2025 ShopX. All rights reserved.</p>
-        </div>
-    </footer>
 </div>
-</div>
+
+
 <%
 
     } catch (SQLException e) {

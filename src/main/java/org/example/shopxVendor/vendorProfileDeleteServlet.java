@@ -31,6 +31,13 @@ public class vendorProfileDeleteServlet extends HttpServlet {
                 stmt.executeUpdate();
             }
 
+            //Delete products table fk
+            String deleteProductsQuery = "DELETE FROM products WHERE vendorID = (SELECT id FROM vendors WHERE username = ?)";
+            try (PreparedStatement stmt = conn.prepareStatement(deleteProductsQuery)) {
+                stmt.setString(1, username);
+                stmt.executeUpdate();
+            }
+
             // Delete from vendors table
             String deleteVendorQuery = "DELETE FROM vendors WHERE username = ?";
             try (PreparedStatement stmt = conn.prepareStatement(deleteVendorQuery)) {

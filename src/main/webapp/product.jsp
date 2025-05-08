@@ -1,5 +1,8 @@
-<%@ page import="java.sql.*" %>
+<%@ page import="java.sql.Connection" %>
+<%@ page import="java.sql.PreparedStatement" %>
+<%@ page import="java.sql.ResultSet" %>
 <%@ page import="org.example.shopx.DBConnection" %>
+<%@ page import="java.sql.SQLException" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -12,15 +15,30 @@
 <%@ include file="/includes/navBar.jsp" %>
 
 <%
-    String sessionUsername = (String) session.getAttribute("username");
-    int productId = Integer.parseInt(request.getParameter("id"));
-    Connection conn = DBConnection.getConnection();
-    String sql = "SELECT * FROM products WHERE product_id = ?";
-    PreparedStatement stmt = conn.prepareStatement(sql);
-    stmt.setInt(1, productId);
-    ResultSet rs = stmt.executeQuery();
+    Connection conn = null;
+    PreparedStatement stmt = null;
+    ResultSet rs = null;
 
-    if (rs.next()) {
+    try {
+        String sessionUsername = (String) session.getAttribute("username");
+        String productIdParam = request.getParameter("product_id");
+
+        if (productIdParam == null || productIdParam.trim().isEmpty()) {
+            out.println("<h2>Invalid product link. No product ID provided. <a href='index.jsp'>Go back</a></h2>");
+            return;
+        }
+
+        int productId = Integer.parseInt(productIdParam);
+
+        conn = DBConnection.getConnection();
+
+        String sql2 = "SELECT p.*, v.store_name FROM vendors v, products p WHERE v.id = p.vendorID AND product_id = ?";
+        stmt = conn.prepareStatement(sql2);
+        stmt.setInt(1, productId);
+
+        rs = stmt.executeQuery();
+
+        if (rs.next()) {
 %>
 
 <div class="product-full-width">
@@ -29,19 +47,18 @@
     </div>
 
     <div class="product-details-section">
-        <div class="vendor-store-name">shopX partner : <%= rs.getString("vendor") %></div>
+        <div class="vendor-store-name">shopX partner : <%= rs.getString("store_name") %></div>
         <p class="product-name"><%= rs.getString("name") %></p>
-        <div class="price-tag">Rs. <%= rs.getBigDecimal("price") %></div>
-        <div class="availability"><%= rs.getString("stock") %></div>
+        <div class="price-tag">Rs. <%= rs.getFloat("price") %></div>
+        <div class="availability"><%= rs.getInt("stock") %> available</div>
 
         <div class="btn-wrapper" style="margin-top: 10px">
             <% if (sessionUsername != null) { %>
-            <a href="cart.jsp?add=<%= rs.getInt("product_id") %>" class="add-to-cart-btn">🛒 Add to Cart</a>
+            <a href="Cart/cart.jsp?add=<%= rs.getInt("product_id") %>" class="add-to-cart-btn">🛒 Add to Cart</a>
             <% } else { %>
             <a href="accessPages/login.jsp" class="add-to-cart-btn">🛒 Add to Cart</a>
             <% } %>
         </div>
-
 
         <ul class="highlights" style="margin-top: 30px">
             <%
@@ -69,10 +86,14 @@
 </div>
 
 <%
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    } finally {
+        if (rs != null) try { rs.close(); } catch (SQLException ignored) {}
+        if (stmt != null) try { stmt.close(); } catch (SQLException ignored) {}
+        if (conn != null) try { conn.close(); } catch (SQLException ignored) {}
     }
-    rs.close();
-    stmt.close();
-    conn.close();
 %>
 
 </body>
