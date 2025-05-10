@@ -17,6 +17,7 @@ conducted by the system administrators. Verified sellers are granted access to
 enhanced features such as managing their storefronts, advertising their products,
 and subscribing to special membership tiers like Gold, Silver, or Bronze, which
 offer different levels of exposure and benefits.
+
 Supporting the shopping activities is the shopping cart system, which allows
 buyers to add, view, and remove items conveniently before proceeding to
 checkout. The entire purchasing process is backed by a secure payment system
