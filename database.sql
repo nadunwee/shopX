@@ -21,7 +21,7 @@ CREATE TABLE `products` (
         `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
         `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
          PRIMARY KEY (`product_id`),
-         FOREIGN KEY (vendorID) REFERENCES vendors(vendor_id)
+         FOREIGN KEY (vendorID) REFERENCES vendors(id)
 );
 
 CREATE TABLE cart (
@@ -40,7 +40,7 @@ CREATE TABLE cart (
 -- vendors tables
 
 CREATE TABLE `vendors` (
-       `vendor_id` int(11) NOT NULL AUTO_INCREMENT,
+       `id` int(11) NOT NULL AUTO_INCREMENT,
        `store_name` varchar(100) NOT NULL,
        `username` varchar(50) NOT NULL,
        `vendorDOB` date DEFAULT NULL,
@@ -49,11 +49,11 @@ CREATE TABLE `vendors` (
        `vendorAddress` varchar(50) DEFAULT NULL,
        `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
        `imageFileName` varchar(50) DEFAULT NULL,
-       PRIMARY KEY(`vendor_id`)
+       PRIMARY KEY(`id`)
 );
 
 CREATE TABLE vendorpendingverifications (
-        verificationID int(11) NOT NULL,
+        verificationID int(11) NOT NULL AUTO_INCREMENT,
         companyName varchar(50) NOT NULL,
         businessAddress varchar(50) NOT NULL,
         businessEmail varchar(50) NOT NULL,
@@ -67,6 +67,7 @@ CREATE TABLE vendorpendingverifications (
         cardEXP date DEFAULT NULL,
         cardCVN varchar(4) DEFAULT NULL,
         verificationStatus varchar(20) DEFAULT 'none',
-        FOREIGN KEY (vendorID) REFERENCES vendors(vendor_id)
+        PRIMARY KEY(`verificationID`),
+        FOREIGN KEY (vendorID) REFERENCES vendors(id)
 );
 
