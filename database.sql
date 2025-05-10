@@ -20,7 +20,8 @@ CREATE TABLE `products` (
         `rating` float(2,1) DEFAULT 0.0,
         `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
         `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-         PRIMARY KEY (`product_id`)
+         PRIMARY KEY (`product_id`),
+         FOREIGN KEY (vendorID) REFERENCES vendors(vendor_id)
 );
 
 CREATE TABLE cart (
@@ -39,7 +40,7 @@ CREATE TABLE cart (
 -- vendors tables
 
 CREATE TABLE `vendors` (
-       `id` int(11) NOT NULL,
+       `vendor_id` int(11) NOT NULL AUTO_INCREMENT,
        `store_name` varchar(100) NOT NULL,
        `username` varchar(50) NOT NULL,
        `vendorDOB` date DEFAULT NULL,
@@ -47,8 +48,9 @@ CREATE TABLE `vendors` (
        `password` varchar(255) NOT NULL,
        `vendorAddress` varchar(50) DEFAULT NULL,
        `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-       `imageFileName` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+       `imageFileName` varchar(50) DEFAULT NULL,
+       PRIMARY KEY(`vendor_id`)
+);
 
 CREATE TABLE vendorpendingverifications (
         verificationID int(11) NOT NULL,
@@ -65,6 +67,6 @@ CREATE TABLE vendorpendingverifications (
         cardEXP date DEFAULT NULL,
         cardCVN varchar(4) DEFAULT NULL,
         verificationStatus varchar(20) DEFAULT 'none',
-        CONSTRAINT fk1 FOREIGN KEY (vendorID) REFERENCES vendors(id)
+        FOREIGN KEY (vendorID) REFERENCES vendors(vendor_id)
 );
 
