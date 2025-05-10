@@ -83,9 +83,11 @@
         <div class="vendor-profile-section">
             <div class="vendor-profile-block">
                 <img src="../photos/<%= rs.getString("imageFileName") %>" class="vendorLOGO" alt="logo">
-                <p class="vendorProfileStoreName" style="margin-bottom: 30px;  "><span
-                        class="vendorProfileStoreName"><%= rs.getString("store_name") %></span></p>
                 <div class="vendor-profile-info">
+                    <div class="vendorProfileRow">
+                        <label class="vendorProfileLabel" style="font-size: 20px"><b>Store Name:</b></label>
+                        <span class="vendorProfileValue"><b><%= rs.getString("store_name") %></b></span>
+                    </div>
                     <div class="vendorProfileRow">
                         <label class="vendorProfileLabel">User Name:</label>
                         <span class="vendorProfileValue"><%= rs.getString("username") %></span>
