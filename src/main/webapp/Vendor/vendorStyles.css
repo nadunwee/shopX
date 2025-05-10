@@ -265,7 +265,7 @@ form{
 .vendor-profile-block{
     background-color: #f2def6;
     width: 800px;
-    height: 700px;
+    height: 750px;
     padding: 30px;
     margin-bottom: 30px;
     border: 2px solid #a508e3;
@@ -345,12 +345,7 @@ span{
     font-family: "Calibri", serif;
     font-weight: bold;
     font-size: 30px;
-    margin-bottom: 50px;
     margin-top: 50px;
-    margin-left: 75px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
 }
