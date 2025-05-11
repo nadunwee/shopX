@@ -1,33 +1,35 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="org.example.shopx.DBConnection" %>
 <%@ page import="java.sql.*" %>
+<%@ page import="org.example.shopx.model.CartItem" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+
 <%
   String usernameSession = (String) session.getAttribute("username");
   if (usernameSession == null) {
-    response.sendRedirect("login.jsp");
+    response.sendRedirect(request.getContextPath() + "/login.jsp");
     return;
   }
 
-  // Sample cart items list (replace with actual DB query)
-  class CartItem {
-    String name;
-    int quantity;
-    double price;
-    CartItem(String name, int quantity, double price) {
-      this.name = name;
-      this.quantity = quantity;
-      this.price = price;
+  List<CartItem> cartItems = new ArrayList<>();
+  double total = 0.0;
+
+  try {
+    cartItems = CartItem.getCartItemsForUser(usernameSession);
+
+    for (CartItem item : cartItems) {
+      total += item.getSubtotal();
     }
-  }
 
-  java.util.List<CartItem> cartItems = new java.util.ArrayList<>();
-  cartItems.add(new CartItem("Wireless Mouse", 2, 1500.00));
-  cartItems.add(new CartItem("USB-C Charger", 1, 2200.00));
-
-  double total = 0;
-  for (CartItem item : cartItems) {
-    total += item.quantity * item.price;
+  } catch (Exception e) {
+    e.printStackTrace();
   }
+//
+//  double total = 0;
+//  for (CartItem item : cartItems) {
+//    total += item.quantity * item.price;
+//  }
 %>
 
 <!DOCTYPE html>
@@ -131,20 +133,21 @@
     <tbody>
     <% for (CartItem item : cartItems) { %>
     <tr>
-      <td><%= item.name %></td>
+      <td><%= item.getName() %></td>
       <td>
-        <form action="UpdateCartServlet" method="post" style="display:flex; align-items:center; gap:8px;">
-          <input type="hidden" name="itemName" value="<%= item.name %>">
+        <form action="<%=request.getContextPath()%>/UpdateCartServlet" method="post" style="display:flex; align-items:center; gap:8px;">
+          <input type="hidden" name="itemName" value="<%= item.getName() %>">
           <button type="submit" name="action" value="decrease" style="padding:4px 10px;">−</button>
-          <span><%= item.quantity %></span>
+          <span><%= item.getQuantity() %></span>
           <button type="submit" name="action" value="increase" style="padding:4px 10px;">+</button>
         </form>
       </td>
-      <td>Rs. <%= String.format("%.2f", item.price) %></td>
-      <td style="text-align:right;">Rs. <%= String.format("%.2f", item.quantity * item.price) %></td>
+      <td>Rs. <%= String.format("%.2f", item.getPrice()) %></td>
+      <td style="text-align:right;">Rs. <%= String.format("%.2f", item.getQuantity() * item.getPrice()) %></td>
       <td style="text-align:right;">
-        <form action="UpdateCartServlet" method="post">
-          <input type="hidden" name="itemName" value="<%= item.name %>">
+        <form action="<%=request.getContextPath()%>/UpdateCartServlet" method="post">
+
+        <input type="hidden" name="itemName" value="<%= item.getName() %>">
           <button type="submit" name="action" value="delete" style="background:transparent; border:none; cursor:pointer; color:red;">
             <i class='bx bx-trash'></i>
           </button>

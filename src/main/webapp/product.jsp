@@ -54,9 +54,13 @@
 
         <div class="btn-wrapper" style="margin-top: 10px">
             <% if (sessionUsername != null) { %>
-            <a href="Cart/cart.jsp?add=<%= rs.getInt("product_id") %>" class="add-to-cart-btn">🛒 Add to Cart</a>
+                <form action="UpdateCartServlet" method="post" style="display:inline;">
+                    <input type="hidden" name="action" value="add">
+                    <input type="hidden" name="product_id" value="<%= rs.getInt("product_id") %>">
+                    <button type="submit" class="add-to-cart-btn">🛒 Add to Cart</button>
+                </form>
             <% } else { %>
-            <a href="accessPages/login.jsp" class="add-to-cart-btn">🛒 Add to Cart</a>
+                <a href="accessPages/login.jsp" class="add-to-cart-btn">🛒 Add to Cart</a>
             <% } %>
         </div>
 
