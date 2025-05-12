@@ -1,22 +1,21 @@
-package org.example.shopxVendor;
+package org.example.shopxVendor.servlet;
 
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.*;
+import org.example.shopxVendor.controller.VendorProfileController;
 import org.example.shopx.DBConnection;
 
 import java.io.*;
 import java.sql.*;
 
 @MultipartConfig
-public class vendorProfileUpdateServlet extends HttpServlet {
+public class VendorProfileUpdateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         String storeName = request.getParameter("store_name");
         String vendorDOB = request.getParameter("vendorDOB");
         String vendorAddress = request.getParameter("vendorAddress");
         String email = request.getParameter("email");
-
         String username = (String) request.getSession().getAttribute("username");
 
         Part vendorLogo = request.getPart("vendorLogo");
@@ -27,7 +26,6 @@ public class vendorProfileUpdateServlet extends HttpServlet {
             try (Connection conn = DBConnection.getConnection()) {
                 PreparedStatement getImgStmt = conn.prepareStatement("SELECT imageFileName FROM vendors WHERE username = ?");
                 getImgStmt.setString(1, username);
-
                 ResultSet rs = getImgStmt.executeQuery();
                 if (rs.next()) {
                     imageFileName = rs.getString("imageFileName");
@@ -36,9 +34,7 @@ public class vendorProfileUpdateServlet extends HttpServlet {
                 e.printStackTrace();
             }
         } else {
-            // Save updated image
-            try (FileOutputStream fos = new FileOutputStream(uploadPath);
-                 InputStream is = vendorLogo.getInputStream()) {
+            try (FileOutputStream fos = new FileOutputStream(uploadPath); InputStream is = vendorLogo.getInputStream()) {
                 byte[] data = new byte[is.available()];
                 is.read(data);
                 fos.write(data);
@@ -47,23 +43,11 @@ public class vendorProfileUpdateServlet extends HttpServlet {
             }
         }
 
-
-        try (Connection conn = DBConnection.getConnection()) {
-            String query = "UPDATE vendors SET store_name = ?, vendorDOB = ?, vendorAddress = ?, email = ?, imageFileName = ? WHERE username = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                stmt.setString(1, storeName);
-                stmt.setString(2, vendorDOB);
-                stmt.setString(3, vendorAddress);
-                stmt.setString(4, email);
-                stmt.setString(5, imageFileName);
-                stmt.setString(6, username);
-
-                stmt.executeUpdate();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        boolean isSuccess = VendorProfileController.updateData(storeName, vendorDOB, vendorAddress, email, imageFileName, username);
+        if (isSuccess) {
+            response.getWriter().println("<script>alert('Update successful'); window.location.href='Vendor/vendorProfilePage.jsp';</script>");
+        } else {
+            response.getWriter().println("<script>alert('Update failed'); window.location.href='Vendor/vendorProfilePage.jsp';</script>");
         }
-
-        response.sendRedirect("Vendor/vendorProfilePage.jsp");
     }
 }

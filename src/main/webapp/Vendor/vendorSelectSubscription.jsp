@@ -34,7 +34,7 @@
               + Get 100% money from a sold item.
             </p>
             <p class="price">Rs.5000</p>
-            <a href="./vendorVerificationForm.jsp?sub=gold"><button class="add-btn" value="gold" name="gold">Select Gold</button></a>
+            <a href="vendorSubscriptionForm.jsp?sub=gold"><button class="add-btn" value="gold" name="gold">Select Gold</button></a>
           </div>
         </div>
 
@@ -51,7 +51,7 @@
               + Get 95% money from a sold item.
             </p>
             <p class="price">Rs.3000</p>
-            <a href="./vendorVerificationForm.jsp?sub=silver"><button class="add-btn" value="silver" name="silver" style="margin-top: 48px">Select Silver</button></a>
+            <a href="vendorSubscriptionForm.jsp?sub=silver"><button class="add-btn" value="silver" name="silver" style="margin-top: 48px">Select Silver</button></a>
           </div>
         </div>
 
@@ -67,7 +67,7 @@
               + Get 80% money from a sold item.
             </p>
             <p class="price">Rs.1000</p>
-            <a href="./vendorVerificationForm.jsp?sub=bronze"><button class="add-btn" value="bronze" name="bronze" style="margin-top: 45px">Select Bronze</button></a>
+            <a href="vendorSubscriptionForm.jsp?sub=bronze"><button class="add-btn" value="bronze" name="bronze" style="margin-top: 45px">Select Bronze</button></a>
           </div>
         </div>
       </div>

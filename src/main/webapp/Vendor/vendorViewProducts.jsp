@@ -1,21 +1,9 @@
 <%@ page import="org.example.shopx.DBConnection" %>
 
-<%@ page import="java.sql.ResultSet" %>
-<%@ page import="java.sql.Connection" %>
-<%@ page import="java.sql.PreparedStatement" %>
-<%@ page import="java.sql.SQLException" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="org.example.shopxVendor.model.VendorProductModel" %>
+<%@ page import="org.example.shopxVendor.controller.VendorProductController" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-<%
-    int vendorID = (session != null) ? (int) session.getAttribute("vendorID") : null;
-
-    try {
-        Connection conn = DBConnection.getConnection();
-        String sql = "SELECT * FROM products WHERE vendorID = ?";
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setInt(1, vendorID);
-        ResultSet rs = stmt.executeQuery();
-%>
 
 
 <!DOCTYPE html>
@@ -40,8 +28,8 @@
 
     <div class="content">
         <h2 class="mainTopic" style=".mainTopic; margin-left: 20px; padding: 10px">Published Products</h2>
-
-        <table class="product-table" >
+        <input type="text" class="searchInput" id="SearchInput" placeholder="Search Product" style="width: 1000px; margin-left: 100px; border: 2px solid #9026dc">
+        <table class="product-table">
             <thead>
             <tr>
                 <th>Image</th>
@@ -56,60 +44,73 @@
             </tr>
             </thead>
             <tbody>
+
             <%
-                while (rs.next()) {
+                Integer vendorIDObj = (session != null) ? (Integer) session.getAttribute("vendorID") : null;
+                if (vendorIDObj == null) {
+                    response.sendRedirect("../accessPages/login.jsp");
+                    return;
+                }
+                int vendorID = vendorIDObj;
+                ArrayList<VendorProductModel> vendorProductDetails = VendorProductController.getProductbyVendorID(vendorID);
             %>
+
+            <% if (!vendorProductDetails.isEmpty()) {
+                for (VendorProductModel vendorProductInfo : vendorProductDetails) {%>
             <tr style="text-align: center;">
                 <td>
-                    <img src="<%= request.getContextPath() + "/photos/" + rs.getString("productImageFileName") %>"
-                         alt="<%= rs.getString("name") %>" width="100">
+                    <img src="<%= request.getContextPath() + "/photos/" + vendorProductInfo.getProductImageFileName() %>"
+                         alt="<%= vendorProductInfo.getProductImageFileName() %>" width="100">
                 </td>
-                <td><%= rs.getString("product_id") %>
+                <td><%= vendorProductInfo.getProduct_id() %>
                 </td>
-                <td><%= rs.getString("name") %>
+                <td><%= vendorProductInfo.getName() %>
                 </td>
-                <td><%= rs.getString("additional_details") %>
+                <td><%= vendorProductInfo.getAdditional_details() %>
                 </td>
-                <td><%= rs.getString("category") %>
+                <td><%= vendorProductInfo.getCategory() %>
                 </td>
-                <td><%= rs.getFloat("price") %>
+                <td><%= vendorProductInfo.getPrice() %>
                 </td>
-                <td><%= rs.getInt("stock") %>
+                <td><%= vendorProductInfo.getStock() %>
                 </td>
-                <td><%= rs.getFloat("rating") %>
+                <td><%= vendorProductInfo.getRating() %>
                 </td>
                 <td>
-                    <button class="vendor-actionBtn" id="editBtn-<%= rs.getString("product_id") %>" >Edit</button>
-                    <button class="vendor-deleteBtn" id="vendor-deleteBtn-<%= rs.getString("product_id") %>">Delete
+                    <button class="vendor-actionBtn" id="editBtn-<%=vendorProductInfo.getProduct_id()%>">Edit</button>
+                    <button class="vendor-deleteBtn" id="vendor-deleteBtn-<%=vendorProductInfo.getProduct_id()%>">Delete
                     </button>
                 </td>
             </tr>
 
             <!-- Edit Modal -->
-            <div id="editModal-<%= rs.getInt("product_id") %>" class="modal">
+            <div id="editModal-<%=vendorProductInfo.getProduct_id()%>" class="modal">
                 <div class="modal-content">
                     <span class="close">&times;</span><br>
                     <h2>Edit Your Details</h2>
-                    <form action="${pageContext.request.contextPath}/vendorProductUpdate?product_id=<%= rs.getInt("product_id") %>" method="post" enctype="multipart/form-data">
+                    <form action="${pageContext.request.contextPath}/vendorProductUpdate?product_id=<%=vendorProductInfo.getProduct_id()%>"
+                          method="post" enctype="multipart/form-data">
                         <div class="input-group">
                             <label>Product ID:</label>
-                            <input class="editInput" type="text" name="product_id" value="<%= rs.getInt("product_id") %>" readonly><br>
+                            <input class="editInput" type="text" name="product_id"
+                                   value="<%=vendorProductInfo.getProduct_id()%>" readonly><br>
                         </div>
                         <div class="input-group">
                             <label>Product Name:</label>
-                            <input class="editInput" type="text" name="name" value="<%= rs.getString("name") %>"><br>
+                            <input class="editInput" type="text" name="name"
+                                   value="<%=vendorProductInfo.getName()%>"><br>
                         </div>
                         <div class="input-group">
                             <label>Price:</label>
-                            <input class="editInput" type="text" name="price" value="<%= rs.getFloat("price") %>"><br>
+                            <input class="editInput" type="text" name="price" value="<%=vendorProductInfo.getPrice()%>"><br>
                         </div>
                         <div class="input-group">
                             <label>Stock:</label>
-                            <input class="editInput" type="text" name="stock" value="<%= rs.getInt("stock") %>"><br>
+                            <input class="editInput" type="text" name="stock" value="<%=vendorProductInfo.getStock()%>"><br>
                         </div>
                         <div class="input-group">
                             <label>Description:</label>
-                            <textarea name="additionalDetails"><%= rs.getString("additional_details") %></textarea><br>
+                            <textarea name="additionalDetails"><%=vendorProductInfo.getAdditional_details()%></textarea><br>
                         </div>
                         <div class="input-group">
                             <label>Update Product Image:</label>
@@ -121,32 +122,34 @@
             </div>
 
             <!-- Delete Modal -->
-            <div id="deleteModal-<%= rs.getInt("product_id") %>" class="modal">
+            <div id="deleteModal-<%=vendorProductInfo.getProduct_id()%>" class="modal">
                 <div class="modal-content">
                     <span class="close">&times;</span>
                     <h2>Are You Sure?</h2>
-                    <form action="${pageContext.request.contextPath}/vendorProductDelete?product_id=<%= rs.getInt("product_id") %>"
+                    <form action="${pageContext.request.contextPath}/vendorProductDelete?product_id=<%=vendorProductInfo.getProduct_id()%>"
                           method="post">
                         <div class="input-group">
                             <label>Product ID:</label>
-                            <input type="text" name="product_id" value="<%= rs.getInt("product_id") %>" readonly><br>
+                            <input type="text" name="product_id" value="<%=vendorProductInfo.getProduct_id()%>"
+                                   readonly><br>
                         </div>
                         <div class="input-group">
                             <label>Product Name:</label>
-                            <input type="text" name="name" value="<%= rs.getString("name") %>" readonly><br>
+                            <input type="text" name="name" value="<%=vendorProductInfo.getName()%>" readonly><br>
                         </div>
                         <button type="submit" class="vendor-deleteBtn">Delete Item</button>
                     </form>
                 </div>
             </div>
 
+
             <script>
                 document.addEventListener("DOMContentLoaded", function () {
-                    const editBtn = document.getElementById("editBtn-<%= rs.getString("product_id") %>");
-                    const editModal = document.getElementById("editModal-<%= rs.getInt("product_id") %>");
+                    const editBtn = document.getElementById("editBtn-<%=vendorProductInfo.getProduct_id()%>");
+                    const editModal = document.getElementById("editModal-<%=vendorProductInfo.getProduct_id()%>");
 
-                    const deleteBtn = document.getElementById("vendor-deleteBtn-<%= rs.getString("product_id") %>");
-                    const deleteModal = document.getElementById("deleteModal-<%= rs.getInt("product_id") %>");
+                    const deleteBtn = document.getElementById("vendor-deleteBtn-<%=vendorProductInfo.getProduct_id()%>");
+                    const deleteModal = document.getElementById("deleteModal-<%=vendorProductInfo.getProduct_id()%>");
 
                     const closeButtons = document.querySelectorAll(".close");
 
@@ -164,10 +167,39 @@
                         if (event.target === deleteModal) deleteModal.style.display = "none";
                     };
                 });
+
+                //Search bar
+                function searchBar(){
+                    let input, filter, table, tr, td, i, j, txtValue, rowMatch;
+                    input = document.getElementById("SearchInput");
+                    filter = input.value.toUpperCase();
+                    table = document.querySelector("table");
+                    tr = table.getElementsByTagName("tr");
+
+                    for(i = 1; i < tr.length; i++){
+                        td = tr[i].getElementsByTagName("td");
+                        rowMatch = false;
+                        for(j = 0; j < td.length; j++){
+                            if(td[j]){
+                                txtValue = td[j].textContent || td[j].innerText;
+                                if(txtValue.toUpperCase().indexOf(filter) > -1){
+                                    rowMatch = true;
+                                    break;
+                                }
+                            }
+                        }
+                        tr[i].style.display = rowMatch ? "" : "none";
+                    }
+                }
+                document.getElementById("SearchInput").addEventListener("input", searchBar);
+
             </script>
             <%
                 }
             %>
+            <% } else { %>
+            <p style="color: red; margin-left: 500px; margin-top: 80px">No Products Available</p>
+            <% } %>
             </tbody>
         </table>
 
@@ -187,13 +219,5 @@
     </div>
 </div>
 
-
-<%
-
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-
-%>
 </body>
 </html>

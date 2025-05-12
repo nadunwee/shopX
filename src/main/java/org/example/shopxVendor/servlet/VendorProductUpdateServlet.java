@@ -1,15 +1,16 @@
-package org.example.shopxVendor;
+package org.example.shopxVendor.servlet;
 
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.*;
 import org.example.shopx.DBConnection;
+import org.example.shopxVendor.controller.VendorProductController;
 
 import java.io.*;
 import java.sql.*;
 
 @MultipartConfig
-public class vendorProductUpdateServlet extends HttpServlet {
+public class VendorProductUpdateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         int product_id = Integer.parseInt(request.getParameter("product_id"));
@@ -17,8 +18,6 @@ public class vendorProductUpdateServlet extends HttpServlet {
         float price = Float.parseFloat(request.getParameter("price"));
         int stock = Integer.parseInt(request.getParameter("stock"));
         String additionalDetails = request.getParameter("additionalDetails");
-
-
 
         int vendorID;
         HttpSession session = request.getSession(false);
@@ -28,7 +27,6 @@ public class vendorProductUpdateServlet extends HttpServlet {
             System.out.println("<h2>Error: You are not logged in as a vendor.</h2>");
             return;
         }
-
         //uploading a photo and displaying in a page//////////////////////////////////////////////
         Part productImage = request.getPart("productImage");
         String productImageFileName = productImage.getSubmittedFileName();
@@ -59,30 +57,13 @@ public class vendorProductUpdateServlet extends HttpServlet {
         }
         ////////////////////////////////////////////////////////////////////////////////////////////
 
-        System.out.println("Product ID: " + product_id);
-        System.out.println("Name: " + name);
-        System.out.println("Price: " + price);
-        System.out.println("Stock: " + stock);
-        System.out.println("Additional Details: " + additionalDetails);
-        System.out.println("Vendor ID: " + vendorID);
-        System.out.println("new image: " + productImageFileName);
+        boolean isUpdated = VendorProductController.updateProductDetails(product_id, name, price, stock, additionalDetails, vendorID, productImageFileName);
 
-
-        try (Connection conn = DBConnection.getConnection()) {
-            String query = "UPDATE products SET name = ?, price = ?, stock = ?, additional_details = ?, productImageFileName = ? WHERE product_id = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                stmt.setString(1, name);
-                stmt.setFloat(2, price);
-                stmt.setInt(3, stock);
-                stmt.setString(4, additionalDetails);
-                stmt.setString(5, productImageFileName);
-                stmt.setInt(6, product_id);
-                stmt.executeUpdate();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(isUpdated){
+            response.getWriter().println("<script>alert('Update successful'); window.location.href='Vendor/vendorViewProducts.jsp';</script>");
+        }else{
+            response.getWriter().println("<script>alert('Item is not updated'); window.location.href='Vendor/vendorViewProducts.jsp';</script>");
         }
 
-        response.sendRedirect("Vendor/vendorViewProducts.jsp");
     }
 }

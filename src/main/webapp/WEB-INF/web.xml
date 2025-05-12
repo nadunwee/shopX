@@ -22,27 +22,28 @@
         <url-pattern>/loginUser</url-pattern>
     </servlet-mapping>
 
+    <!--//////////////////////////Vendor Mappings//////////////////////////////////////////////-->
     <servlet>
-        <servlet-name>vendorProfileUpdateServlet</servlet-name>
-        <servlet-class>org.example.shopxVendor.vendorProfileUpdateServlet</servlet-class>
+        <servlet-name>VendorProfileUpdateServlet</servlet-name>
+        <servlet-class>org.example.shopxVendor.servlet.VendorProfileUpdateServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>vendorProfileUpdateServlet</servlet-name>
-        <url-pattern>/vendorProfileUpdate</url-pattern>
+        <servlet-name>VendorProfileUpdateServlet</servlet-name>
+        <url-pattern>/VendorProfileUpdate</url-pattern>
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>vendorProfileDeleteServlet</servlet-name>
-        <servlet-class>org.example.shopxVendor.vendorProfileDeleteServlet</servlet-class>
+        <servlet-name>VendorProfileDeleteServlet</servlet-name>
+        <servlet-class>org.example.shopxVendor.servlet.VendorProfileDeleteServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>vendorProfileDeleteServlet</servlet-name>
-        <url-pattern>/vendorProfileDelete</url-pattern>
+        <servlet-name>VendorProfileDeleteServlet</servlet-name>
+        <url-pattern>/VendorProfileDelete</url-pattern>
     </servlet-mapping>
 
     <servlet>
         <servlet-name>vendorSubscriptionServlet</servlet-name>
-        <servlet-class>org.example.shopxVendor.vendorSubscriptionServlet</servlet-class>
+        <servlet-class>org.example.shopxVendor.servlet.vendorSubscriptionServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>vendorSubscriptionServlet</servlet-name>
@@ -59,7 +60,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>vendorAddProductsServlet</servlet-name>
-        <servlet-class>org.example.shopxVendor.vendorAddProductsServlet</servlet-class>
+        <servlet-class>org.example.shopxVendor.servlet.VendorAddProductsServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>vendorAddProductsServlet</servlet-name>
@@ -67,7 +68,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>vendorProductUpdateServlet</servlet-name>
-        <servlet-class>org.example.shopxVendor.vendorProductUpdateServlet</servlet-class>
+        <servlet-class>org.example.shopxVendor.servlet.VendorProductUpdateServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>vendorProductUpdateServlet</servlet-name>
@@ -75,7 +76,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>vendorProductDeleteServlet</servlet-name>
-        <servlet-class>org.example.shopxVendor.vendorProductDeleteServlet</servlet-class>
+        <servlet-class>org.example.shopxVendor.servlet.VendorProductDeleteServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>vendorProductDeleteServlet</servlet-name>

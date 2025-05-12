@@ -74,17 +74,33 @@
                 </div>
 
                 <div class="form-row">
-                    <label for="businessRegNo">Business Registration No. :</label>
-                    <input type="text" id="businessRegNo" name="businessRegNo" required>
+                    <label for="businessRegNo">Business Registration No. :</label><br>
+                    <input type="text" id="businessRegNo" name="businessRegNo" required maxlength="20" oninput="updateCharCount()">
+                    <small id="charCount" style="color: gray;">20 characters remaining</small>
                 </div>
 
                 <div class="form-row" style="justify-content: flex-end;">
                     <button type="submit" class="vendor-actionBtn" name="submitBtn">Proceed To Pay</button>
                 </div>
             </form>
-
-
         </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const input = document.getElementById("businessRegNo");
+                const counter = document.getElementById("charCount");
+
+                function updateCharCount() {
+                    const maxLength = parseInt(input.getAttribute("maxlength"));
+                    const currentLength = input.value.length;
+                    const remaining = maxLength - currentLength;
+                    counter.textContent = remaining + " characters remaining";
+                }
+
+                input.addEventListener("input", updateCharCount);
+                updateCharCount();
+            });
+        </script>
 
         <footer class="landing-footer">
             <div class="landing-footer-content">

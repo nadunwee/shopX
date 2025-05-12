@@ -4,28 +4,9 @@
 <%@ page import="org.example.shopx.DBConnection" %>
 <%@ page import="java.sql.SQLException" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-<%
-    String username = (String) session.getAttribute("username");
-    if (username == null) {
-        response.sendRedirect("../accessPages/login.jsp");
-        return;
-    }
-
-    Connection conn = null;
-    PreparedStatement stmt = null;
-    ResultSet rs = null;
-
-    try {
-        conn = DBConnection.getConnection();
-        String sql = "SELECT * FROM vendors WHERE username = ?";
-        stmt = conn.prepareStatement(sql);
-        stmt.setString(1, username);
-        rs = stmt.executeQuery();
-
-        if (rs.next()) {
-            session.setAttribute("username", rs.getString("username"));
-%>
+<%@ page import="org.example.shopxVendor.model.VendorProfileModel" %>
+<%@ page import="org.example.shopxVendor.controller.VendorProfileController" %>
+<%@ page import="java.util.ArrayList" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -79,34 +60,44 @@
                 Log Out
             </button>
         </a>
-        <%--  reading data from the up, go to the top--%>
+
+        <%
+            String username = (String) request.getSession().getAttribute("username");
+            ArrayList<VendorProfileModel> vendorDetails = VendorProfileController.getByUsername(username);
+            VendorProfileModel vendorInfo = null;
+
+            if (!vendorDetails.isEmpty()) {
+                vendorInfo = vendorDetails.get(0);
+            }
+        %>
+        <% if (vendorInfo != null) { %>
         <div class="vendor-profile-section">
             <div class="vendor-profile-block">
-                <img src="../photos/<%= rs.getString("imageFileName") %>" class="vendorLOGO" alt="logo">
+                <img src="../photos/<%= vendorInfo.getImageFileName()%>" class="vendorLOGO" alt="logo">
                 <div class="vendor-profile-info">
                     <div class="vendorProfileRow">
                         <label class="vendorProfileLabel" style="font-size: 20px"><b>Store Name:</b></label>
-                        <span class="vendorProfileValue"><b><%= rs.getString("store_name") %></b></span>
+                        <span class="vendorProfileValue"><b><%= vendorInfo.getStoreName()%></b></span>
                     </div>
                     <div class="vendorProfileRow">
                         <label class="vendorProfileLabel">User Name:</label>
-                        <span class="vendorProfileValue"><%= rs.getString("username") %></span>
+                        <span class="vendorProfileValue"><%=vendorInfo.getUsername()%></span>
                     </div>
                     <div class="vendorProfileRow">
                         <label class="vendorProfileLabel">Date Of Birth:</label>
-                        <span class="vendorProfileValue"><%= rs.getString("vendorDOB") %></span>
+                        <span class="vendorProfileValue"><%=vendorInfo.getVendorDOB()%></span>
                     </div>
                     <div class="vendorProfileRow">
                         <label class="vendorProfileLabel">Address:</label>
-                        <span class="vendorProfileValue"><%= rs.getString("vendorAddress") %></span>
+                        <span class="vendorProfileValue"><%=vendorInfo.getVendorAddress()%></span>
                     </div>
                     <div class="vendorProfileRow">
                         <label class="vendorProfileLabel">Email:</label>
-                        <span class="vendorProfileValue"><%= rs.getString("email") %></span>
+                        <span class="vendorProfileValue"><%=vendorInfo.getEmail()%></span>
                     </div>
                     <div class="vendorProfileRow">
                         <label class="vendorProfileLabel">Joined at:</label>
-                        <span class="vendorProfileValue"><%= rs.getString("created_at").split(" ")[0] %></span>
+                        <span class="vendorProfileValue"><%=vendorInfo.getCreatedAt().split(" ")[0]%></span>
                     </div>
 
                 </div>
@@ -122,24 +113,22 @@
                     <div class="modal-content">
                         <span class="close">&times;</span>
                         <h2>Edit Your Details</h2>
-                        <form action="${pageContext.request.contextPath}/vendorProfileUpdate" method="post" enctype="multipart/form-data">
+                        <form action="${pageContext.request.contextPath}/VendorProfileUpdate" method="post" enctype="multipart/form-data">
                             <div class="input-group">
                                 <label>Store Name:</label>
-                                <input type="text" name="store_name" value="<%= rs.getString("store_name") %>"><br>
+                                <input type="text" name="store_name" value="<%=vendorInfo.getStoreName()%>"><br>
                             </div>
                             <div class="input-group">
                                 <label>Date Of Birth:</label>
-                                <input type="text" name="vendorDOB" value="<%= rs.getString("vendorDOB") %>"><br>
+                                <input type="text" name="vendorDOB" value="<%=vendorInfo.getVendorDOB()%>"><br>
                             </div>
                             <div class="input-group">
                                 <label>Address:</label>
-                                <input type="text" name="vendorAddress"
-                                       value="<%= rs.getString("vendorAddress") %>"><br>
+                                <input type="text" name="vendorAddress" value="<%=vendorInfo.getVendorAddress()%>"><br>
                             </div>
                             <div class="input-group">
                                 <label>Email:</label>
-                                <input style="margin-left: 75px" type="email" name="email"
-                                       value="<%= rs.getString("email") %>"><br>
+                                <input style="margin-left: 75px" type="email" name="email" value="<%=vendorInfo.getEmail()%>"><br>
                             </div>
                             <div class="input-group">
                                 <label>New Image:</label>
@@ -156,25 +145,22 @@
                         <h2>Are You Sure ?</h2>
                         <h4 style="color: #e74c3c; font-family: 'Century',serif; margin-bottom: 8px">You about to
                             permanently delete your data from ShopX</h4>
-                        <form action="${pageContext.request.contextPath}/vendorProfileDelete" method="post">
+                        <form action="${pageContext.request.contextPath}/VendorProfileDelete" method="post">
                             <div class="input-group">
                                 <label>Store Name:</label>
-                                <input type="text" name="store_name" value="<%= rs.getString("store_name") %>" readonly><br>
+                                <input type="text" name="store_name" value="<%=vendorInfo.getStoreName()%>" readonly><br>
                             </div>
                             <div class="input-group">
                                 <label>Date Of Birth:</label>
-                                <input type="text" name="username" value="<%= rs.getString("vendorDOB") %>"
-                                       readonly><br>
+                                <input type="text" name="username" value="<%=vendorInfo.getVendorDOB()%>" readonly><br>
                             </div>
                             <div class="input-group">
-                                <label>Business ID:</label>
-                                <input type="text" name="vendorAddress" value="<%= rs.getString("vendorAddress") %>"
-                                       readonly><br>
+                                <label>Address:</label>
+                                <input type="text" name="vendorAddress" value="<%=vendorInfo.getVendorAddress()%>" readonly><br>
                             </div>
                             <div class="input-group">
                                 <label>Email:</label>
-                                <input style="margin-left: 75px" type="email" name="email"
-                                       value="<%= rs.getString("email") %>" readonly><br>
+                                <input style="margin-left: 75px" type="email" name="email" value="<%=vendorInfo.getEmail()%>" readonly><br>
                             </div>
                             <button type="submit" class="vendor-deleteBtn">Delete Account</button>
                         </form>
@@ -184,6 +170,10 @@
 
             </div>
         </div>
+        <% } else { %>
+        <p style="color: red;">Vendor profile not found for user: <%= username %></p>
+        <% } %>
+
         <footer class="landing-footer">
             <div class="landing-footer-content">
                 <div class="landing-footer-logo">ShopX</div>
@@ -198,13 +188,6 @@
         </footer>
     </div>
 </div>
-
-<%
-        }
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-%>
 
 </body>
 </html>
