@@ -60,7 +60,11 @@
 
                 <div class="form-row">
                     <label for="cardNo">Card No :</label>
-                    <input type="text" id="cardNo" name="cardNo" required>
+                    <div class="promptRemaining" style="display: flex; flex-direction: column;">
+                        <input type="text" id="cardNo" name="cardNo" required maxlength="16" oninput="updateCharCount()">
+                        <small id="charCount" style="color: gray;">16 characters remaining</small>
+                    </div>
+
                 </div>
 
                 <div class="form-row">
@@ -78,9 +82,23 @@
                 </div>
 
             </form>
-
-
         </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const input = document.getElementById("cardNo");
+                const counter = document.getElementById("charCount");
+
+                function updateCharCount() {
+                    const maxLength = parseInt(input.getAttribute("maxlength"));
+                    const currentLength = input.value.length;
+                    const remaining = maxLength - currentLength;
+                    counter.textContent = remaining + " characters remaining";
+                }
+
+                input.addEventListener("input", updateCharCount);
+                updateCharCount();
+            });
+        </script>
 
         <footer class="landing-footer">
             <div class="landing-footer-content">

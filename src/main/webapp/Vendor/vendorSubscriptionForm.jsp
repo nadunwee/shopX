@@ -75,8 +75,11 @@
 
                 <div class="form-row">
                     <label for="businessRegNo">Business Registration No. :</label><br>
-                    <input type="text" id="businessRegNo" name="businessRegNo" required maxlength="20" oninput="updateCharCount()">
-                    <small id="charCount" style="color: gray;">20 characters remaining</small>
+                    <div class="promptRemaining" style="display: flex; flex-direction: column;">
+                        <input type="text" id="businessRegNo" name="businessRegNo" required maxlength="20" oninput="updateCharCount()">
+                        <small id="charCount" style="color: gray;">20 characters remaining</small>
+                    </div>
+
                 </div>
 
                 <div class="form-row" style="justify-content: flex-end;">
