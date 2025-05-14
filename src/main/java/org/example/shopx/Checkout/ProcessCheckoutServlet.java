@@ -90,8 +90,6 @@ public class ProcessCheckoutServlet extends HttpServlet {
                 }
             }
             throw new ServletException("Checkout failed", e);
-        } finally {
-            DBConnection.closeConnection(conn);
         }
     }
 }

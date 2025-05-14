@@ -102,11 +102,11 @@
                         </div>
                         <div class="input-group">
                             <label>Price:</label>
-                            <input class="editInput" type="text" name="price" value="<%=vendorProductInfo.getPrice()%>"><br>
+                            <input class="editInput" type="number" name="price" value="<%=vendorProductInfo.getPrice()%>"><br>
                         </div>
                         <div class="input-group">
                             <label>Stock:</label>
-                            <input class="editInput" type="text" name="stock" value="<%=vendorProductInfo.getStock()%>"><br>
+                            <input class="editInput" type="number" name="stock" value="<%=vendorProductInfo.getStock()%>"><br>
                         </div>
                         <div class="input-group">
                             <label>Description:</label>
