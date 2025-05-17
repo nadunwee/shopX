@@ -25,7 +25,7 @@ public class RegisterServlet extends HttpServlet {
 
             if ("vendor".equalsIgnoreCase(userType)) {
                 String password = request.getParameter("vendorPassword");
-                String confirmPassword = request.getParameter("confirm-password");
+                String confirmPassword = request.getParameter("vendorConfirmPassword");
                 if (!password.equals(confirmPassword)) {
                     request.setAttribute("error", "Passwords do not match.");
                     request.getRequestDispatcher("accessPages/register.jsp").forward(request, response);
