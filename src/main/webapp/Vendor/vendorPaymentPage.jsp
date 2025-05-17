@@ -51,7 +51,7 @@
             <form action="${pageContext.request.contextPath}/vendorPaymentDetails" method="POST" class="subPayment-form">
 
                 <div class="form-row">
-                    <label for="cardType">Card Type :</label>
+                    <label for="cardType">Card Type * :</label>
                     <select id="cardType" name="cardType" required>
                         <option value="visa">VISA</option>
                         <option value="master">MASTER CARD</option>
@@ -59,7 +59,7 @@
                 </div>
 
                 <div class="form-row">
-                    <label for="cardNo">Card No :</label>
+                    <label for="cardNo">Card No * :</label>
                     <div class="promptRemaining" style="display: flex; flex-direction: column;">
                         <input type="text" id="cardNo" name="cardNo" required maxlength="16" oninput="updateCharCount()">
                         <small id="charCount" style="color: gray;">16 characters remaining</small>
@@ -68,12 +68,12 @@
                 </div>
 
                 <div class="form-row">
-                    <label for="cardEXP">Expiry Date :</label>
+                    <label for="cardEXP">Expiry Date * :</label>
                     <input type="date" id="cardEXP" name="cardEXP" required>
                 </div>
 
                 <div class="form-row">
-                    <label for="cardCVN">CVN :</label>
+                    <label for="cardCVN">CVN * :</label>
                     <input type="text" id="cardCVN" name="cardCVN" required>
                 </div>
 

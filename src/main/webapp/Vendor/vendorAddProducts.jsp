@@ -24,12 +24,12 @@
             <h2 style="padding: 15px; margin-bottom: 15px">Enter Item Details</h2>
             <form action="${pageContext.request.contextPath}/vendorAddProducts" method="post" enctype="multipart/form-data">
                 <div class="form-row">
-                    <label>Product Name :</label>
+                    <label>Product Name * :</label>
                     <input type="text" id="productName" name="productName" required>
                 </div>
 
                 <div class="form-row">
-                    <label>Category :</label>
+                    <label>Category * :</label>
                     <select name="category" id="category" required>
                         <option name="none" value="none">None</option>
                         <option name="food" value="food">Food</option>
@@ -40,12 +40,12 @@
                 </div>
 
                 <div class="form-row">
-                    <label>Description :</label>
+                    <label>Description * :</label>
                     <textarea name="description" id="description" rows="4" required></textarea>
                 </div>
 
                 <div class="form-row">
-                    <label>Upload Image :</label>
+                    <label>Upload Image * :</label>
                     <div class="prompt" style="display: flex; flex-direction: column">
                         <input type="file" id="productImage" name="productImage" accept=".jpg,.jpeg,.png" required>
                         <small id="charCount" style="color: gray;">20 characters remaining</small>
@@ -54,12 +54,12 @@
                 </div>
 
                 <div class="form-row">
-                    <label>Price :</label>
+                    <label>Price * :</label>
                     <input type="number" name="price" id="price" required>
                 </div>
 
                 <div class="form-row">
-                    <label>Stock :</label>
+                    <label>Stock * :</label>
                     <input type="number" name="stock" id="stock" required>
                 </div>
 
