@@ -54,6 +54,7 @@
             <div class="input-group">
                 <label for="vendorLogo">Upload Logo</label>
                 <input type="file" id="vendorLogo" name="vendorLogo" required>
+                <small id="charCount" style="color: gray;">20 characters remaining</small>
             </div>
 
             <div class="register-actions">
@@ -64,6 +65,37 @@
         </form>
     </div>
 </main>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const input = document.getElementById("vendorLogo");
+        const counter = document.getElementById("charCount");
+        const submitButton = document.querySelector(".register-btn");
+        const maxLength = 20;
 
+        function updateCharCount() {
+            if (input.files.length > 0) {
+                const fileName = input.files[0].name;
+                const length = fileName.length;
+
+                if (length > maxLength) {
+                    counter.textContent = "Image name exceeds 20 character limit!";
+                    counter.style.color = "red";
+                    submitButton.disabled = true;
+                } else {
+                    counter.textContent = (maxLength - length) + " characters remaining";
+                    counter.style.color = "gray";
+                    submitButton.disabled = false;
+                }
+            } else {
+                counter.textContent = maxLength + " characters remaining";
+                counter.style.color = "gray";
+                submitButton.disabled = false;
+            }
+        }
+
+        input.addEventListener("change", updateCharCount);
+    });
+</script>
 </body>
+
 </html>
