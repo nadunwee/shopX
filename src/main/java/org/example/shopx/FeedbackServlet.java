@@ -35,7 +35,7 @@ public class FeedbackServlet extends HttpServlet {
         boolean isInserted = FeedbackController.addFeedback(name,email,subject,message,rating);
 
         if(isInserted){
-            response.sendRedirect("Feedback.jsp");
+            response.sendRedirect("Feedback");
         }else {
             response.getWriter().println("Something went wrong");
         }
