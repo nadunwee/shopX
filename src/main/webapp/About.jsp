@@ -96,7 +96,7 @@
                         <textarea id="message" name="message" rows="4" style="width:100%; padding:8px;"></textarea>
                     </div>
                     <div style="margin-bottom:1rem;">
-                        <input type="checkbox" id="agree" name="agree" />
+                        <input type="checkbox" id="agree" />
                         <label for="agree"> I agree to the terms and conditions *</label>
                     </div>
                     <div style="text-align:right;">
@@ -159,6 +159,19 @@
 
 
 
+
+<footer class="landing-footer">
+    <div class="landing-footer-content">
+        <div class="landing-footer-logo">ShopX</div>
+        <div class="landing-footer-links">
+            <a href="About.jsp">About</a>
+            <a href="#">Contact</a>
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+        </div>
+        <p class="landing-footer-copy">&copy; 2025 ShopX. All rights reserved.</p>
+    </div>
+</footer>
 
 
 </body>
