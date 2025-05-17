@@ -12,7 +12,6 @@
     <div class="landing-logo">Shop <span class="logo-x">X</span></div>
     <nav class="landing-nav-links">
         <a href="homePage.jsp">Home</a>
-        <a href="shop.jsp">Shop</a>
         <a href="#contact">Contact</a>
     </nav>
 </header>
@@ -21,9 +20,11 @@
 <main class="landing-hero">
     <h1>Welcome to ShopX</h1>
     <p>Your curated destination for thoughtful gifts, seasonal treats, and more.</p>
-    <button class="landing-start-btn" onclick="location.href='/homePage.jsp'">
-        <i class='bx bx-store'></i> Start Shopping
-    </button>
+    <a href="./homePage.jsp">
+        <button class="landing-start-btn">
+            <i class='bx bx-store'></i> Start Shopping
+        </button>
+    </a>
 </main>
 
 <section class="landing-why-choose">

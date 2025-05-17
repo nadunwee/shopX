@@ -52,7 +52,7 @@
 
     <servlet>
         <servlet-name>vendorPaymentDetailsServlet</servlet-name>
-        <servlet-class>org.example.shopxVendor.vendorPaymentDetailsServlet</servlet-class>
+        <servlet-class>org.example.shopxVendor.servlet.VendorPaymentDetailsServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>vendorPaymentDetailsServlet</servlet-name>
