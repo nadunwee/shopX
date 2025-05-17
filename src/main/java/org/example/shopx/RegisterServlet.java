@@ -63,25 +63,29 @@ public class RegisterServlet extends HttpServlet {
                 String email = request.getParameter("email");
                 String password = request.getParameter("password");
 
-                if (!InputValidator.isValidUsername(username)) {
-                    request.setAttribute("error", "Invalid username. Must be 4-20 characters and alphanumeric.");
-                    request.getRequestDispatcher("accessPages/register.jsp").forward(request, response);
-                    return;
-                }
+                System.out.println(username);
+                System.out.println(email);
+                System.out.println(password);
 
-                if (!InputValidator.isStrongPassword(password)) {
-                    request.setAttribute("error", "Password must be at least 8 characters with uppercase, number, and symbol.");
-                    request.getRequestDispatcher("accessPages/register.jsp").forward(request, response);
-                    return;
-                }
+//                if (!InputValidator.isValidUsername(username)) {
+//                    request.setAttribute("error", "Invalid username. Must be 4-20 characters and alphanumeric.");
+//                    request.getRequestDispatcher("accessPages/register.jsp").forward(request, response);
+//                    return;
+//                }
 
-                // Password match check
-                String confirmPassword = request.getParameter("confirm-password");
-                if (!password.equals(confirmPassword)) {
-                    request.setAttribute("error", "Passwords do not match.");
-                    request.getRequestDispatcher("accessPages/register.jsp").forward(request, response);
-                    return;
-                }
+//                if (!InputValidator.isStrongPassword(password)) {
+//                    request.setAttribute("error", "Password must be at least 8 characters with uppercase, number, and symbol.");
+//                    request.getRequestDispatcher("accessPages/register.jsp").forward(request, response);
+//                    return;
+//                }
+//
+//                // Password match check
+//                String confirmPassword = request.getParameter("confirm-password");
+//                if (!password.equals(confirmPassword)) {
+//                    request.setAttribute("error", "Passwords do not match.");
+//                    request.getRequestDispatcher("accessPages/register.jsp").forward(request, response);
+//                    return;
+//                }
 
                 // If valid, proceed
                 User user = new User(username, email, password);
