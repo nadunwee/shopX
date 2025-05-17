@@ -28,7 +28,7 @@
         try {
             DBConnection DBUtil = null;
             Connection conn = DBUtil.getConnection();
-            String sql = "SELECT * FROM cart_items c , users u WHERE u.id=c.user_id AND username = ?";
+            String sql = "SELECT c.* FROM cart_items c , users u WHERE u.id=c.user_id AND username = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, usernameSession);
             ResultSet rs = stmt.executeQuery();
@@ -52,48 +52,39 @@
 %>
 <%
     List<Map<String, String>> addresses = new ArrayList<>();
+    String fullName = "";
+    String street = "";
+    String city = "";
+    String zip = "";
     if (usernameSession != null) {
         try {
             DBConnection DBUtil = null;
             Connection conn = DBUtil.getConnection();
 
-            // First, get user_id based on username
-            String userQuery = "SELECT id FROM users WHERE username = ?";
-            PreparedStatement userStmt = conn.prepareStatement(userQuery);
-            userStmt.setString(1, usernameSession);
-            ResultSet userRs = userStmt.executeQuery();
+            String sql = "SELECT d.full_name, d.street, d.city, d.zip " +
+                    "FROM delivery_address d " +
+                    "JOIN users u ON d.user_id = u.id " +
+                    "WHERE u.username = ?";
 
-            int userId = -1;
-            if (userRs.next()) {
-                userId = userRs.getInt("id");
-            }
-            userRs.close();
-            userStmt.close();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, usernameSession);
+            ResultSet rs = stmt.executeQuery();
 
-            if (userId != -1) {
-                // Now fetch delivery addresses
-                String addressQuery = "SELECT * FROM delivery_address WHERE user_id = ?";
-                PreparedStatement addrStmt = conn.prepareStatement(addressQuery);
-                addrStmt.setInt(1, userId);
-                ResultSet addrRs = addrStmt.executeQuery();
-
-                while (addrRs.next()) {
-                    Map<String, String> addr = new HashMap<>();
-                    addr.put("id", addrRs.getString("id"));
-                    addr.put("full_name", addrRs.getString("full_name"));
-                    addr.put("street", addrRs.getString("street"));
-                    addr.put("city", addrRs.getString("city"));
-                    addr.put("zip", addrRs.getString("zip"));
-                    addresses.add(addr);
-                }
-                addrRs.close();
-                addrStmt.close();
+            if (rs.next()) {
+                fullName = rs.getString("full_name");
+                street = rs.getString("street");
+                city = rs.getString("city");
+                zip = rs.getString("zip");
             }
 
+            rs.close();
+            stmt.close();
             conn.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    } else {
+        response.sendRedirect("login.jsp");
     }
 %>
 <!DOCTYPE html>
@@ -125,9 +116,9 @@
 
 
     <h2>Select Delivery Address</h2>
-    <c:forEach var="addr" items="${addresses}">
-        <input type="radio" name="addressId" value="${addr.id}" required />
-        ${addr.line1}, ${addr.city}, ${addr.zip}<br/>
+    <c:forEach var="addr" >
+        <input type="radio" name="addressId" value="<%=fullName%>" required />
+        <%=street%>, <%=city%>, <%=zip%><br/>
     </c:forEach>
 
         <!-- Outside the main checkout form -->
