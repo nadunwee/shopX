@@ -102,11 +102,11 @@
                         </div>
                         <div class="input-group">
                             <label>Price:</label>
-                            <input class="editInput" type="text" name="price" value="<%=vendorProductInfo.getPrice()%>"><br>
+                            <input class="editInput" type="number" name="price" value="<%=vendorProductInfo.getPrice()%>"><br>
                         </div>
                         <div class="input-group">
                             <label>Stock:</label>
-                            <input class="editInput" type="text" name="stock" value="<%=vendorProductInfo.getStock()%>"><br>
+                            <input class="editInput" type="number" name="stock" value="<%=vendorProductInfo.getStock()%>"><br>
                         </div>
                         <div class="input-group">
                             <label>Description:</label>
@@ -114,7 +114,11 @@
                         </div>
                         <div class="input-group">
                             <label>Update Product Image:</label>
-                            <input class="editInput" type="file" name="productImage" accept=".jpg,.jpeg,.png"><br><br>
+                            <div class="prompt" style="display: flex; flex-direction: column">
+                                <input class="editInput" id="productImage" type="file" name="productImage" accept=".jpg,.jpeg,.png"><br><br>
+                                <small id="charCount" style="color: gray;">20 characters remaining</small>
+                            </div>
+
                         </div>
                         <button type="submit" class="vendor-actionBtn">Save Changes</button>
                     </form>
@@ -192,6 +196,37 @@
                     }
                 }
                 document.getElementById("SearchInput").addEventListener("input", searchBar);
+
+                //image validation
+                document.addEventListener("DOMContentLoaded", function () {
+                    const input = document.getElementById("productImage");
+                    const counter = document.getElementById("charCount");
+                    const submitButton = document.querySelector("#editModal.vendor-actionBtn");
+                    const maxLength = 20;
+
+                    function updateCharCount() {
+                        if (input.files.length > 0) {
+                            const fileName = input.files[0].name;
+                            const length = fileName.length;
+
+                            if (length > maxLength) {
+                                counter.textContent = "Image name exceeds 20 character limit!";
+                                counter.style.color = "red";
+                                submitButton.disabled = true;
+                            } else {
+                                counter.textContent = (maxLength - length) + " characters remaining";
+                                counter.style.color = "gray";
+                                submitButton.disabled = false;
+                            }
+                        } else {
+                            counter.textContent = maxLength + " characters remaining";
+                            counter.style.color = "gray";
+                            submitButton.disabled = false;
+                        }
+                    }
+
+                    input.addEventListener("change", updateCharCount);
+                });
 
             </script>
             <%

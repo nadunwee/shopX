@@ -52,7 +52,7 @@
 
     <servlet>
         <servlet-name>vendorPaymentDetailsServlet</servlet-name>
-        <servlet-class>org.example.shopxVendor.vendorPaymentDetailsServlet</servlet-class>
+        <servlet-class>org.example.shopxVendor.servlet.VendorPaymentDetailsServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>vendorPaymentDetailsServlet</servlet-name>
@@ -82,5 +82,38 @@
         <servlet-name>vendorProductDeleteServlet</servlet-name>
         <url-pattern>/vendorProductDelete</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>ProcessCheckoutServlet</servlet-name>
+        <servlet-class>org.example.shopx.Checkout.ProcessCheckoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProcessCheckoutServlet</servlet-name>
+        <url-pattern>/processCheckout</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>AddAddressServlet</servlet-name>
+        <servlet-class>org.example.shopx.Checkout.AddAddressServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddAddressServlet</servlet-name>
+        <url-pattern>/addAddress</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>OrderConfirmationServlet</servlet-name>
+        <servlet-class>org.example.shopx.Checkout.OrderConfirmationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OrderConfirmationServlet</servlet-name>
+        <url-pattern>/orderConfirmation</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>CancelOrderServlet</servlet-name>
+        <servlet-class>org.example.shopx.Checkout.CancelOrderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CancelOrderServlet</servlet-name>
+        <url-pattern>/cancelOrder</url-pattern>
+    </servlet-mapping>
+
 
 </web-app>

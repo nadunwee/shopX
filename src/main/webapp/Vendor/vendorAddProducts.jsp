@@ -46,7 +46,11 @@
 
                 <div class="form-row">
                     <label>Upload Image :</label>
-                    <input type="file" name="productImage" accept=".jpg,.jpeg,.png" required>
+                    <div class="prompt" style="display: flex; flex-direction: column">
+                        <input type="file" id="productImage" name="productImage" accept=".jpg,.jpeg,.png" required>
+                        <small id="charCount" style="color: gray;">20 characters remaining</small>
+                    </div>
+
                 </div>
 
                 <div class="form-row">
@@ -65,6 +69,38 @@
             </form>
 
         </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const input = document.getElementById("productImage");
+                const counter = document.getElementById("charCount");
+                const submitButton = document.querySelector(".vendor-actionBtn");
+                const maxLength = 20;
+
+                function updateCharCount() {
+                    if (input.files.length > 0) {
+                        const fileName = input.files[0].name;
+                        const length = fileName.length;
+
+                        if (length > maxLength) {
+                            counter.textContent = "Image name exceeds 20 character limit!";
+                            counter.style.color = "red";
+                            submitButton.disabled = true;
+                        } else {
+                            counter.textContent = (maxLength - length) + " characters remaining";
+                            counter.style.color = "gray";
+                            submitButton.disabled = false;
+                        }
+                    } else {
+                        counter.textContent = maxLength + " characters remaining";
+                        counter.style.color = "gray";
+                        submitButton.disabled = false;
+                    }
+                }
+
+                input.addEventListener("change", updateCharCount);
+            });
+        </script>
 
         <footer class="landing-footer">
             <div class="landing-footer-content">
