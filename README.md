@@ -26,7 +26,7 @@ issuing electronic receipts, and handling refunds if needed. Meanwhile, the
 platform administrators, or admins, oversee the entire operation. They are
 responsible for verifying sellers and products, managing users, and ensuring that
 the platform remains trustworthy and efficient.
-To complete the buyer’s journey, the delivery manager plays a crucial role by
+To complete the buyer’s journey, the delivery manager play a crucial role by
 managing the delivery process after an order is placed. They assign delivery
 personnel, track the delivery progress, and update order statuses to ensure that
 products reach buyers on time. Together, these actors create a seamless and
