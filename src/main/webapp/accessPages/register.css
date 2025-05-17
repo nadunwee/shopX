@@ -123,3 +123,14 @@ body {
     overflow: hidden;
 }
 
+.error-message {
+    color: red;
+    margin-bottom: 15px;
+    font-weight: bold;
+    background-color: #ffe6e6;
+    padding: 10px;
+    border: 1px solid red;
+    border-radius: 5px;
+}
+
+

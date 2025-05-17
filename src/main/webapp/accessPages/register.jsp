@@ -22,6 +22,11 @@
     <!-- Right side -->
     <div class="register-right">
       <h2>Create Your Account</h2>
+      <% String errorMessage = (String) request.getAttribute("error"); %>
+      <% if (errorMessage != null) { %>
+      <div class="error-message"><%= errorMessage %></div>
+      <% } %>
+
       <form action="${pageContext.request.contextPath}/registerUser" method="POST" class="register-form">
         <input type="hidden" name="type" value="customer" />
 

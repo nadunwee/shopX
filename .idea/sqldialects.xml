@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
-    <file url="file://$PROJECT_DIR$/database.sql" dialect="MariaDB" />
-    <file url="file://$PROJECT_DIR$/src/main/java/org/example/shopx/LoginServlet.java" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/java/org/example/shopx/RegisterServlet.java" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/java/org/example/shopxVendor/controller/VendorProductController.java" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/java/org/example/shopxVendor/controller/VendorSubscriptionController.java" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/java/org/example/shopxVendor/servlet/vendorSubscriptionServlet.java" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/webapp/Vendor/vendorProfilePage.jsp" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/webapp/Vendor/vendorViewProducts.jsp" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/webapp/product.jsp" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/database.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/CheckOut/checkout.jsp" dialect="GenericSQL" />
   </component>
 </project>

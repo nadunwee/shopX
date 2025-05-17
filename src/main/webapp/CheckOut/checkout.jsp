@@ -5,18 +5,41 @@
   Time: 11:24 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.sql.PreparedStatement" %>
 <%@ page import="java.sql.Connection" %>
 <%@ page import="org.example.shopx.DBConnection" %>
+<%@ page import="java.sql.SQLException" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%
+    DBConnection DBUtil = null;
+    Connection conn = null;
+    try {
+        conn = DBConnection.getConnection();
+    } catch (SQLException e) {
+        throw new RuntimeException(e);
+    }
+    String sql = "SELECT * FROM products";
+    PreparedStatement stmt = null;
+    try {
+        stmt = conn.prepareStatement(sql);
+    } catch (SQLException e) {
+        throw new RuntimeException(e);
+    }
+    try {
+        ResultSet rs = stmt.executeQuery();
+    } catch (SQLException e) {
+        throw new RuntimeException(e);
+    }
+%>
 
 <!DOCTYPE html>
 <html>
 <head>
     <title>Checkout | ShopX</title>
     <link rel="stylesheet" type="text/css" href="../style.css">
-    <link rel="stylesheet" type="text/css" href="checkoutcss.css">
+    <link rel="stylesheet" type="text/css" href="checkout.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
 </head>
@@ -24,53 +47,57 @@
 <%@include file="../includes/navBar.jsp" %>
 
 <div class="checkout-container">
+    <h2>Your Cart</h2>
+    <table>
+        <tr><th>Item</th><th>Price</th><th>Quantity</th><th>Total</th></tr>
+        <c:forEach var="item" items="${cartItems}">
+            <tr>
+                <td>${item.name}</td>
+                <td>${item.price}</td>
+                <td>${item.quantity}</td>
+                <td>${item.total}</td>
+            </tr>
+        </c:forEach>
+    </table>
 
-    <!-- 🛒 CART ITEMS -->
-    <div class="cart-section">
-        <h2>Your Cart</h2>
-        <!-- Placeholder items, cart logic not implemented yet -->
-        <p><em>Note: Cart functionality is not yet implemented.</em></p>
 
-        <div class="cart-item">
-            <strong>Sample Product A</strong>
-            <p>Qty: 1</p>
-            <p>Price: Rs. 1500</p>
-        </div>
+    <h2>Select Delivery Address</h2>
+    <form action="processCheckout" method="post">
+        <c:forEach var="addr" items="${addresses}">
+            <input type="radio" name="addressId" value="${addr.id}" required />
+            ${addr.line1}, ${addr.city}, ${addr.zip}<br/>
+        </c:forEach>
 
-        <div class="cart-item">
-            <strong>Sample Product B</strong>
-            <p>Qty: 2</p>
-            <p>Price: Rs. 900</p>
-        </div>
-    </div>
-
-    <!-- 🏠 DELIVERY ADDRESS -->
-    <div class="address-section">
-        <h2>Delivery Address</h2>
-        <p><strong>Name:</strong> Jane Doe</p>
-        <p><strong>Address:</strong> 456 Park Road, Kandy, Sri Lanka</p>
-        <p><strong>Phone:</strong> +94 76 987 6543</p>
-
-        <button class="change-address-btn" onclick="window.location.href='manageAddresses.jsp'">
-            Change / Add Address
-        </button>
-    </div>
-
-    <!-- 💳 PAYMENT METHOD -->
-    <div class="payment-section">
-        <h2>Payment Method</h2>
-        <form action="processPayment.jsp" method="POST">
-            <label><input type="radio" name="paymentMethod" value="cod" checked> Cash on Delivery</label>
-            <label><input type="radio" name="paymentMethod" value="card"> Debit / Credit Card</label>
-            <label><input type="radio" name="paymentMethod" value="koko"> Koko (Pay Later)</label>
-            <label><input type="radio" name="paymentMethod" value="mintpay"> MintPay (Installments)</label>
-
-            <br>
-            <button type="submit" class="proceed-btn">Proceed to Payment</button>
+        <form action="addAddress" method="post">
+            <!-- address input fields -->
+            <input type="text" name="street" />
+            <input type="text" name="city" />
+            <input type="submit" value="Add Address" />
         </form>
+
+        <h3>Payment Method</h3>
+        <input type="radio" name="paymentMethod" value="COD" required /> Cash on Delivery<br/>
+        <input type="radio" name="paymentMethod" value="CARD" /> Card<br/>
+
+        <input type="submit" value="Place Order" />
+    </form>
+
+    <script>
+        function togglePaymentDetails() {
+            var selected = document.querySelector('input[name="paymentMethod"]:checked').value;
+            document.getElementById('cardFields').style.display = (selected === 'CARD') ? 'block' : 'none';
+        }
+    </script>
+
+    <input type="radio" name="paymentMethod" value="COD" onclick="togglePaymentDetails()"> Cash on Delivery<br>
+    <input type="radio" name="paymentMethod" value="CARD" onclick="togglePaymentDetails()"> Credit/Debit Card<br>
+    <input type="radio" name="paymentMethod" value="THIRD_PARTY" onclick="togglePaymentDetails()"> Pay via Gateway<br>
+
+    <div id="cardFields" style="display: none;">
+        Card Number: <input type="text" name="cardNumber"><br>
+        Expiry: <input type="text" name="expiry"><br>
+        CVV: <input type="password" name="cvv"><br>
     </div>
-
 </div>
-
 </body>
 </html>
