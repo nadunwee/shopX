@@ -54,27 +54,27 @@
 
             <form action="${pageContext.request.contextPath}/vendorSubscription" method="POST" class="subscription-form">
                 <div class="form-row">
-                    <label for="companyName">Legal company name :</label>
+                    <label for="companyName">Legal company name * :</label>
                     <input type="text" id="companyName" name="companyName" required>
                 </div>
 
                 <div class="form-row">
-                    <label for="businessAddress">Business address :</label>
+                    <label for="businessAddress">Business address * :</label>
                     <input type="text" id="businessAddress" name="businessAddress" required>
                 </div>
 
                 <div class="form-row">
-                    <label for="businessEmail">Business email :</label>
+                    <label for="businessEmail">Business email * :</label>
                     <input type="email" id="businessEmail" name="businessEmail" required>
                 </div>
 
                 <div class="form-row">
-                    <label for="businessContactNo">Business Contact No. :</label>
+                    <label for="businessContactNo">Business Contact No. * :</label>
                     <input type="tel" id="businessContactNo" name="businessContactNo" required>
                 </div>
 
                 <div class="form-row">
-                    <label for="businessRegNo">Business Registration No. :</label><br>
+                    <label for="businessRegNo">Business Registration No. * :</label><br>
                     <div class="promptRemaining" style="display: flex; flex-direction: column;">
                         <input type="text" id="businessRegNo" name="businessRegNo" required maxlength="20" oninput="updateCharCount()">
                         <small id="charCount" style="color: gray;">20 characters remaining</small>

@@ -17,7 +17,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/processCheckout")
+
 public class ProcessCheckoutServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -91,5 +91,8 @@ public class ProcessCheckoutServlet extends HttpServlet {
             }
             throw new ServletException("Checkout failed", e);
         }
+//        finally {
+//            DBConnection.closeConnection(conn);
+//        }
     }
 }
