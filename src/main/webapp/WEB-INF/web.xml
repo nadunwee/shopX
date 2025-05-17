@@ -82,5 +82,13 @@
         <servlet-name>vendorProductDeleteServlet</servlet-name>
         <url-pattern>/vendorProductDelete</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>FeedbackServlet</servlet-name>
+        <servlet-class>org.example.shopx.FeedbackServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FeedbackServlet</servlet-name>
+        <url-pattern>/Feedback</url-pattern>
+    </servlet-mapping>
 
 </web-app>

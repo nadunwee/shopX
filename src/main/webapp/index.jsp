@@ -74,7 +74,7 @@
     <div class="landing-footer-content">
         <div class="landing-footer-logo">ShopX</div>
         <div class="landing-footer-links">
-            <a href="#">About</a>
+            <a href="About.jsp">About</a>
             <a href="#">Contact</a>
             <a href="#">Privacy</a>
             <a href="#">Terms</a>
