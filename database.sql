@@ -79,7 +79,7 @@ CREATE TABLE delivery_address (
                                   city VARCHAR(100) NOT NULL,
                                   zip VARCHAR(20) NOT NULL,
                                   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                                  FOREIGN KEY (user_id) REFERENCES users(user_id)
+                                  FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE orders (
@@ -90,7 +90,7 @@ CREATE TABLE orders (
                         total DECIMAL(10, 2) NOT NULL,
                         status VARCHAR(50) DEFAULT 'Pending',
                         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                        FOREIGN KEY (user_id) REFERENCES users(user_id),
+                        FOREIGN KEY (user_id) REFERENCES users(id),
                         FOREIGN KEY (address_id) REFERENCES delivery_address(id)
 );
 

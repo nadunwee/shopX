@@ -9,7 +9,15 @@ import java.sql.*;
 
 public class AddAddressServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int userId = (int) request.getSession().getAttribute("userId"); // assuming session has userId
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("userId") == null) {
+            response.sendRedirect("login.jsp"); // Or show an error
+            return;
+        }
+
+        int userId = ((Integer) session.getAttribute("userId")).intValue();
+        request.getSession().setAttribute("userId", userId);
+
         String fullName = request.getParameter("fullName");
         String street = request.getParameter("street");
         String city = request.getParameter("city");

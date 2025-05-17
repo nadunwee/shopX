@@ -1,98 +1,58 @@
 package org.example.shopx.Checkout;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import org.example.shopx.Checkout.Address;
-import org.example.shopx.model.CartItem;
-import org.example.shopx.Checkout.Order;
 import org.example.shopx.DBConnection;
+import org.example.shopx.model.CartItem;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.List;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 
+public class ProcessCheckoutServlet  {
+    public static ArrayList<OrderItems>  getCartItems(String username) {
+       //DATA
+        ArrayList<OrderItems> OItem = new ArrayList<OrderItems>();
 
-public class ProcessCheckoutServlet extends HttpServlet {
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        try (Connection conn = DBConnection.getConnection()) {
+            String sql = "SELECT * FROM cart_items c , users u WHERE u.id=c.user_id AND username = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, username);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        int orderId = rs.getInt("order_id");
+                        int cartItemId = rs.getInt("cart_item_id");
+                        int productId = rs.getInt("product_id");
+                        int quantity = rs.getInt("quantity");
+                        float price = rs.getFloat("price");
+                        String productName = rs.getString("product_name");
+                        String productImageFileName = rs.getString("product_image_file_name");
 
-        HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("username");
-
-        if (username == null) {
-            response.sendRedirect("login.jsp");
-            return;
-        }
-
-        // Get cart and address details from session or request
-        List<CartItem> cartItems = (List<CartItem>) session.getAttribute("cartItems");
-        String addressId = request.getParameter("addressId"); // Could be new or existing
-        String paymentMethod = request.getParameter("paymentMethod");
-
-        if (cartItems == null || cartItems.isEmpty()) {
-            request.setAttribute("error", "Your cart is empty.");
-            request.getRequestDispatcher("/checkout.jsp").forward(request, response);
-            return;
-        }
-
-        Connection conn = null;
-        try {
-            conn = DBConnection.getConnection();
-            conn.setAutoCommit(false);
-
-            // Save order summary
-            String orderSQL = "INSERT INTO orders (username, address_id, payment_method) VALUES (?, ?, ?)";
-            PreparedStatement orderStmt = conn.prepareStatement(orderSQL, PreparedStatement.RETURN_GENERATED_KEYS);
-            orderStmt.setString(1, username);
-            orderStmt.setString(2, addressId);
-            orderStmt.setString(3, paymentMethod);
-            orderStmt.executeUpdate();
-
-            var rs = orderStmt.getGeneratedKeys();
-            int orderId = -1;
-            if (rs.next()) {
-                orderId = rs.getInt(1);
-            }
-
-            // Save each cart item under the order
-            String itemSQL = "INSERT INTO order_items (order_id, product_id, quantity) VALUES (?, ?, ?)";
-            PreparedStatement itemStmt = conn.prepareStatement(itemSQL);
-
-            for (CartItem item : cartItems) {
-                itemStmt.setInt(1, orderId);
-                itemStmt.setInt(2, item.getProductId());
-                itemStmt.setInt(3, item.getQuantity());
-                itemStmt.addBatch();
-            }
-
-            itemStmt.executeBatch();
-            conn.commit();
-
-            // Clear cart
-            session.removeAttribute("cartItems");
-
-            // Redirect to confirmation
-            response.sendRedirect("checkoutSuccess.jsp");
-
-        } catch (SQLException e) {
-            if (conn != null) {
-                try {
-                    conn.rollback();
-                } catch (SQLException rollbackEx) {
-                    rollbackEx.printStackTrace();
+                        OrderItems orderItems =  new OrderItems(orderId , productId , quantity , price );
+                        OItem.add(orderItems);
+                    }
                 }
             }
-            throw new ServletException("Checkout failed", e);
+
+        }catch(Exception e) {
+            e.printStackTrace();
+
         }
-//        finally {
-//            DBConnection.closeConnection(conn);
-//        }
+        return OItem;
     }
+
+    public static boolean updateQuantity(int userId, int productId, int quantity) {
+        try (Connection conn = DBConnection.getConnection()) {
+            String query = "UPDATE cart SET quantity = ? WHERE user_id = ? AND product_id = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.setInt(1, quantity);
+                stmt.setInt(2, userId);
+                stmt.setInt(3, productId);
+                return stmt.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }
