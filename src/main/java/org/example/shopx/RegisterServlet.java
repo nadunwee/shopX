@@ -1,19 +1,18 @@
 package org.example.shopx;
 
 import jakarta.servlet.annotation.MultipartConfig;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
-
+import jakarta.servlet.ServletException;
 import java.io.*;
-import java.sql.*;
+import java.sql.Connection;
+
+import org.example.shopx.model.*;
+import org.example.shopxVendor.controller.VendorProfileController;
+import org.example.shopxVendor.model.VendorProfileModel;
 
 @MultipartConfig
 public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Get user type
         String userType = request.getParameter("type");
 
         try (Connection conn = DBConnection.getConnection()) {
@@ -22,74 +21,82 @@ public class RegisterServlet extends HttpServlet {
                 return;
             }
 
-            String query;
-            PreparedStatement stmt;
+            boolean success = false;
 
             if ("vendor".equalsIgnoreCase(userType)) {
-                // Vendor specific fields
-                String vendorEmail = request.getParameter("vendorEmail");
-                String vendorUsername = request.getParameter("vendorUsername");
-                String vendorDOB = request.getParameter("vendorDOB");
-                String storeName = request.getParameter("storeName");
-                String vendorAddress = request.getParameter("vendorAddress");
-                String vendorPassword = request.getParameter("vendorPassword");
+                String password = request.getParameter("vendorPassword");
+                String confirmPassword = request.getParameter("confirm-password");
+                if (!password.equals(confirmPassword)) {
+                    request.setAttribute("error", "Passwords do not match.");
+                    request.getRequestDispatcher("accessPages/register.jsp").forward(request, response);
+                    return;
+                }
 
-                //uploading a photo and displaying in a page//////////////////////////////////////////////
+                // Upload image
                 Part vendorLogo = request.getPart("vendorLogo");
                 String imageFileName = vendorLogo.getSubmittedFileName();
                 String uploadPath = getServletContext().getRealPath("/photos") + File.separator + imageFileName;
 
-                try{
-                    FileOutputStream fos = new FileOutputStream(uploadPath);
-                    InputStream is = vendorLogo.getInputStream();
-
-                    byte [] data = new byte[is.available()];
-                    is.read(data);
+                try (FileOutputStream fos = new FileOutputStream(uploadPath);
+                     InputStream is = vendorLogo.getInputStream()) {
+                    byte[] data = is.readAllBytes();
                     fos.write(data);
-                    fos.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
-                ////////////////////////////////////////////////////////////////////////////////////////////
 
-                System.out.println(storeName);
-                System.out.println(vendorAddress);
-                System.out.println(vendorUsername);
-                System.out.println(vendorEmail);
+                // Build vendor profile
+                VendorProfileModel vendor = new VendorProfileModel(
+                        0, // id will be auto-generated
+                        request.getParameter("storeName"),
+                        request.getParameter("vendorUsername"),
+                        request.getParameter("vendorDOB"),
+                        request.getParameter("vendorEmail"),
+                        password,
+                        request.getParameter("vendorAddress"),
+                        null, // createdAt will be handled by DB
+                        imageFileName
+                );
 
-                query = "INSERT INTO vendors (store_name, username, vendorDOB, email, password, vendorAddress, imageFileName) VALUES (?, ?, ?, ?, ?, ?, ?)";
-                stmt = conn.prepareStatement(query);
-                stmt.setString(1, storeName);
-                stmt.setString(2, vendorUsername);
-                stmt.setString(3, vendorDOB);
-                stmt.setString(4, vendorEmail);
-                stmt.setString(5, vendorPassword);
-                stmt.setString(6, vendorAddress);
-                stmt.setString(7, imageFileName);
+                // Use your controller to insert vendor
+                success = VendorProfileController.createVendorProfile(vendor);
             } else {
                 String username = request.getParameter("username");
                 String email = request.getParameter("email");
                 String password = request.getParameter("password");
 
-                //customer
-                query = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
-                stmt = conn.prepareStatement(query);
-                stmt.setString(1, username);
-                stmt.setString(2, email);
-                stmt.setString(3, password);
+                if (!InputValidator.isValidUsername(username)) {
+                    request.setAttribute("error", "Invalid username. Must be 4-20 characters and alphanumeric.");
+                    request.getRequestDispatcher("accessPages/register.jsp").forward(request, response);
+                    return;
+                }
+
+                if (!InputValidator.isStrongPassword(password)) {
+                    request.setAttribute("error", "Password must be at least 8 characters with uppercase, number, and symbol.");
+                    request.getRequestDispatcher("accessPages/register.jsp").forward(request, response);
+                    return;
+                }
+
+                // Password match check
+                String confirmPassword = request.getParameter("confirm-password");
+                if (!password.equals(confirmPassword)) {
+                    request.setAttribute("error", "Passwords do not match.");
+                    request.getRequestDispatcher("accessPages/register.jsp").forward(request, response);
+                    return;
+                }
+
+                // If valid, proceed
+                User user = new User(username, email, password);
+                success = UserDAO.registerUser(conn, user);
             }
 
-            int rowsAffected = stmt.executeUpdate();
-
-            if (rowsAffected > 0) {
+            if (success) {
                 response.sendRedirect("accessPages/login.jsp");
             } else {
-                response.sendRedirect("accessPages/register.jsp?error=Failed%20to%20register,%20please%20try%20again.");
+                response.sendRedirect("accessPages/register.jsp?error=Registration%20failed");
             }
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("accessPages/vendorRegistration.jsp?error=" + e.getMessage());
+            response.sendRedirect("accessPages/register.jsp?error=" + e.getMessage());
         }
     }
 }

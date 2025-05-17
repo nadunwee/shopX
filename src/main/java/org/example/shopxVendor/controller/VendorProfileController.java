@@ -112,4 +112,26 @@ public class VendorProfileController {
     return successOrNot;
 
     }
+
+    public static boolean createVendorProfile(VendorProfileModel vendor) {
+        try (Connection conn = DBConnection.getConnection()) {
+            String query = "INSERT INTO vendors (store_name, username, vendorDOB, email, password, vendorAddress, imageFileName, created_at) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, NOW())";
+            try (PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.setString(1, vendor.getStoreName());
+                stmt.setString(2, vendor.getUsername());
+                stmt.setString(3, vendor.getVendorDOB());
+                stmt.setString(4, vendor.getEmail());
+                stmt.setString(5, vendor.getPassword()); // You should hash this in production
+                stmt.setString(6, vendor.getVendorAddress());
+                stmt.setString(7, vendor.getImageFileName());
+
+                return stmt.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }
