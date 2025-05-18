@@ -1,18 +1,18 @@
 
 package org.example.shopx.Checkout;
 
-public class OrderItems {
+public class OrderItemsModel {
     private int itemId;
     private int orderId;
     private int productId;
-    private String productName; // optional: for display in JSP
+    private String productName;
     private int quantity;
     private double price;
 
     // Constructors
-    public OrderItems() {}
+    public OrderItemsModel() {}
 
-    public OrderItems(int orderId, int productId, int quantity, double price) {
+    public OrderItemsModel(int orderId, int productId, int quantity, double price) {
         this.orderId = orderId;
         this.productId = productId;
         this.quantity = quantity;

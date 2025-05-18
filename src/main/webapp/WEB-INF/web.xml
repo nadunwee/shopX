@@ -82,6 +82,7 @@
         <servlet-name>vendorProductDeleteServlet</servlet-name>
         <url-pattern>/vendorProductDelete</url-pattern>
     </servlet-mapping>
+    <!--//////////////////////////////////////////////////////////////////////////////////////-->
     <servlet>
         <servlet-name>ProcessCheckoutServlet</servlet-name>
         <servlet-class>org.example.shopx.Checkout.ProcessCheckoutServlet</servlet-class>
@@ -91,6 +92,7 @@
         <url-pattern>/processCheckout</url-pattern>
     </servlet-mapping>
     <servlet>
+
         <servlet-name>AddAddressServlet</servlet-name>
         <servlet-class>org.example.shopx.Checkout.AddAddressServlet</servlet-class>
     </servlet>

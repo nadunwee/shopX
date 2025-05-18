@@ -15,7 +15,7 @@
     }
     Integer orderId = (Integer) request.getAttribute("orderId");
     if (orderId == null) {
-        response.sendRedirect("checkout.jsp"); // or an error page
+        response.sendRedirect("checkout.jsp");
         return;
     }
 

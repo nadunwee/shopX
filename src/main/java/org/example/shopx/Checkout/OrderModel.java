@@ -4,15 +4,15 @@ import org.example.shopx.model.CartItem;
 import java.util.Date;
 import java.util.List;
 
-public class Order {
+public class OrderModel {
     private int orderId;
     private String username;
     private int addressId;
     private String paymentMethod;
     private Date orderDate;
-    private List<CartItem> items; // Optional: list of items in the order
+    private List<CartItem> items;
 
-    public Order() {}
+    public OrderModel() {}
 
     public int getOrderId() {
         return orderId;

@@ -1,7 +1,5 @@
 package org.example.shopx.Checkout;
-
 import org.example.shopx.DBConnection;
-import org.example.shopx.model.CartItem;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,9 +7,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class ProcessCheckoutServlet  {
-    public static ArrayList<OrderItems>  getCartItems(String username) {
-       //DATA
-        ArrayList<OrderItems> OItem = new ArrayList<OrderItems>();
+    public static ArrayList<OrderItemsModel>  getCartItems(String username) {
+        ArrayList<OrderItemsModel> OItem = new ArrayList<OrderItemsModel>();
 
         try (Connection conn = DBConnection.getConnection()) {
             String sql = "SELECT * FROM cart_items c , users u WHERE u.id=c.user_id AND username = ?";
@@ -27,7 +24,7 @@ public class ProcessCheckoutServlet  {
                         String productName = rs.getString("product_name");
                         String productImageFileName = rs.getString("product_image_file_name");
 
-                        OrderItems orderItems =  new OrderItems(orderId , productId , quantity , price );
+                        OrderItemsModel orderItems =  new OrderItemsModel(orderId , productId , quantity , price );
                         OItem.add(orderItems);
                     }
                 }

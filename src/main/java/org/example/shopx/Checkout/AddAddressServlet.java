@@ -11,7 +11,7 @@ public class AddAddressServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("userId") == null) {
-            response.sendRedirect("login.jsp"); // Or show an error
+            response.sendRedirect("login.jsp");
             return;
         }
 
@@ -33,9 +33,9 @@ public class AddAddressServlet extends HttpServlet {
             stmt.setString(5, zip);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace(); // ideally log this
+            e.printStackTrace();
         }
 
-        response.sendRedirect("checkout.jsp"); // reloads the page to show new address
+        response.sendRedirect("checkout.jsp");
     }
 }
