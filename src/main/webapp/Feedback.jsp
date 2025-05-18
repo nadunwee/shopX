@@ -23,7 +23,7 @@
         .feedback-container {
             background-color: #fff;
             padding: 2rem;
-            max-width: 1000px;
+            max-width: 1200px;
             margin: auto;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
@@ -60,7 +60,17 @@
             color: #666;
             margin-top: 2rem;
         }
-
+        .deleteFbBtn{
+            padding: 12px;
+            width: 65px;
+            background-color: red;
+            color: white;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        .deleteFbBtn:hover{
+            background-color: darkred;
+        }
         @media (max-width: 768px) {
             table, thead, tbody, th, td, tr {
                 display: block;
@@ -101,7 +111,6 @@
     <h2>All Feedbacks</h2>
     <%
         List<FeedbackModel> feedbackList = (List<FeedbackModel>) request.getAttribute("feedbackList");
-
         if (feedbackList == null || feedbackList.isEmpty()) {
     %>
     <div class="no-feedback">No feedbacks found.</div>
@@ -116,6 +125,7 @@
             <th>Subject</th>
             <th>Message</th>
             <th>Rating</th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
@@ -128,6 +138,13 @@
             <td data-label="Subject"><%= fb.getSubject() %></td>
             <td data-label="Message"><%= fb.getMessage() %></td>
             <td data-label="Rating"><%= fb.getRating() %></td>
+            <td data-label="deleteAction">
+                <form action="DeleteFeedbackServlet" method="post" onsubmit="return confirm('Are you sure you want to delete this feedback?');">
+                    <input type="hidden" name="feedbackID" value="<%= fb.getId() %>"/>
+                    <button type="submit" class="deleteFbBtn">Delete</button>
+                </form>
+            </td>
+
         </tr>
         <%
             }

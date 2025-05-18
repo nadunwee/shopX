@@ -6,14 +6,24 @@ public class FeedbackModel {
     private String Subject;
     private int rating;
     private String Message;
+    private int id;
 
-    public FeedbackModel(String name, String email, String subject, int rating, String message )
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public FeedbackModel(int id, String name, String email, String subject, int rating, String message )
     {
         this.name = name;
         this.Email = email;
         this.Subject = subject;
         this.rating = rating;
         this.Message = message;
+        this.id = id;
 
     }
 

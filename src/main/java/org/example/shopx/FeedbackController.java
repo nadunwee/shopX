@@ -1,10 +1,12 @@
 package org.example.shopx;
 
+import jakarta.servlet.http.HttpServlet;
 import org.example.shopx.model.FeedbackModel;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +44,7 @@ public class FeedbackController {
         try (Connection conn = DBConnection.getConnection()) {
             if (conn == null) return feedbackList;
 
-            String sql = "SELECT name, email, subject, rating, message FROM feedback ORDER BY id DESC";
+            String sql = "SELECT id, name, email, subject, rating, message FROM feedback ORDER BY id DESC";
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
 
@@ -52,8 +54,9 @@ public class FeedbackController {
                 String subject = rs.getString("subject");
                 int rating = rs.getInt("rating");
                 String message = rs.getString("message");
+                int id = rs.getInt("id");
 
-                FeedbackModel feedback = new FeedbackModel(name, email, subject, rating, message);
+                FeedbackModel feedback = new FeedbackModel(id, name, email, subject, rating, message);
                 feedbackList.add(feedback);
             }
         } catch (Exception e) {
@@ -62,5 +65,25 @@ public class FeedbackController {
 
         return feedbackList;
     }
+    public static boolean deleteFeedback(int feedbackId) {
+        boolean isDeleted = false;
+        String sql = "DELETE FROM feedback WHERE id = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            if (conn == null) return false;
+
+            stmt.setInt(1, feedbackId);
+            int rows = stmt.executeUpdate();
+            isDeleted = rows > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return isDeleted;
+    }
+
 
 }
