@@ -1,6 +1,6 @@
 package org.example.shopx.Checkout;
 
-public class AddressModel {
+public class Address {
     private int addressId;
     private String username;
     private String street;
@@ -9,7 +9,7 @@ public class AddressModel {
     private String postalCode;
     private String country;
 
-    public AddressModel() {}
+    public Address() {}
 
     public int getAddressId() {
         return addressId;
