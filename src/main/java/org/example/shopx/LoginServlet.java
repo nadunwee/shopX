@@ -51,7 +51,11 @@ public class LoginServlet extends HttpServlet {
             } else {
                 User user = UserDAO.authenticateUser(conn, username, password);
                 if (user != null) {
+                    System.out.println("Login Success");
+                    System.out.println(user.getId());
+                    System.out.println(user.getUsername());
                     session.setAttribute("username", user.getUsername());
+                    session.setAttribute("userID", user.getId());
                     session.setAttribute("type", "user");
                     response.sendRedirect("homePage.jsp");
                     return;

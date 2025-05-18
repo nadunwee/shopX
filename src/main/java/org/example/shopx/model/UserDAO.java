@@ -22,6 +22,7 @@ public class UserDAO {
 
         if (rs.next()) {
             return new User(
+                    rs.getInt("id"),
                     rs.getString("username"),
                     rs.getString("email"),
                     rs.getString("password")
