@@ -1,110 +1,205 @@
-/* Resetting default browser styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* Checkout Page Main Container */
+.checkout-container {
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
-/* Apply font and background to the body */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #ffffff;
-    color: #2d2d2d;
-    line-height: 1.6;
+/* Section Headings */
+.checkout-container h2 {
+    font-size: 1.8rem;
+    color: #4b1e83;
+    margin-bottom: 1.5rem;
+    border-left: 5px solid #ffd369;
+    padding-left: 12px;
 }
 
-/* Navigation Bar */
-nav {
+/* Cart Item Styling */
+.cart-item {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    background-color: #4b0082;
-    color: white;
-    padding: 1rem 2rem;
+    justify-content: space-between;
+    padding: 1rem 0;
+    border-bottom: 1px solid #ddd;
 }
 
-nav .logo {
-    font-weight: 800;
-    font-size: 1.5rem;
+.cart-item img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
 }
 
-nav .logo span {
-    color: #ffcc4d;
+.cart-details {
+    flex: 1;
+    margin-left: 1rem;
 }
 
-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 1.5rem;
-}
-
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-weight: 600;
-    transition: color 0.3s;
-}
-
-nav ul li a:hover {
-    color: #ffcc4d;
-}
-
-/* Hero Section */
-.hero {
-    background: linear-gradient(135deg, #4b0082, #800080);
-    color: white;
-    text-align: center;
-    padding: 6rem 2rem;
-}
-
-.hero h1 {
-    font-size: 3rem;
+.cart-details .item-title {
     font-weight: bold;
-    margin-bottom: 1rem;
+    color: #333;
 }
 
-.hero p {
-    font-size: 1.25rem;
-    margin-bottom: 2rem;
+.cart-details .item-price {
+    color: #4b1e83;
+    margin-top: 0.5rem;
 }
 
-.hero .btn-primary {
-    background-color: #ffcc4d;
-    color: #4b0082;
-    font-weight: 700;
+/* Button Styles */
+.btn-primary {
+    background-color: #4b1e83;
+    color: white;
     border: none;
-    padding: 0.8rem 2rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 1rem;
+    transition: background 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #3a1963;
+}
+
+.btn-secondary {
+    background-color: #ffd369;
+    color: #4b1e83;
+    border: none;
+    padding: 0.65rem 1.4rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-.hero .btn-primary:hover {
-    background-color: #ffdb70;
+.btn-secondary:hover {
+    background-color: #ffbd2d;
 }
 
-/* Section Below Hero */
-.section {
-    padding: 4rem 2rem;
+/* Address Selection */
+.address-box {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    background-color: #fdf9ff;
+}
+
+.address-box.selected {
+    border-color: #4b1e83;
+    background-color: #f0e6ff;
+}
+
+/* New Address Form */
+.new-address-form input,
+.new-address-form textarea {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+/* Payment Method Section */
+.payment-methods {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.payment-option {
+    flex: 1;
+    min-width: 150px;
+    padding: 1rem;
+    border: 2px solid #ccc;
+    border-radius: 10px;
     text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
-.section h2 {
-    font-size: 2rem;
-    font-weight: 800;
-    color: #4b0082;
+.payment-option:hover,
+.payment-option.selected {
+    border-color: #4b1e83;
+    background-color: #f2e6ff;
+}
+
+/* Order Summary */
+.order-summary {
+    border-top: 1px solid #ddd;
+    padding-top: 1.5rem;
+    margin-top: 2rem;
+}
+
+.order-summary .summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.8rem;
+    font-size: 1rem;
+}
+
+.order-summary .total {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #4b1e83;
+}
+
+/* Confirmation Message */
+.order-confirmation {
+    text-align: center;
+    padding: 3rem 1rem;
+    background-color: #f5f3fa;
+    border-radius: 12px;
+}
+
+.order-confirmation h2 {
+    color: #4b1e83;
+    margin-bottom: 1rem;
+}
+
+.order-confirmation p {
+    font-size: 1.1rem;
+    color: #333;
     margin-bottom: 2rem;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .hero h1 {
-        font-size: 2.2rem;
-    }
+/* In checkout.css */
+.card-fields {
+    display: none;
+    margin-top: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+.card-fields input {
+    margin-bottom: 10px;
+    display: block;
+    width: 100%;
+    padding: 8px;
+}
 
-    nav ul {
-        flex-direction: column;
-        gap: 1rem;
-    }
+/* In checkout.css */
+.input-card, .section-box {
+    background-color: #ffffff;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+.input-group input {
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+.section-title {
+    margin-bottom: 10px;
+    font-size: 22px;
 }

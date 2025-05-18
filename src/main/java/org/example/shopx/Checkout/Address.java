@@ -1,6 +1,7 @@
 package org.example.shopx.Checkout;
 
 public class Address {
+    private int userid;
     private int addressId;
     private String username;
     private String street;
@@ -10,6 +11,15 @@ public class Address {
     private String country;
 
     public Address() {}
+
+    public Address(int userid, String fullName, String street, String city, int zip) {
+        this.userid=userid;
+        this.username=fullName;
+        this.street=street;
+        this.city=city;
+        this.postalCode=String.valueOf(zip);
+
+    }
 
     public int getAddressId() {
         return addressId;

@@ -113,30 +113,34 @@
     </div>
 
     <h2 class="section-title">Add New Delivery Address</h2>
-    <form action="${pageContext.request.contextPath}/addAddress" method="post" class="input-group">
-        <input type="text" name="fullName" placeholder="Full Name" required>
-        <input type="text" name="street" placeholder="Street" required>
-        <input type="text" name="city" placeholder="City" required>
-        <input type="text" name="zip" placeholder="ZIP Code" required>
-        <input type="submit" class="btn-edge" value="Add Address">
-    </form>
+    <div class="input-card">
+        <form action="${pageContext.request.contextPath}/addAddress" method="post" class="input-group">
+            <input type="text" name="fullName" placeholder="Full Name" required>
+            <input type="text" name="street" placeholder="Street" required>
+            <input type="text" name="city" placeholder="City" required>
+            <input type="text" name="zip" placeholder="ZIP Code" required>
+            <input type="submit" class="btn-edge" value="Add Address">
+        </form>
+    </div>
 
     <h2 class="section-title">Select Payment Method</h2>
-    <form action="orderConfirmation.jsp" method="post">
-        <div class="payment-methods">
-            <label><input type="radio" name="paymentMethod" value="COD" onclick="togglePaymentDetails()"> Cash on Delivery</label>
-            <label><input type="radio" name="paymentMethod" value="CARD" onclick="togglePaymentDetails()"> Credit/Debit Card</label>
-            <label><input type="radio" name="paymentMethod" value="THIRD_PARTY" onclick="togglePaymentDetails()"> Pay via Gateway</label>
-        </div>
+    <div class="section-box">
+        <form action="" method="post">
+            <div class="payment-methods">
+                <label><input type="radio" name="paymentMethod" value="COD" onclick="togglePaymentDetails()"> Cash on Delivery</label><br>
+                <label><input type="radio" name="paymentMethod" value="CARD" onclick="togglePaymentDetails()"> Credit/Debit Card</label><br>
+                <label><input type="radio" name="paymentMethod" value="THIRD_PARTY" onclick="togglePaymentDetails()"> Pay via Gateway</label>
+            </div>
 
-        <div id="cardFields" class="card-fields">
-            <input type="text" name="cardNumber" placeholder="Card Number">
-            <input type="text" name="expiry" placeholder="Expiry">
-            <input type="password" name="cvv" placeholder="CVV">
-        </div>
+            <div id="cardFields" class="card-fields">
+                <input type="text" name="cardNumber" placeholder="Card Number">
+                <input type="text" name="expiry" placeholder="Expiry">
+                <input type="password" name="cvv" placeholder="CVV">
+            </div>
 
-        <button type="submit" class="confirm-btn edgy-btn"><i class='bx bx-credit-card'></i> Finalize Checkout</button>
-    </form>
+            <a href="orderConfirmation.jsp"><button type="submit" class="confirm-btn edgy-btn"><i class='bx bx-credit-card'></i> Finalize Checkout</button></a>
+        </form>
+    </div>
 </div>
 
 <script>
@@ -145,6 +149,7 @@
         const cardFields = document.getElementById('cardFields');
         cardFields.style.display = (selected === 'CARD') ? 'block' : 'none';
     }
+
 </script>
 
 </body>
