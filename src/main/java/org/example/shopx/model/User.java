@@ -1,14 +1,33 @@
 package org.example.shopx.model;
 
 public class User {
+    private int id; // userId
     private String username;
     private String email;
     private String password;
 
+    // Constructor with id
+    public User(int id, String username, String email, String password) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
+    // Optional: constructor without id (e.g., for registration)
     public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
+    }
+
+    // Getters and setters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUsername() {
