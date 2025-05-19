@@ -94,13 +94,13 @@ public class CartItem {
         return cartItems;
     }
 
-    // ✅ Updated method to accept userId instead of username
+    //  Updated method to accept userId
     public static void addToCart(List<CartItem> cart, int productId, int userId) throws SQLException {
         try (Connection conn = DBConnection.getConnection()) {
             conn.setAutoCommit(false);
 
             try {
-                // ✅ Fix: Use user_id instead of username
+
                 String checkQuery = "SELECT * FROM cart WHERE user_id = ? AND product_id = ?";
                 try (PreparedStatement checkStmt = conn.prepareStatement(checkQuery)) {
                     checkStmt.setInt(1, userId);
@@ -127,7 +127,7 @@ public class CartItem {
                     }
                 }
 
-                // Reduce product stock
+                // minus product stock
                 String stockUpdateQuery = "UPDATE products SET stock = stock - 1 WHERE product_id = ? AND stock > 0";
                 try (PreparedStatement stockStmt = conn.prepareStatement(stockUpdateQuery)) {
                     stockStmt.setInt(1, productId);
@@ -154,7 +154,7 @@ public class CartItem {
         }
     }
 
-    // Helper method: Get product price
+    //  Get product price
     private static double getProductPrice(Connection conn, int productId) throws SQLException {
         String query = "SELECT price FROM products WHERE product_id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -168,7 +168,7 @@ public class CartItem {
         return 0.0;
     }
 
-    // Helper method: Create CartItem object from product
+    // Create CartItem object from product
     private static CartItem getCartItemFromProduct(Connection conn, int productId, int userId) throws SQLException {
         String query = "SELECT * FROM products WHERE product_id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {

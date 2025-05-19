@@ -12,6 +12,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@WebServlet("/UpdateCartServlet")
 
 public class UpdateCartServlet extends HttpServlet {
 
@@ -82,15 +83,17 @@ public class UpdateCartServlet extends HttpServlet {
                                 }
 
                                 if (stock <= 0) {
-                                    // No stock available - throw or handle appropriately
+                                    // No stock available
                                     throw new SQLException("No more stock available for " + itemName);
                                 }
 
                                 // Increase quantity in cart
-                                String updateCart = "UPDATE cart SET quantity = quantity + 1 WHERE username = ? AND product_id = (SELECT product_id FROM products WHERE name = ?)";
+                                String updateCart = "UPDATE cart SET quantity = quantity + 1 WHERE user_id = ? AND product_id = (SELECT product_id FROM products WHERE name = ?)";
+
                                 try (PreparedStatement stmt = conn.prepareStatement(updateCart)) {
-                                    stmt.setString(1, username);
+                                    stmt.setInt(1, userId);  // instead of stmt.setString(1, username);
                                     stmt.setString(2, itemName);
+
                                     stmt.executeUpdate();
                                 }
 
@@ -116,10 +119,11 @@ public class UpdateCartServlet extends HttpServlet {
                                 try (Connection conn = DBConnection.getConnection()) {
                                     conn.setAutoCommit(false);
 
-                                    String updateCart = "UPDATE cart SET quantity = quantity - 1 WHERE username = ? AND product_id = (SELECT product_id FROM products WHERE name = ?)";
+                                    String updateCart = "UPDATE cart SET quantity = quantity - 1 WHERE user_id = ? AND product_id = (SELECT product_id FROM products WHERE name = ?)";
                                     try (PreparedStatement stmt = conn.prepareStatement(updateCart)) {
-                                        stmt.setString(1, username);
+                                        stmt.setInt(1, userId);
                                         stmt.setString(2, itemName);
+
                                         stmt.executeUpdate();
                                     }
 
@@ -143,13 +147,14 @@ public class UpdateCartServlet extends HttpServlet {
                                 conn.setAutoCommit(false);
 
                                 try {
-                                    String fetchQuery = "SELECT product_id, quantity FROM cart WHERE username = ? AND product_id = (SELECT product_id FROM products WHERE name = ?)";
+                                    String fetchQuery = "SELECT product_id, quantity FROM cart WHERE user_id = ? AND product_id = (SELECT product_id FROM products WHERE name = ?)";
                                     int productId = -1;
                                     int quantity = 0;
 
                                     try (PreparedStatement stmt = conn.prepareStatement(fetchQuery)) {
-                                        stmt.setString(1, username);
+                                        stmt.setInt(1, userId);
                                         stmt.setString(2, itemName);
+
                                         try (ResultSet rs = stmt.executeQuery()) {
                                             if (rs.next()) {
                                                 productId = rs.getInt("product_id");
@@ -159,10 +164,11 @@ public class UpdateCartServlet extends HttpServlet {
                                     }
 
                                     if (productId != -1) {
-                                        String deleteQuery = "DELETE FROM cart WHERE username = ? AND product_id = ?";
+                                        String deleteQuery = "DELETE FROM cart WHERE user_id = ? AND product_id = ?";
                                         try (PreparedStatement deleteStmt = conn.prepareStatement(deleteQuery)) {
-                                            deleteStmt.setString(1, username);
+                                            deleteStmt.setInt(1, userId);
                                             deleteStmt.setInt(2, productId);
+
                                             deleteStmt.executeUpdate();
                                         }
 

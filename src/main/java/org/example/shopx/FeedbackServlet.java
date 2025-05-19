@@ -41,7 +41,7 @@ public class FeedbackServlet extends HttpServlet {
         }
     }
 
-//    /Add doGet method to load all feedbacks
+//    Add doGet method to load all feedbacks
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<FeedbackModel> feedbackList = FeedbackController.getAllFeedbacks();
         request.setAttribute("feedbackList", feedbackList);

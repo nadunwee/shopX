@@ -8,7 +8,7 @@
 <head>
     <title>MyShop</title>
     <link rel="stylesheet" type="text/css" href="style.css">
-    <!-- Boxicons CDN -->
+
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body class="body1">
