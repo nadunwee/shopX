@@ -1,10 +1,8 @@
 package org.example.shopx.Checkout;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import org.example.shopx.DBConnection;
-import org.example.shopx.model.CartItem;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,7 +18,7 @@ public class ProcessCheckoutServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("username");
 
-        ArrayList<OrderItems> cartItems = getCartItems(username);
+        ArrayList<OrderItemsModel> cartItems = getCartItems(username);
 
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
@@ -28,7 +26,7 @@ public class ProcessCheckoutServlet extends HttpServlet {
             out.println("<p>No items found in cart.</p>");
         } else {
             out.println("<h2>Items in your cart:</h2>");
-            for (OrderItems item : cartItems) {
+            for (OrderItemsModel item : cartItems) {
                 out.println("<p>Product ID: " + item.getProductId() +
                         ", Quantity: " + item.getQuantity() +
                         ", Price: " + item.getPrice() + "</p>");
@@ -36,8 +34,8 @@ public class ProcessCheckoutServlet extends HttpServlet {
         }
     }
 
-    private ArrayList<OrderItems> getCartItems(String username) {
-        ArrayList<OrderItems> itemList = new ArrayList<>();
+    private ArrayList<OrderItemsModel> getCartItems(String username) {
+        ArrayList<OrderItemsModel> itemList = new ArrayList<>();
         try (Connection conn = DBConnection.getConnection()) {
             String sql = "SELECT * FROM cart_items c JOIN users u ON u.id = c.user_id WHERE u.username = ?";
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -49,7 +47,7 @@ public class ProcessCheckoutServlet extends HttpServlet {
                         int quantity = rs.getInt("quantity");
                         float price = rs.getFloat("price");
 
-                        OrderItems orderItem = new OrderItems(orderId, productId, quantity, price);
+                        OrderItemsModel orderItem = new OrderItemsModel(orderId, productId, quantity, price);
                         itemList.add(orderItem);
                     }
                 }

@@ -70,8 +70,8 @@ public class AddAddressServlet extends HttpServlet {
         }
     }
 
-    public static ArrayList<Address> getNewAddress(String username) {
-        ArrayList<Address> newAddressData = new ArrayList<>();
+    public static ArrayList<AddressModel> getNewAddress(String username) {
+        ArrayList<AddressModel> newAddressData = new ArrayList<>();
         try (Connection conn = DBConnection.getConnection()) {
             String sql = "SELECT * FROM delivery_address da JOIN users u ON u.id = da.userId WHERE u.username = ?";
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -84,7 +84,7 @@ public class AddAddressServlet extends HttpServlet {
                         String city = rs.getString("city");
                         int zip = rs.getInt("zip");
 
-                        Address newAddress = new Address(userId, fullName, street, city, zip);
+                        AddressModel newAddress = new AddressModel(userId, fullName, street, city, zip);
                         newAddressData.add(newAddress);
                     }
                 }

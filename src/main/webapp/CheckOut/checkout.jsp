@@ -52,6 +52,7 @@
             DBConnection DBUtil = null;
             Connection conn = DBUtil.getConnection();
 
+
             String sql = "SELECT d.full_name, d.street, d.city, d.zip " +
                     "FROM delivery_address d " +
                     "JOIN users u ON d.user_id = u.id " +

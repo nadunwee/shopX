@@ -1,15 +1,20 @@
 package org.example.shopx.Checkout;
 
-public class Address {
+public class AddressModel {
     private int addressId;
-    private String username;
+    private String fullname;
     private String street;
     private String city;
-    private String state;
-    private String postalCode;
-    private String country;
+    private int zip;
 
-    public Address() {}
+    public AddressModel(int addressId, String fullname, String street, String city, int zip) {
+        this.addressId = addressId;
+        this.fullname = fullname;
+        this.street = street;
+        this.city = city;
+        this.zip = zip;
+
+    }
 
     public int getAddressId() {
         return addressId;
@@ -19,12 +24,12 @@ public class Address {
         this.addressId = addressId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getFullname() {
+        return fullname;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public String getStreet() {
@@ -43,27 +48,12 @@ public class Address {
         this.city = city;
     }
 
-    public String getState() {
-        return state;
+    public int getZip() {
+        return zip;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setZip(int zip) {
+        this.zip = zip;
     }
 
-    public String getPostalCode() {
-        return postalCode;
-    }
-
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
 }
