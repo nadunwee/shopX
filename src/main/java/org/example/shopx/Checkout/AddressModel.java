@@ -13,7 +13,6 @@ public class AddressModel {
         this.street = street;
         this.city = city;
         this.zip = zip;
-
     }
 
     public int getAddressId() {
@@ -28,7 +27,7 @@ public class AddressModel {
         return fullname;
     }
 
-    public void setUFullname(String fullname) {
+    public void setFullname(String fullname) {
         this.fullname = fullname;
     }
 
@@ -55,5 +54,4 @@ public class AddressModel {
     public void setZip(int zip) {
         this.zip = zip;
     }
-
 }

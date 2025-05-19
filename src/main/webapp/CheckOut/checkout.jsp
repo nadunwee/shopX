@@ -2,12 +2,12 @@
 <%@ page import="java.sql.PreparedStatement" %>
 <%@ page import="java.sql.Connection" %>
 <%@ page import="org.example.shopx.DBConnection" %>
-<%@ page import="java.sql.SQLException" %>
-<%@ page import="org.example.shopx.model.CartItem" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.HashMap" %>
+<%@ page import="org.example.shopx.Checkout.AddressModel" %>
+<%@ page import="org.example.shopx.model.CartItem" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
@@ -15,8 +15,14 @@
     String name = "";
     double price = 0;
     int quantity = 0;
-
+    List<Map<String, String>> addresses = new ArrayList<>();
+    String fullName = "";
+    String street = "";
+    String city = "";
+    int zip = 0;
     String username = "";
+    int userId =0;
+
     if (usernameSession != null) {
         try {
             DBConnection DBUtil = null;
@@ -38,19 +44,13 @@
         } catch (Exception e) {
             e.printStackTrace();
         }
-    } else {
-        response.sendRedirect("login.jsp");
     }
 
-    List<Map<String, String>> addresses = new ArrayList<>();
-    String fullName = "";
-    String street = "";
-    String city = "";
-    String zip = "";
-    if (usernameSession != null) {
+
+    if (usernameSession == null) {
         try {
             DBConnection DBUtil = null;
-            Connection conn = DBUtil.getConnection();
+            Connection conn = DBConnection.getConnection();
 
 
             String sql = "SELECT d.full_name, d.street, d.city, d.zip " +
@@ -61,12 +61,16 @@
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, usernameSession);
             ResultSet rs = stmt.executeQuery();
-
+            ArrayList<AddressModel> newAddressData = new ArrayList<>();
             if (rs.next()) {
+                userId = rs.getInt("user_id");
                 fullName = rs.getString("full_name");
                 street = rs.getString("street");
                 city = rs.getString("city");
-                zip = rs.getString("zip");
+                zip = rs.getInt("zip");
+
+                AddressModel newAddress = new AddressModel(userId, fullName, street, city, zip);
+                newAddressData.add(newAddress);
             }
 
             rs.close();
@@ -75,8 +79,6 @@
         } catch (Exception e) {
             e.printStackTrace();
         }
-    } else {
-        response.sendRedirect("login.jsp");
     }
 %>
 
@@ -97,10 +99,10 @@
     <% double total = 0; %>
     <div class="cart-item-card">
         <div class="item-info">
-            <h3 class="item-name"><%= name %></h3>
-            <p class="item-price">Price: Rs. <%= price %></p>
-            <p class="item-quantity">Quantity: <%= quantity %></p>
-            <% total += quantity * price; %>
+            <h3 class="item-name"><%= CartItem.getName() %></h3>
+            <p class="item-price">Price: Rs. <%= CartItem.getPrice() %></p>
+            <p class="item-quantity">Quantity: <%= CartItem.getQuantity() %></p>
+            <% total += CartItem.getPrice() * CartItem.getQuantity(); %>
         </div>
     </div>
     <p class="item-total section-title">Total: Rs. <%= total %></p>
@@ -108,8 +110,8 @@
     <h2 class="section-title">Select Delivery Address</h2>
     <div class="payment-methods">
         <label>
-            <input type="radio" name="addressId" value="<%= fullName %>" required>
-            <%= fullName %> - <%= street %>, <%= city %>, <%= zip %>
+            <input type="radio" name="addressId" value="<%= AddressModel.getFullname() %>" required>
+            <%= AddressModel.getFullname() %>- <%= AddressModel.getStreet() %>,<%= AddressModel.getCity() %>, <%= AddressModel.getZip() %>
         </label>
     </div>
 
@@ -150,7 +152,6 @@
         const cardFields = document.getElementById('cardFields');
         cardFields.style.display = (selected === 'CARD') ? 'block' : 'none';
     }
-
 </script>
 
 </body>

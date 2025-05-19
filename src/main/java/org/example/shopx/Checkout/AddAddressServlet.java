@@ -1,14 +1,12 @@
 package org.example.shopx.Checkout;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import org.example.shopx.DBConnection;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
-import java.util.ArrayList;
 
 public class AddAddressServlet extends HttpServlet {
 
@@ -55,7 +53,7 @@ public class AddAddressServlet extends HttpServlet {
 
     private boolean updateAddress(int userId, String fullName, String street, String city, int zip) {
         try (Connection conn = DBConnection.getConnection()) {
-            String query = "INSERT INTO delivery_address (userId, fullName, street, city, zip) VALUES (?, ?, ?, ?, ?)";
+            String query = "INSERT INTO delivery_address (user_id, full_name, street, city, zip) VALUES (?, ?, ?, ?, ?)";
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
                 stmt.setInt(1, userId);
                 stmt.setString(2, fullName);
@@ -68,30 +66,5 @@ public class AddAddressServlet extends HttpServlet {
             e.printStackTrace();
             return false;
         }
-    }
-
-    public static ArrayList<AddressModel> getNewAddress(String username) {
-        ArrayList<AddressModel> newAddressData = new ArrayList<>();
-        try (Connection conn = DBConnection.getConnection()) {
-            String sql = "SELECT * FROM delivery_address da JOIN users u ON u.id = da.userId WHERE u.username = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setString(1, username);
-                try (ResultSet rs = stmt.executeQuery()) {
-                    while (rs.next()) {
-                        int userId = rs.getInt("userId");
-                        String fullName = rs.getString("fullName");
-                        String street = rs.getString("street");
-                        String city = rs.getString("city");
-                        int zip = rs.getInt("zip");
-
-                        AddressModel newAddress = new AddressModel(userId, fullName, street, city, zip);
-                        newAddressData.add(newAddress);
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return newAddressData;
     }
 }
