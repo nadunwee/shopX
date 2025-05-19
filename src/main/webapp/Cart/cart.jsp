@@ -25,11 +25,6 @@
   } catch (Exception e) {
     e.printStackTrace();
   }
-//
-//  double total = 0;
-//  for (CartItem item : cartItems) {
-//    total += item.quantity * item.price;
-//  }
 %>
 
 <!DOCTYPE html>
@@ -112,6 +107,18 @@
     .checkout-btn:hover {
       background-color: #ffbd2d;
     }
+
+    .stock-warning {
+      color: red;
+      font-size: 12px;
+      margin-left: 8px;
+    }
+
+    .disabled-btn {
+      background-color: #ddd !important;
+      color: #999 !important;
+      cursor: not-allowed;
+    }
   </style>
 </head>
 <body>
@@ -128,10 +135,21 @@
       <th>Qty</th>
       <th>Price (Rs.)</th>
       <th>Subtotal (Rs.)</th>
+      <th></th>
     </tr>
     </thead>
     <tbody>
-    <% for (CartItem item : cartItems) { %>
+    <%
+      for (CartItem item : cartItems) {
+        int stock = 0;
+        boolean disableIncrease = false;
+        try {
+          stock = CartItem.getStockForProduct(item.getName());
+          disableIncrease = item.getQuantity() >= stock;
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+    %>
     <tr>
       <td><%= item.getName() %></td>
       <td>
@@ -139,15 +157,21 @@
           <input type="hidden" name="itemName" value="<%= item.getName() %>">
           <button type="submit" name="action" value="decrease" style="padding:4px 10px;">−</button>
           <span><%= item.getQuantity() %></span>
-          <button type="submit" name="action" value="increase" style="padding:4px 10px;">+</button>
+          <button type="submit" name="action" value="increase"
+                  style="padding:4px 10px;"
+                  <%= disableIncrease ? "disabled class='disabled-btn'" : "" %>>
+            +
+          </button>
         </form>
+        <% if (disableIncrease) { %>
+        <div class="stock-warning">Max stock reached (Available: <%= stock %>)</div>
+        <% } %>
       </td>
       <td>Rs. <%= String.format("%.2f", item.getPrice()) %></td>
       <td style="text-align:right;">Rs. <%= String.format("%.2f", item.getQuantity() * item.getPrice()) %></td>
       <td style="text-align:right;">
         <form action="<%=request.getContextPath()%>/UpdateCartServlet" method="post">
-
-        <input type="hidden" name="itemName" value="<%= item.getName() %>">
+          <input type="hidden" name="itemName" value="<%= item.getName() %>">
           <button type="submit" name="action" value="delete" style="background:transparent; border:none; cursor:pointer; color:red;">
             <i class='bx bx-trash'></i>
           </button>
@@ -156,14 +180,17 @@
     </tr>
     <% } %>
     </tbody>
-
   </table>
 
   <div class="cart-total">
     <strong>Total: Rs. <%= String.format("%.2f", total) %></strong>
   </div>
 
-  <a href="../CheckOut/checkout.jsp" class="checkoutBtn"><button class="checkout-btn" type="submit"><i class='bx bx-credit-card'></i>Proceed to Checkout</button> </a>
+  <a href="../CheckOut/checkout.jsp" class="checkoutBtn">
+    <button class="checkout-btn" type="button">
+      <i class='bx bx-credit-card'></i> Proceed to Checkout
+    </button>
+  </a>
 </div>
 
 </body>

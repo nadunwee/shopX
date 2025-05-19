@@ -70,13 +70,13 @@
 
                 <div class="form-row">
                     <label for="businessContactNo">Business Contact No. * :</label>
-                    <input type="tel" id="businessContactNo" name="businessContactNo" required>
+                    <input type="number" id="businessContactNo" name="businessContactNo" required>
                 </div>
 
                 <div class="form-row">
                     <label for="businessRegNo">Business Registration No. * :</label><br>
                     <div class="promptRemaining" style="display: flex; flex-direction: column;">
-                        <input type="text" id="businessRegNo" name="businessRegNo" required maxlength="20" oninput="updateCharCount()">
+                        <input type="number" id="businessRegNo" name="businessRegNo" required>
                         <small id="charCount" style="color: gray;">20 characters remaining</small>
                     </div>
 
@@ -92,12 +92,21 @@
             document.addEventListener("DOMContentLoaded", function () {
                 const input = document.getElementById("businessRegNo");
                 const counter = document.getElementById("charCount");
+                const submitButton = document.querySelector(".vendor-actionBtn");
+                const maxLength = 20;
 
                 function updateCharCount() {
-                    const maxLength = parseInt(input.getAttribute("maxlength"));
-                    const currentLength = input.value.length;
-                    const remaining = maxLength - currentLength;
-                    counter.textContent = remaining + " characters remaining";
+                    const length = input.value.length;
+
+                    if (length > maxLength) {
+                        counter.textContent = "BR number exceeds 20 character limit!";
+                        counter.style.color = "red";
+                        submitButton.disabled = true;
+                    } else {
+                        counter.textContent = (maxLength - length) + " characters remaining";
+                        counter.style.color = "gray";
+                        submitButton.disabled = false;
+                    }
                 }
 
                 input.addEventListener("input", updateCharCount);

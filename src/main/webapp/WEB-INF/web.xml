@@ -135,4 +135,13 @@
         <url-pattern>/DeleteFeedback</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>UpdateCartServlet</servlet-name>
+        <servlet-class>org.example.shopx.UpdateCartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateCartServlet</servlet-name>
+        <url-pattern>/UpdateCart</url-pattern>
+    </servlet-mapping>
+
 </web-app>

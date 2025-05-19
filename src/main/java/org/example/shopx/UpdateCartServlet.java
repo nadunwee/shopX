@@ -12,10 +12,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/UpdateCartServlet")
+
 public class UpdateCartServlet extends HttpServlet {
 
-    @SuppressWarnings("unchecked")
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -27,31 +26,39 @@ public class UpdateCartServlet extends HttpServlet {
         }
 
         String action = request.getParameter("action");
-        int userId = (int) session.getAttribute("userId");
-        String username = session.getAttribute("username").toString(); // Get userId from session
+        String username = (String) session.getAttribute("username");
+        int userId = 0;
+
+        try (Connection conn = DBConnection.getConnection()) {
+            conn.setAutoCommit(false);
+
+            String sql = "SELECT id FROM users WHERE username = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, username);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    userId = rs.getInt("id");
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         System.out.println(username);
+        System.out.println(userId);
 
         if ("add".equals(action)) {
-            // Add to cart action
             String productIdParam = request.getParameter("product_id");
-
             if (productIdParam != null) {
                 int productId = Integer.parseInt(productIdParam);
-
                 try {
-                    // Use CartItem's addToCart method to handle adding to the cart
                     CartItem.addToCart(cart, productId, userId);
-
-                    // Save the updated cart to the session
                     session.setAttribute("cart", cart);
-
                 } catch (SQLException e) {
                     throw new ServletException("Error adding to cart", e);
                 }
             }
         } else if ("increase".equals(action) || "decrease".equals(action) || "delete".equals(action)) {
-            // Update cart (increase, decrease, delete)
             String itemName = request.getParameter("itemName");
 
             for (int i = 0; i < cart.size(); i++) {
@@ -62,44 +69,47 @@ public class UpdateCartServlet extends HttpServlet {
                             try (Connection conn = DBConnection.getConnection()) {
                                 conn.setAutoCommit(false);
 
-                                String updateCart = "UPDATE cart SET quantity = quantity + 1 WHERE username = ? AND product_id = (SELECT product_id FROM products WHERE name = ?)";
-                                try (PreparedStatement stmt = conn.prepareStatement(updateCart)) {
-                                    stmt.setString(1, username);
-                                    stmt.setString(2, itemName);
-                                    int rows = stmt.executeUpdate();
-                                    if (rows == 0) {
-                                        throw new SQLException("Failed to update cart");
-                                    }
-                                }
-
+                                // Check current stock
                                 String checkStock = "SELECT stock FROM products WHERE name = ?";
+                                int stock = 0;
                                 try (PreparedStatement stockStmt = conn.prepareStatement(checkStock)) {
                                     stockStmt.setString(1, itemName);
                                     try (ResultSet rs = stockStmt.executeQuery()) {
-                                        if (rs.next() && rs.getInt("stock") <= 0) {
-                                            throw new SQLException("No more stock available for " + itemName);
+                                        if (rs.next()) {
+                                            stock = rs.getInt("stock");
                                         }
                                     }
                                 }
 
+                                if (stock <= 0) {
+                                    // No stock available - throw or handle appropriately
+                                    throw new SQLException("No more stock available for " + itemName);
+                                }
 
-                                // Decrease stock
-                                String updateStock = "UPDATE products SET stock = stock - 1 WHERE product_id = (SELECT product_id FROM products WHERE name = ?) AND stock > 0";
+                                // Increase quantity in cart
+                                String updateCart = "UPDATE cart SET quantity = quantity + 1 WHERE username = ? AND product_id = (SELECT product_id FROM products WHERE name = ?)";
+                                try (PreparedStatement stmt = conn.prepareStatement(updateCart)) {
+                                    stmt.setString(1, username);
+                                    stmt.setString(2, itemName);
+                                    stmt.executeUpdate();
+                                }
+
+                                // Reduce stock by 1
+                                String updateStock = "UPDATE products SET stock = stock - 1 WHERE product_id = (SELECT product_id FROM products WHERE name = ?)";
                                 try (PreparedStatement stmt = conn.prepareStatement(updateStock)) {
                                     stmt.setString(1, itemName);
-                                    int rows = stmt.executeUpdate();
-                                    if (rows == 0) {
-                                        throw new SQLException("Out of stock");
-                                    }
+                                    stmt.executeUpdate();
                                 }
 
                                 conn.commit();
-                                item.setQuantity(item.getQuantity() + 1); // session cart
+
+                                item.setQuantity(item.getQuantity() + 1);
 
                             } catch (SQLException e) {
                                 throw new ServletException("Increase quantity failed", e);
                             }
                             break;
+
 
                         case "decrease":
                             if (item.getQuantity() > 1) {
@@ -113,7 +123,6 @@ public class UpdateCartServlet extends HttpServlet {
                                         stmt.executeUpdate();
                                     }
 
-                                    // Increase stock back
                                     String updateStock = "UPDATE products SET stock = stock + 1 WHERE product_id = (SELECT product_id FROM products WHERE name = ?)";
                                     try (PreparedStatement stmt = conn.prepareStatement(updateStock)) {
                                         stmt.setString(1, itemName);
@@ -121,19 +130,19 @@ public class UpdateCartServlet extends HttpServlet {
                                     }
 
                                     conn.commit();
-                                    item.setQuantity(item.getQuantity() - 1); // session cart
+                                    item.setQuantity(item.getQuantity() - 1);
 
                                 } catch (SQLException e) {
                                     throw new ServletException("Decrease quantity failed", e);
                                 }
                             }
                             break;
+
                         case "delete":
                             try (Connection conn = DBConnection.getConnection()) {
                                 conn.setAutoCommit(false);
 
                                 try {
-                                    // First, find the quantity and product_id for this item
                                     String fetchQuery = "SELECT product_id, quantity FROM cart WHERE username = ? AND product_id = (SELECT product_id FROM products WHERE name = ?)";
                                     int productId = -1;
                                     int quantity = 0;
@@ -150,7 +159,6 @@ public class UpdateCartServlet extends HttpServlet {
                                     }
 
                                     if (productId != -1) {
-                                        // Delete from cart
                                         String deleteQuery = "DELETE FROM cart WHERE username = ? AND product_id = ?";
                                         try (PreparedStatement deleteStmt = conn.prepareStatement(deleteQuery)) {
                                             deleteStmt.setString(1, username);
@@ -158,7 +166,6 @@ public class UpdateCartServlet extends HttpServlet {
                                             deleteStmt.executeUpdate();
                                         }
 
-                                        // Restore stock
                                         String stockUpdate = "UPDATE products SET stock = stock + ? WHERE product_id = ?";
                                         try (PreparedStatement stockStmt = conn.prepareStatement(stockUpdate)) {
                                             stockStmt.setInt(1, quantity);
@@ -175,7 +182,6 @@ public class UpdateCartServlet extends HttpServlet {
                                     conn.setAutoCommit(true);
                                 }
 
-                                // Remove from session cart
                                 for (int j = 0; j < cart.size(); j++) {
                                     if (cart.get(j).getName().equals(itemName)) {
                                         cart.remove(j);
@@ -190,12 +196,9 @@ public class UpdateCartServlet extends HttpServlet {
                     break;
                 }
             }
-
-            // Save the updated cart to the session
             session.setAttribute("cart", cart);
         }
 
-        // Redirect back to the cart page to display the updated cart
         response.sendRedirect("Cart/cart.jsp");
     }
 }

@@ -67,7 +67,7 @@
               + Get 80% money from a sold item.
             </p>
             <p class="price">Rs.1000</p>
-            <a href="vendorSubscriptionForm.jsp?sub=bron  ze"><button class="add-btn" value="bronze" name="bronze" style="margin-top: 45px">Select Bronze</button></a>
+            <a href="vendorSubscriptionForm.jsp?sub=bronze"><button class="add-btn" value="bronze" name="bronze" style="margin-top: 45px">Select Bronze</button></a>
           </div>
         </div>
       </div>

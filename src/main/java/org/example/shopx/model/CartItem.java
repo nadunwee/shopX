@@ -183,4 +183,17 @@ public class CartItem {
         }
         return null;
     }
+    public static int getStockForProduct(String productName) throws SQLException {
+        try (Connection conn = DBConnection.getConnection()) {
+            String sql = "SELECT stock FROM products WHERE name = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, productName);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt("stock");
+                }
+            }
+        }
+        return 0;
+    }
 }
