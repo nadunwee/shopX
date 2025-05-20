@@ -62,33 +62,49 @@ public class RegisterServlet extends HttpServlet {
                 String username = request.getParameter("username");
                 String email = request.getParameter("email");
                 String password = request.getParameter("password");
+                String confirmPassword = request.getParameter("confirm-password");
+                String dob = request.getParameter("dob");
+                String nationalId = request.getParameter("national-id");
 
                 System.out.println(username);
                 System.out.println(email);
                 System.out.println(password);
 
-//                if (!InputValidator.isValidUsername(username)) {
-//                    request.setAttribute("error", "Invalid username. Must be 4-20 characters and alphanumeric.");
-//                    request.getRequestDispatcher("accessPages/register.jsp").forward(request, response);
-//                    return;
-//                }
+                if (!InputValidator.isValidUsername(username)) {
+                    request.setAttribute("error", "Invalid username. Must be 4-20 characters and alphanumeric.");
+                    request.getRequestDispatcher("accessPages/register.jsp").forward(request, response);
+                    return;
+                }
 
-//                if (!InputValidator.isStrongPassword(password)) {
-//                    request.setAttribute("error", "Password must be at least 8 characters with uppercase, number, and symbol.");
-//                    request.getRequestDispatcher("accessPages/register.jsp").forward(request, response);
-//                    return;
-//                }
-//
-//                // Password match check
-//                String confirmPassword = request.getParameter("confirm-password");
-//                if (!password.equals(confirmPassword)) {
-//                    request.setAttribute("error", "Passwords do not match.");
-//                    request.getRequestDispatcher("accessPages/register.jsp").forward(request, response);
-//                    return;
-//                }
+                if (!InputValidator.isStrongPassword(password)) {
+                    request.setAttribute("error", "Password must be at least 8 characters with uppercase, number, and symbol.");
+                    request.getRequestDispatcher("accessPages/register.jsp").forward(request, response);
+                    return;
+                }
+
+                // Password match check
+                if (!password.equals(confirmPassword)) {
+                    request.setAttribute("error", "Passwords do not match.");
+                    request.getRequestDispatcher("accessPages/register.jsp").forward(request, response);
+                    return;
+                }
+
+                if (!InputValidator.isValidDOB(dob)) {
+                    request.setAttribute("error", "Invalid date of birth. You must be at least 13 years old.");
+                    request.getRequestDispatcher("accessPages/register.jsp").forward(request, response);
+                    return;
+                }
+
+                if (!InputValidator.isValidNationalID(nationalId)) {
+                    request.setAttribute("error", "Invalid national ID. It must be 8 to 12 digits long.");
+                    request.getRequestDispatcher("accessPages/register.jsp").forward(request, response);
+                    return;
+                }
+
+
 
                 // If valid, proceed
-                User user = new User(username, email, password);
+                User user = new User(username, email, password, dob, nationalId);
                 success = UserDAO.registerUser(conn, user);
             }
 

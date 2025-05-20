@@ -50,12 +50,30 @@
           <input type="password" id="confirm-password" name="confirm-password" required>
         </div>
 
+        <div class="input-group">
+          <label for="dob">Date of Birth</label>
+          <input type="date" id="dob" name="dob" required>
+        </div>
+
+        <div class="input-group">
+          <label for="national-id">National ID </label>
+          <input type="text" id="national-id" name="national-id" required>
+        </div>
+
         <button type="submit" class="register-btn">Register</button>
       </form>
     </div>
 
   </div>
 </div>
+
+<% String error = (String) request.getAttribute("error"); %>
+<% if (error != null) { %>
+<script>
+  alert("<%= error %>");
+  window.location.href = "accessPages/register.jsp";
+</script>
+<% } %>
 
 </body>
 </html>
