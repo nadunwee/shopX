@@ -141,6 +141,15 @@
             cursor: pointer;
         }
 
+        .input-group select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: white;
+            color: #333;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -154,15 +163,16 @@
     String name = "";
     String email = "";
     String dob = "";
-    String nationalId = "";
+    String gender = "";
     String password = "";
+    String created_at = "";
 
     String username = "";
     if (usernameSession != null) {
         try {
             DBConnection DBUtil = null;
             Connection conn = DBUtil.getConnection();
-            String sql = "SELECT username, email, dob, national_id, password FROM users WHERE username = ?";
+            String sql = "SELECT username, email, dob, gender, password, created_at FROM users WHERE username = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, usernameSession);
             ResultSet rs = stmt.executeQuery();
@@ -171,8 +181,9 @@
                 name = rs.getString("username");
                 email = rs.getString("email");
                 dob = rs.getString("dob");
-                nationalId = rs.getString("national_id");
+                gender = rs.getString("gender");
                 password = rs.getString("password");
+                created_at = rs.getString("created_at");
             }
 
             rs.close();
@@ -231,7 +242,8 @@
             <p><strong>Name:</strong><%= name %></p>
             <p><strong>Email:</strong><%= email %></p>
             <p><strong>Date Of Birth: </strong><%= dob %> </p>
-            <p><strong>National ID: </strong><%= nationalId %> </p>
+            <p><strong>Gender: </strong><%= gender %> </p>
+            <p><strong>Account Created At: </strong><%= created_at %> </p>
         </div>
 
         <div class="account-card">
@@ -280,9 +292,13 @@
                 <label>Email:</label>
                 <input type="email" name="email" value="<%= email %>">
             </div>
-            <div>
-                <label>National ID:</label>
-                <input type="text" name="nationalID" value="<%= nationalId %>">
+            <div class="input-group">
+                <label for="gender">Gender</label>
+                <select id="gender" name="gender" required>
+                    <option value="male" <%= gender.equalsIgnoreCase("male") ? "selected" : "" %>>Male</option>
+                    <option value="female" <%= gender.equalsIgnoreCase("female") ? "selected" : "" %>>Female</option>
+                    <option value="other" <%= gender.equalsIgnoreCase("other") ? "selected" : "" %>>Other</option>
+                </select>
             </div>
             <div>
                 <label>Date Of Birth:</label>

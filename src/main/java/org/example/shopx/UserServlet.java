@@ -17,16 +17,16 @@ public class UserServlet extends HttpServlet {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             String dob = request.getParameter("dob");
-            String nationalID = request.getParameter("nationalID");
+            String gender = request.getParameter("gender");
 
             try {
                 Connection conn = DBConnection.getConnection();
-                String sql = "UPDATE users SET email = ?, password = ?, dob = ?, national_id = ? WHERE username = ?";
+                String sql = "UPDATE users SET email = ?, password = ?, dob = ?, gender = ? WHERE username = ?";
                 PreparedStatement stmt = conn.prepareStatement(sql);
                 stmt.setString(1, email);
                 stmt.setString(2, password);
                 stmt.setString(3, dob);
-                stmt.setString(4, nationalID);
+                stmt.setString(4, gender);
                 stmt.setString(5, username);
 
                 int updated = stmt.executeUpdate();

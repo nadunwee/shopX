@@ -56,8 +56,13 @@
         </div>
 
         <div class="input-group">
-          <label for="national-id">National ID </label>
-          <input type="text" id="national-id" name="national-id" required>
+          <label for="gender">Gender</label>
+          <select id="gender" name="gender" required>
+            <option value="" disabled selected>Select your gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
         </div>
 
         <button type="submit" class="register-btn">Register</button>
