@@ -20,6 +20,7 @@ public class UpdateCartServlet extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
+
         List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
 
         if (cart == null) {
@@ -27,26 +28,29 @@ public class UpdateCartServlet extends HttpServlet {
         }
 
         String action = request.getParameter("action");
+        int userId = (int) session.getAttribute("userID");
         String username = (String) session.getAttribute("username");
-        int userId = 0;
 
-        try (Connection conn = DBConnection.getConnection()) {
-            conn.setAutoCommit(false);
+//        int userId = 0;
 
-            String sql = "SELECT id FROM users WHERE username = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setString(1, username);
-                ResultSet rs = stmt.executeQuery();
-                if (rs.next()) {
-                    userId = rs.getInt("id");
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+//        try (Connection conn = DBConnection.getConnection()) {
+//            conn.setAutoCommit(false);
+//
+//            String sql = "SELECT id FROM users WHERE username = ?";
+//            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+//                stmt.setString(1, username);
+//                ResultSet rs = stmt.executeQuery();
+//                if (rs.next()) {
+//                    userId = rs.getInt("id");
+//                }
+//            }
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
 
         System.out.println(username);
-        System.out.println(userId);
+//        System.out.println(userId);
+
 
         if ("add".equals(action)) {
             String productIdParam = request.getParameter("product_id");
