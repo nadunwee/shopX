@@ -15,13 +15,19 @@ public class UserServlet extends HttpServlet {
         if ("updateProfile".equals(action)) {
             String username = request.getParameter("username");
             String email = request.getParameter("email");
+            String password = request.getParameter("password");
+            String dob = request.getParameter("dob");
+            String nationalID = request.getParameter("nationalID");
 
             try {
                 Connection conn = DBConnection.getConnection();
-                String sql = "UPDATE users SET email = ? WHERE username = ?";
+                String sql = "UPDATE users SET email = ?, password = ?, dob = ?, national_id = ? WHERE username = ?";
                 PreparedStatement stmt = conn.prepareStatement(sql);
                 stmt.setString(1, email);
-                stmt.setString(2, username);
+                stmt.setString(2, password);
+                stmt.setString(3, dob);
+                stmt.setString(4, nationalID);
+                stmt.setString(5, username);
 
                 int updated = stmt.executeUpdate();
 

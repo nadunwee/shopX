@@ -153,14 +153,16 @@
     String usernameSession = (String) session.getAttribute("username");
     String name = "";
     String email = "";
-    String joined = "";
+    String dob = "";
+    String nationalId = "";
+    String password = "";
 
     String username = "";
     if (usernameSession != null) {
         try {
             DBConnection DBUtil = null;
             Connection conn = DBUtil.getConnection();
-            String sql = "SELECT username, email FROM users WHERE username = ?";
+            String sql = "SELECT username, email, dob, national_id, password FROM users WHERE username = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, usernameSession);
             ResultSet rs = stmt.executeQuery();
@@ -168,6 +170,9 @@
             if (rs.next()) {
                 name = rs.getString("username");
                 email = rs.getString("email");
+                dob = rs.getString("dob");
+                nationalId = rs.getString("national_id");
+                password = rs.getString("password");
             }
 
             rs.close();
@@ -225,7 +230,8 @@
             <h3>Profile Info</h3>
             <p><strong>Name:</strong><%= name %></p>
             <p><strong>Email:</strong><%= email %></p>
-            <p><strong>Joined:</strong> January 2024</p>
+            <p><strong>Date Of Birth: </strong><%= dob %> </p>
+            <p><strong>National ID: </strong><%= nationalId %> </p>
         </div>
 
         <div class="account-card">
@@ -268,12 +274,25 @@
             <input type="hidden" name="action" value="updateProfile">
             <div>
                 <label>Username:</label>
-                <input type="text" name="username" value="<%= name %>" readonly>
+                <input type="text" name="username" style="color:#aaa" value="<%= name %>" readonly>
             </div>
             <div>
                 <label>Email:</label>
                 <input type="email" name="email" value="<%= email %>">
             </div>
+            <div>
+                <label>National ID:</label>
+                <input type="text" name="nationalID" value="<%= nationalId %>">
+            </div>
+            <div>
+                <label>Date Of Birth:</label>
+                <input type="date" name="dob" value="<%= dob %>">
+            </div>
+            <div>
+            <label>Password: </label>
+            <input type="password" name="password" value="<%= password %>">
+            </div>
+
             <br>
             <button type="submit">Save Changes</button>
         </form>
