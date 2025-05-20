@@ -24,44 +24,6 @@ public class ProcessCheckoutServlet extends HttpServlet {
             return;
         }
 
-        // Retrieve selected delivery address
-        String addressIdStr = request.getParameter("addressId");
-        if (addressIdStr == null || addressIdStr.trim().isEmpty()) {
-            session.setAttribute("errorMessage", "Please select a delivery address.");
-            response.sendRedirect("checkout.jsp");
-            return;
-        }
-
-        int addressId = Integer.parseInt(addressIdStr);
-
-        // Retrieve selected payment method
-        String paymentMethod = request.getParameter("paymentMethod");
-        if (paymentMethod == null || paymentMethod.trim().isEmpty()) {
-            session.setAttribute("errorMessage", "Please select a payment method.");
-            response.sendRedirect("checkout.jsp");
-            return;
-        }
-
-        // Optional: Handle card details if payment method is CARD
-        if (paymentMethod.equals("CARD")) {
-            String cardNumber = request.getParameter("cardNumber");
-            String expiry = request.getParameter("expiry");
-            String cvv = request.getParameter("cvv");
-
-            if (cardNumber == null || expiry == null || cvv == null ||
-                    cardNumber.isEmpty() || expiry.isEmpty() || cvv.isEmpty()) {
-                session.setAttribute("errorMessage", "Please provide complete card details.");
-                response.sendRedirect("checkout.jsp");
-                return;
-            }
-
-            // Validate or store card details here (not recommended to store raw card data!)
-        }
-
-        // ✅ Continue processing the order
-        // You would insert order into the database, generate an order ID, etc.
-        // We'll just simulate success for now.
-
         session.setAttribute("successMessage", "Your order has been placed successfully!");
         response.sendRedirect("orderConfirmation.jsp");
     }

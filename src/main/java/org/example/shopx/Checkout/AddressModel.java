@@ -91,6 +91,25 @@ public class AddressModel {
         return isUpdated;
     }
 
+    public static boolean deleteDeliveryAddress(int userId, int addressId) {
+        boolean isSuccess = false;
+
+        try (Connection conn = DBConnection.getConnection()) {
+            String deleteQuery = "DELETE FROM delivery_address WHERE address_id = ? AND user_id = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(deleteQuery)) {
+                stmt.setInt(1, addressId);
+                stmt.setInt(2, userId);
+                int rowsAffected = stmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    isSuccess = true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return isSuccess;
+    }
 
 
     public  int getAddressId() {

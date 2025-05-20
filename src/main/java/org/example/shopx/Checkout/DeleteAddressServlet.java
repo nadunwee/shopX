@@ -32,7 +32,7 @@ public class DeleteAddressServlet extends HttpServlet {
             return;
         }
 
-        boolean isDeleted = AddressModel.deleteAddress(addressID, userId);
+        boolean isDeleted = AddressModel.deleteDeliveryAddress(addressID, userId);
 
         if (isDeleted) {
             response.getWriter().println("<script>alert('Address deleted successfully!'); window.location.href='checkout.jsp';</script>");

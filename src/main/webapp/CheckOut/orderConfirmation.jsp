@@ -9,12 +9,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
 
-    Integer orderId = (Integer) request.getAttribute("orderId");
-    if (orderId == null) {
+    String usernameSession = (String) session.getAttribute("username");
+    if (usernameSession == null) {
         response.sendRedirect("checkout.jsp");
         return;
     }
 
+    int orderId = 0;
+    try {
+        orderId = Integer.parseInt(request.getParameter("orderId"));
+    } catch (Exception e) {
+        response.sendRedirect("checkout.jsp");
+        return;
+    }
     Map<String, Object> orderDetails = new HashMap<>();
     List<Map<String, Object>> orderItems = new ArrayList<>();
     Map<String, String> deliveryAddress = new HashMap<>();
@@ -33,7 +40,11 @@
 
             // Get delivery address
             PreparedStatement addrStmt = conn.prepareStatement(
-                    "SELECT full_name, street, city, zip FROM delivery_address WHERE id = ?");
+                    "SELECT o.*, da.full_name ,da.street, da.city, da.zip FROM orders o " +
+                            "JOIN delivery_address da ON o.delivery_address_id = da.id " +
+                            "WHERE o.user_id = ? ORDER BY o.created_at DESC LIMIT 1"
+            );
+
             addrStmt.setInt(1, addressId);
             ResultSet rsAddr = addrStmt.executeQuery();
             if (rsAddr.next()) {

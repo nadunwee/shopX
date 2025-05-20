@@ -102,15 +102,19 @@
             <td><%= addr.getCity() %></td>
             <td><%= addr.getZip() %></td>
             <td>
-                <form action="${pageContext.request.contextPath}/editAddressForm" method="post" style="display:inline;">
+                <form action="${pageContext.request.contextPath}/editAddressForm" method="get" style="display:inline;">
                     <input type="hidden" name="addressId" value="<%= addr.getAddressId() %>">
-                    <button type="submit" class="btn-edge">Edit</button>
+                    <button type="submit">Edit</button>
+                </form>
+<%--                //delete button--%>
+                <form id="deleteForm-<%= addr.getAddressId() %>" action="${pageContext.request.contextPath}/deleteAddress" method="post" style="display:inline;">
+                    <input type="hidden" name="addressId" value="<%= addr.getAddressId() %>">
+                    <button type="button" class="btn-edge" onclick="confirmDelete(<%= addr.getAddressId() %>)">Delete</button>
                 </form>
 
-                <button type="button" class="btn-edge" onclick="toggleEditForm(<%= addr.getAddressId() %>)">Edit</button>
 
-                <div id="editForm-<%= addr.getAddressId() %>" class="edit-form" style="display: none;">
-                    <h2>Edit Address</h2>
+                <div id="editForm-<%= addr.getAddressId() %>" style="display: none; margin-top: 10px;">
+
                     <form action="${pageContext.request.contextPath}/updateAddress" method="post">
                         <input type="hidden" name="addressId" value="<%= addr.getAddressId() %>">
                         <input type="text" name="fullName" value="<%= addr.getFullname() %>" required>
@@ -149,7 +153,7 @@
     </div>
     <h2 class="section-title">Select Payment Method</h2>
     <div class="section-box">
-        <form action="" method="post">
+        <form action="processCheckout" method="post">
             <div class="payment-methods">
                 <label><input type="radio" name="paymentMethod" value="COD" onclick="togglePaymentDetails()"> Cash on Delivery</label><br>
                 <label><input type="radio" name="paymentMethod" value="CARD" onclick="togglePaymentDetails()"> Credit/Debit Card</label><br>
@@ -158,15 +162,26 @@
 
             <div id="cardFields" class="card-fields">
                 <input type="text" name="cardNumber" placeholder="Card Number">
-                <input type="text" name="expiry" placeholder="Expiry">
+                <input type="date" name="expiry" placeholder="Expiry">
                 <input type="password" name="cvv" placeholder="CVV">
             </div>
 
-            <a href="orderConfirmation.jsp"><button type="submit" class="confirm-btn edgy-btn"><i class='bx bx-credit-card'></i> Finalize Checkout</button></a>
         </form>
-    </div>
 
+        <button type="button" class="confirm-btn edgy-btn" onclick="validateCheckout()">
+            <i class='bx bx-credit-card'></i> Finalize Checkout
+        </button>
+    </div>
 </div>
+<script>
+    function confirmDelete(addressId) {
+        const confirmed = confirm("Are you sure you want to delete this address?");
+        if (confirmed) {
+            document.getElementById(`deleteForm-${addressId}`).submit();
+        }
+    }
+</script>
+
 <script>
     function toggleEditForm(addressId) {
         const form = document.getElementById(`editForm-${addressId}`);
@@ -181,6 +196,53 @@
         cardFields.style.display = (selected === 'CARD') ? 'block' : 'none';
     }
 </script>
+<script>
+    function validateCheckout() {
+        const addressSelected = document.querySelector('input[name="addressId"]:checked');
+        const paymentSelected = document.querySelector('input[name="paymentMethod"]:checked');
+
+        if (!addressSelected) {
+            alert("Please select a delivery address.");
+            return;
+        }
+
+        if (!paymentSelected) {
+            alert("Please select a payment method.");
+            return;
+        }
+
+        // If CARD selected, validate card fields
+        if (paymentSelected.value === "CARD") {
+            const cardNumber = document.querySelector('input[name="cardNumber"]').value.trim();
+            const expiry = document.querySelector('input[name="expiry"]').value.trim();
+            const cvv = document.querySelector('input[name="cvv"]').value.trim();
+
+            if (!cardNumber || !expiry || !cvv) {
+                alert("Please fill in all card details.");
+                return;
+            }
+        }
+
+        document.getElementById("processCheckout").submit();
+    }
+
+    function togglePaymentDetails() {
+        const selected = document.querySelector('input[name="paymentMethod"]:checked');
+        const cardFields = document.getElementById('cardFields');
+        if (selected && selected.value === 'CARD') {
+            cardFields.style.display = 'block';
+        } else {
+            cardFields.style.display = 'none';
+        }
+    }
+
+    // Attach change event listeners on page load
+    window.onload = () => {
+        const radios = document.querySelectorAll('input[name="paymentMethod"]');
+        radios.forEach(r => r.addEventListener('change', togglePaymentDetails));
+    };
+</script>
+
 
 </body>
 </html>
