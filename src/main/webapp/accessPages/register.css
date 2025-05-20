@@ -133,4 +133,12 @@ body {
     border-radius: 5px;
 }
 
+.input-group select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: white;
+    color: #333;
+}
 

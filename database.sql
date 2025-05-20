@@ -5,8 +5,10 @@ CREATE TABLE users (
        username VARCHAR(100) NOT NULL,
        email VARCHAR(100) NOT NULL,
        password VARCHAR(255) NOT NULL,
-       national_id VARCHAR(20) NOT NULL,
-       dob DATE NOT NULL
+       gender VARCHAR(20) NOT NULL,
+       dob DATE NOT NULL,
+        `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+        `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 );
 
 

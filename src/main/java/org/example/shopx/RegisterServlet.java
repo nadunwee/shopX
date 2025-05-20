@@ -28,7 +28,7 @@ public class RegisterServlet extends HttpServlet {
                 String confirmPassword = request.getParameter("vendorConfirmPassword");
                 if (!password.equals(confirmPassword)) {
                     request.setAttribute("error", "Passwords do not match.");
-                    request.getRequestDispatcher("accessPages/register.jsp").forward(request, response);
+                    request.getRequestDispatcher("accessPages/vendorRegistration.jsp").forward(request, response);
                     return;
                 }
 
@@ -64,11 +64,7 @@ public class RegisterServlet extends HttpServlet {
                 String password = request.getParameter("password");
                 String confirmPassword = request.getParameter("confirm-password");
                 String dob = request.getParameter("dob");
-                String nationalId = request.getParameter("national-id");
-
-                System.out.println(username);
-                System.out.println(email);
-                System.out.println(password);
+                String gender = request.getParameter("gender");
 
                 if (!InputValidator.isValidUsername(username)) {
                     request.setAttribute("error", "Invalid username. Must be 4-20 characters and alphanumeric.");
@@ -95,16 +91,8 @@ public class RegisterServlet extends HttpServlet {
                     return;
                 }
 
-                if (!InputValidator.isValidNationalID(nationalId)) {
-                    request.setAttribute("error", "Invalid national ID. It must be 8 to 12 digits long.");
-                    request.getRequestDispatcher("accessPages/register.jsp").forward(request, response);
-                    return;
-                }
-
-
-
                 // If valid, proceed
-                User user = new User(username, email, password, dob, nationalId);
+                User user = new User(username, email, password, gender, dob);
                 success = UserDAO.registerUser(conn, user);
             }
 

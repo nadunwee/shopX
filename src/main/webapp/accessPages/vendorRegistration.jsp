@@ -3,14 +3,14 @@
 <html>
 <head>
     <title>ShopX | Vendor Registration</title>
-    <link rel="stylesheet" type="text/css" href="register.css">
+    <link rel="stylesheet" type="text/css" href="vendorregistration.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
 
 <main class="register-main">
     <h2 class="mainTopic" style="margin-left: 20px;font-size: 28px; color: #4b1e83; text-align: center">Vendor Registration</h2>
-    <div class="register-container" style="margin-left: 350px; padding: 50px; margin-bottom: 60px;">
+    <div class="register-container" style="padding: 50px; margin-bottom: 60px;">
 
         <form action="${pageContext.request.contextPath}/registerUser" method="POST" class="register-form" enctype="multipart/form-data">
 

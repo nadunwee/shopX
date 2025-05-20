@@ -5,25 +5,25 @@ public class User {
     private String username;
     private String email;
     private String password;
-    private String nationalId;
+    private String gender;
     private String dob;
 
     // Constructor with id
-    public User(int id, String username, String email, String password, String nationalId, String dob) {
+    public User(int id, String username, String email, String password, String gender, String dob) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.nationalId = nationalId;
+        this.gender = gender;
         this.dob = dob;
     }
 
     // Optional: constructor without id (e.g., for registration)
-    public User(String username, String email, String password, String nationalId, String dob) {
+    public User(String username, String email, String password, String gender, String dob) {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.nationalId = nationalId;
+        this.gender = gender;
         this.dob = dob;
     }
 
@@ -48,12 +48,12 @@ public class User {
         return email;
     }
 
-    public String getNationalId() {
-        return nationalId;
+    public String gender() {
+        return gender;
     }
 
-    public void setNationalId(String nationalId) {
-        this.nationalId = nationalId;
+    public void gender(String gender) {
+        this.gender = gender;
     }
 
     public String getDob() {

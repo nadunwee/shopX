@@ -5,12 +5,12 @@ import java.sql.*;
 
 public class UserDAO {
     public static boolean registerUser(Connection conn, User user) throws SQLException {
-        String query = "INSERT INTO users (username, email, password, national_id, dob) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO users (username, email, password, gender, dob) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setString(1, user.getUsername());
         stmt.setString(2, user.getEmail());
         stmt.setString(3, user.getPassword());
-        stmt.setString(4, user.getNationalId());
+        stmt.setString(4, user.gender());
         stmt.setString(5, user.getDob());
         return stmt.executeUpdate() > 0;
     }
@@ -28,8 +28,8 @@ public class UserDAO {
                     rs.getString("username"),
                     rs.getString("email"),
                     rs.getString("password"),
-                    rs.getString("dob"),
-                    rs.getString("national_id")
+                    rs.getString("gender"),
+                    rs.getString("dob")
             );
         }
         return null;
