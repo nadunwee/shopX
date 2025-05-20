@@ -8,11 +8,7 @@
 <%@ page import="java.util.*, java.sql.*, org.example.shopx.DBConnection" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    String usernameSession = (String) session.getAttribute("username");
-    if (usernameSession == null) {
-        response.sendRedirect(request.getContextPath() + "/login.jsp");
-        return;
-    }
+
     Integer orderId = (Integer) request.getAttribute("orderId");
     if (orderId == null) {
         response.sendRedirect("checkout.jsp");
@@ -48,19 +44,6 @@
             }
         }
 
-        // Get order items
-        PreparedStatement itemsStmt = conn.prepareStatement(
-                "SELECT p.name, oi.quantity, oi.price FROM order_items oi JOIN products p ON oi.product_id = p.id WHERE oi.order_id = ?");
-        itemsStmt.setInt(1, orderId);
-        ResultSet rsItems = itemsStmt.executeQuery();
-
-        while (rsItems.next()) {
-            Map<String, Object> item = new HashMap<>();
-            item.put("name", rsItems.getString("name"));
-            item.put("quantity", rsItems.getInt("quantity"));
-            item.put("price", rsItems.getDouble("price"));
-            orderItems.add(item);
-        }
     } catch (SQLException e) {
         e.printStackTrace();
     }

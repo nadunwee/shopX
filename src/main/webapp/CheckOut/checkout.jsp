@@ -13,13 +13,12 @@
 <%
     String usernameSession = (String) session.getAttribute("username");
     List<AddressModel> savedAddresses = new ArrayList<>();
-    AddressModel UpdateAddress = (AddressModel) request.getAttribute("address");
     if (usernameSession != null) {
         try {
             DBConnection DBUtil = null;
             Connection conn = DBUtil.getConnection();
 
-            String sql = "SELECT da.address_id, da.full_name, da.street, da.city, da.zip\n " +
+            String sql = "SELECT da.id, da.full_name, da.street, da.city, da.zip " +
                     "FROM delivery_address da " +
                     "INNER JOIN users u ON u.id = da.user_id " +
                     "WHERE u.username = ?";
@@ -30,12 +29,18 @@
 
             while (rs.next()) {
                 AddressModel address = new AddressModel();
-                address.setAddressId(rs.getInt("address_id"));
-                address.setFullname(rs.getString("full_name"));
-                address.setStreet(rs.getString("street"));
-                address.setCity(rs.getString("city"));
-                address.setZip(rs.getInt("zip"));
-                savedAddresses.add(address);
+//                address.setAddressId(rs.getInt("id"));
+//                address.setFullname(rs.getString("full_name"));
+//                address.setStreet(rs.getString("street"));
+//                address.setCity(rs.getString("city"));
+//                address.setZip(rs.getInt("zip"));
+                int product_id = rs.getInt("id");
+                String fullName = rs.getString("full_name");
+                String street = rs.getString("street");
+                String city = rs.getString("city");
+                int zip = rs.getInt("zip");
+                AddressModel AddressData = new AddressModel(fullName, street,city,zip);
+                savedAddresses.add(AddressData);
             }
 
             rs.close();
@@ -56,11 +61,13 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
-<%@include file="../includes/navBar.jsp" %>
+<%@ include file="/includes/navBar.jsp" %>
 
 <div class="checkout-container">
 
     <h2 class="section-title">Your Cart</h2>
+    <% System.out.println("Session Username: " + usernameSession); %>
+
     <% double total = 0; %>
     <div class="cart-item-card">
         <div class="item-info">
@@ -100,15 +107,29 @@
                     <button type="submit" class="btn-edge">Edit</button>
                 </form>
 
-                <form action="${pageContext.request.contextPath}/deleteAddress" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this address?');">
-                    <input type="hidden" name="addressId" value="<%= addr.getAddressId() %>">
-                    <button type="submit" class="btn-edge" style="background-color: #d9534f;">Delete</button>
-                </form>
+                <button type="button" class="btn-edge" onclick="toggleEditForm(<%= addr.getAddressId() %>)">Edit</button>
+
+                <div id="editForm-<%= addr.getAddressId() %>" class="edit-form" style="display: none;">
+                    <h2>Edit Address</h2>
+                    <form action="${pageContext.request.contextPath}/updateAddress" method="post">
+                        <input type="hidden" name="addressId" value="<%= addr.getAddressId() %>">
+                        <input type="text" name="fullName" value="<%= addr.getFullname() %>" required>
+                        <input type="text" name="street" value="<%= addr.getStreet() %>" required>
+                        <input type="text" name="city" value="<%= addr.getCity() %>" required>
+                        <input type="text" name="zip" value="<%= addr.getZip() %>" required>
+                        <input type="submit" value="Update Address">
+                    </form>
+                </div>
+
             </td>
         </tr>
         <% } %>
+        <%
+            AddressModel address = (AddressModel) request.getAttribute("address");
+        %>
         <% } else { %>
         <tr>
+
             <td colspan="5">Please log in to view your saved addresses.</td>
         </tr>
         <% } %>
@@ -144,7 +165,14 @@
             <a href="orderConfirmation.jsp"><button type="submit" class="confirm-btn edgy-btn"><i class='bx bx-credit-card'></i> Finalize Checkout</button></a>
         </form>
     </div>
+
 </div>
+<script>
+    function toggleEditForm(addressId) {
+        const form = document.getElementById(`editForm-${addressId}`);
+        form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    }
+</script>
 
 <script>
     function togglePaymentDetails() {

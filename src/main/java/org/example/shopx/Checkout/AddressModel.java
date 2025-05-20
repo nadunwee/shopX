@@ -7,24 +7,23 @@ import java.sql.PreparedStatement;
 
 public class AddressModel {
     private int addressId;
-    private static String fullname;
-    private static String street;
-    private static String city;
-    private static int zip;
+    private  String fullname;
+    private  String street;
+    private String city;
+    private  int zip;
 
-    public AddressModel(int addressId, String fullname, String street, String city, int zip) {
-        this.addressId = addressId;
-        AddressModel.fullname = fullname;
-        AddressModel.street = street;
-        AddressModel.city = city;
-        AddressModel.zip = zip;
+    public AddressModel( String fullname, String street, String city, int zip) {
+        this.fullname = fullname;
+        this.street = street;
+        this.city = city;
+        this.zip = zip;
     }
 
     public AddressModel(String street, String city, String postalCode) {
 
-        AddressModel.street = street;
-        AddressModel.city = city;
-        AddressModel.zip = Integer.parseInt(postalCode);
+        this.street = street;
+        this.city = city;
+        this.zip = Integer.parseInt(postalCode);
     }
 
     public AddressModel() {
@@ -71,9 +70,30 @@ public class AddressModel {
         return isUpdated;
     }
 
+    public static boolean updateAddress(AddressModel address) {
+        boolean isUpdated = false;
+        try (Connection conn = DBConnection.getConnection()) {
+            String sql = "UPDATE delivery_address SET full_name = ?, phone = ?, address_line1 = ?, address_line2 = ?, city = ?, postal_code = ?, country = ? WHERE id = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+                stmt.setString(1, address.getFullname());
+                stmt.setString(2, address.getStreet());
+                stmt.setString(3, address.getCity());
+                stmt.setInt(4, address.getZip());
 
 
-    public int getAddressId() {
+                int rowsAffected = stmt.executeUpdate();
+                isUpdated = rowsAffected > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return isUpdated;
+    }
+
+
+
+    public  int getAddressId() {
         return addressId;
     }
 
@@ -81,36 +101,36 @@ public class AddressModel {
         this.addressId = addressId;
     }
 
-    public static String getFullname() {
+    public  String getFullname() {
         return fullname;
     }
 
     public void setFullname(String fullname) {
-        AddressModel.fullname = fullname;
+        this.fullname = fullname;
     }
 
-    public static String getStreet() {
+    public  String getStreet() {
         return street;
     }
 
     public void setStreet(String street) {
-        AddressModel.street = street;
+        this.street = street;
     }
 
-    public static String getCity() {
+    public  String getCity() {
         return city;
     }
 
     public void setCity(String city) {
-        AddressModel.city = city;
+        this.city = city;
     }
 
-    public static int getZip() {
+    public  int getZip() {
         return zip;
     }
 
     public void setZip(int zip) {
-        AddressModel.zip = zip;
+        this.zip = zip;
     }
 
 }

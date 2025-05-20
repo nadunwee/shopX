@@ -1,75 +1,68 @@
 package org.example.shopx.Checkout;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.*;
-import org.example.shopx.DBConnection;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.*;
-import java.util.ArrayList;
 
 public class ProcessCheckoutServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Assuming a user is logged in and username is stored in session
+
+        // Check if user is logged in
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("username");
 
-        ArrayList<OrderItemsModel> cartItems = getCartItems(username);
-
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-        if (cartItems.isEmpty()) {
-            out.println("<p>No items found in cart.</p>");
-        } else {
-            out.println("<h2>Items in your cart:</h2>");
-            for (OrderItemsModel item : cartItems) {
-                out.println("<p>Product ID: " + item.getProductId() +
-                        ", Quantity: " + item.getQuantity() +
-                        ", Price: " + item.getPrice() + "</p>");
-            }
+        if (username == null) {
+            session.setAttribute("errorMessage", "You must be logged in to complete checkout.");
+            response.sendRedirect("login.jsp");
+            return;
         }
-    }
 
-    private ArrayList<OrderItemsModel> getCartItems(String username) {
-        ArrayList<OrderItemsModel> itemList = new ArrayList<>();
-        try (Connection conn = DBConnection.getConnection()) {
-            String sql = "SELECT * FROM cart_items c JOIN users u ON u.id = c.user_id WHERE u.username = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setString(1, username);
-                try (ResultSet rs = stmt.executeQuery()) {
-                    while (rs.next()) {
-                        int orderId = rs.getInt("order_id");
-                        int productId = rs.getInt("product_id");
-                        int quantity = rs.getInt("quantity");
-                        float price = rs.getFloat("price");
-
-                        OrderItemsModel orderItem = new OrderItemsModel(orderId, productId, quantity, price);
-                        itemList.add(orderItem);
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        // Retrieve selected delivery address
+        String addressIdStr = request.getParameter("addressId");
+        if (addressIdStr == null || addressIdStr.trim().isEmpty()) {
+            session.setAttribute("errorMessage", "Please select a delivery address.");
+            response.sendRedirect("checkout.jsp");
+            return;
         }
-        return itemList;
-    }
 
-    private boolean updateQuantity(int userId, int productId, int quantity) {
-        try (Connection conn = DBConnection.getConnection()) {
-            String query = "UPDATE cart_items SET quantity = ? WHERE user_id = ? AND product_id = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                stmt.setInt(1, quantity);
-                stmt.setInt(2, userId);
-                stmt.setInt(3, productId);
-                return stmt.executeUpdate() > 0;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+        int addressId = Integer.parseInt(addressIdStr);
+
+        // Retrieve selected payment method
+        String paymentMethod = request.getParameter("paymentMethod");
+        if (paymentMethod == null || paymentMethod.trim().isEmpty()) {
+            session.setAttribute("errorMessage", "Please select a payment method.");
+            response.sendRedirect("checkout.jsp");
+            return;
         }
+
+        // Optional: Handle card details if payment method is CARD
+        if (paymentMethod.equals("CARD")) {
+            String cardNumber = request.getParameter("cardNumber");
+            String expiry = request.getParameter("expiry");
+            String cvv = request.getParameter("cvv");
+
+            if (cardNumber == null || expiry == null || cvv == null ||
+                    cardNumber.isEmpty() || expiry.isEmpty() || cvv.isEmpty()) {
+                session.setAttribute("errorMessage", "Please provide complete card details.");
+                response.sendRedirect("checkout.jsp");
+                return;
+            }
+
+            // Validate or store card details here (not recommended to store raw card data!)
+        }
+
+        // ✅ Continue processing the order
+        // You would insert order into the database, generate an order ID, etc.
+        // We'll just simulate success for now.
+
+        session.setAttribute("successMessage", "Your order has been placed successfully!");
+        response.sendRedirect("orderConfirmation.jsp");
     }
 }
