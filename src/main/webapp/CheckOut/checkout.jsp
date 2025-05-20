@@ -106,7 +106,7 @@
                     <input type="hidden" name="addressId" value="<%= addr.getAddressId() %>">
                     <button type="submit">Edit</button>
                 </form>
-<%--                //delete button--%>
+                <%--                //delete button--%>
                 <form id="deleteForm-<%= addr.getAddressId() %>" action="${pageContext.request.contextPath}/deleteAddress" method="post" style="display:inline;">
                     <input type="hidden" name="addressId" value="<%= addr.getAddressId() %>">
                     <button type="button" class="btn-edge" onclick="confirmDelete(<%= addr.getAddressId() %>)">Delete</button>
