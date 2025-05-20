@@ -7,43 +7,43 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CartItem {
-    private String name;
-    private int quantity;
-    private double price;
+    private static String name;
+    private static int quantity;
+    private static double price;
     private int userId;
     private int productId;
 
     public CartItem(String name, int quantity, double price, int userId, int productId) {
-        this.name = name;
-        this.quantity = quantity;
-        this.price = price;
+        CartItem.name = name;
+        CartItem.quantity = quantity;
+        CartItem.price = price;
         this.userId = userId;
         this.productId = productId;
     }
 
     // Getters and Setters
-    public String getName() {
+    public static String getName() {
         return name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        CartItem.name = name;
     }
 
-    public int getQuantity() {
+    public static int getQuantity() {
         return quantity;
     }
 
     public void setQuantity(int quantity) {
-        this.quantity = quantity;
+        CartItem.quantity = quantity;
     }
 
-    public double getPrice() {
+    public static double getPrice() {
         return price;
     }
 
     public void setPrice(double price) {
-        this.price = price;
+        CartItem.price = price;
     }
 
     public int getUserId() {

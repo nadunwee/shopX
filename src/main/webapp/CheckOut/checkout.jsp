@@ -12,65 +12,30 @@
 
 <%
     String usernameSession = (String) session.getAttribute("username");
-    String name = "";
-    double price = 0;
-    int quantity = 0;
-    List<Map<String, String>> addresses = new ArrayList<>();
-    String fullName = "";
-    String street = "";
-    String city = "";
-    int zip = 0;
-    String username = "";
-    int userId =0;
-
+    List<AddressModel> savedAddresses = new ArrayList<>();
+    AddressModel UpdateAddress = (AddressModel) request.getAttribute("address");
     if (usernameSession != null) {
         try {
             DBConnection DBUtil = null;
             Connection conn = DBUtil.getConnection();
-            String sql = "SELECT c.* FROM cart_items c , users u WHERE u.id=c.user_id AND username = ?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, usernameSession);
-            ResultSet rs = stmt.executeQuery();
 
-            if (rs.next()) {
-                name = rs.getString("username");
-                price = rs.getDouble("price");
-                quantity = rs.getInt("quantity");
-            }
-
-            rs.close();
-            stmt.close();
-            conn.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    if (usernameSession == null) {
-        try {
-            DBConnection DBUtil = null;
-            Connection conn = DBConnection.getConnection();
-
-
-            String sql = "SELECT d.full_name, d.street, d.city, d.zip " +
-                    "FROM delivery_address d " +
-                    "JOIN users u ON d.user_id = u.id " +
+            String sql = "SELECT da.address_id, da.full_name, da.street, da.city, da.zip\n " +
+                    "FROM delivery_address da " +
+                    "INNER JOIN users u ON u.id = da.user_id " +
                     "WHERE u.username = ?";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, usernameSession);
             ResultSet rs = stmt.executeQuery();
-            ArrayList<AddressModel> newAddressData = new ArrayList<>();
-            if (rs.next()) {
-                userId = rs.getInt("user_id");
-                fullName = rs.getString("full_name");
-                street = rs.getString("street");
-                city = rs.getString("city");
-                zip = rs.getInt("zip");
 
-                AddressModel newAddress = new AddressModel(userId, fullName, street, city, zip);
-                newAddressData.add(newAddress);
+            while (rs.next()) {
+                AddressModel address = new AddressModel();
+                address.setAddressId(rs.getInt("address_id"));
+                address.setFullname(rs.getString("full_name"));
+                address.setStreet(rs.getString("street"));
+                address.setCity(rs.getString("city"));
+                address.setZip(rs.getInt("zip"));
+                savedAddresses.add(address);
             }
 
             rs.close();
@@ -108,12 +73,48 @@
     <p class="item-total section-title">Total: Rs. <%= total %></p>
 
     <h2 class="section-title">Select Delivery Address</h2>
-    <div class="payment-methods">
-        <label>
-            <input type="radio" name="addressId" value="<%= AddressModel.getFullname() %>" required>
-            <%= AddressModel.getFullname() %>- <%= AddressModel.getStreet() %>,<%= AddressModel.getCity() %>, <%= AddressModel.getZip() %>
-        </label>
-    </div>
+
+    <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+        <thead>
+        <tr>
+            <th>Select</th>
+            <th>Full Name</th>
+            <th>Street</th>
+            <th>City</th>
+            <th>ZIP Code</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if (!savedAddresses.isEmpty()) { %>
+        <% for (AddressModel addr : savedAddresses) { %>
+        <tr>
+            <td><input type="radio" name="addressId" value="<%= addr.getAddressId() %>" required></td>
+            <td><%= addr.getFullname() %></td>
+            <td><%= addr.getStreet() %></td>
+            <td><%= addr.getCity() %></td>
+            <td><%= addr.getZip() %></td>
+            <td>
+                <form action="${pageContext.request.contextPath}/editAddressForm" method="post" style="display:inline;">
+                    <input type="hidden" name="addressId" value="<%= addr.getAddressId() %>">
+                    <button type="submit" class="btn-edge">Edit</button>
+                </form>
+
+                <form action="${pageContext.request.contextPath}/deleteAddress" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this address?');">
+                    <input type="hidden" name="addressId" value="<%= addr.getAddressId() %>">
+                    <button type="submit" class="btn-edge" style="background-color: #d9534f;">Delete</button>
+                </form>
+            </td>
+        </tr>
+        <% } %>
+        <% } else { %>
+        <tr>
+            <td colspan="5">Please log in to view your saved addresses.</td>
+        </tr>
+        <% } %>
+        </tbody>
+    </table>
+
 
     <h2 class="section-title">Add New Delivery Address</h2>
     <div class="input-card">
@@ -125,7 +126,6 @@
             <input type="submit" class="btn-edge" value="Add Address">
         </form>
     </div>
-
     <h2 class="section-title">Select Payment Method</h2>
     <div class="section-box">
         <form action="" method="post">

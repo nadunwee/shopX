@@ -4,6 +4,9 @@
 <%@ page import="java.sql.Connection" %>
 <%@ page import="java.sql.PreparedStatement" %>
 <%@ page import="java.sql.ResultSet" %>
+<%@ page import="org.example.shopx.Checkout.AddressModel" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -177,7 +180,40 @@
         response.sendRedirect("login.jsp");
     }
 
+    List<AddressModel> savedAddresses = new ArrayList<>();
+
+    if (usernameSession != null) {
+        try {
+            DBConnection DBUtil = null;
+            Connection conn = DBUtil.getConnection();
+
+            String sql = "SELECT da.full_name, da.street, da.city, da.zip " +
+                    "FROM delivery_address da " +
+                    "INNER JOIN users u ON u.id = da.user_id " +
+                    "WHERE u.username = ?";
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, usernameSession);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                AddressModel address = new AddressModel();
+                address.setFullname(rs.getString("full_name"));
+                address.setStreet(rs.getString("street"));
+                address.setCity(rs.getString("city"));
+                address.setZip(rs.getInt("zip"));
+                savedAddresses.add(address);
+            }
+
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 %>
+
 
 <%@ include file="/includes/navBar.jsp" %>
 
@@ -197,6 +233,17 @@
             <p>Order #1054 – Rs. 3,200 – <span style="color: green;">Delivered</span></p>
             <p>Order #1048 – Rs. 1,900 – <span style="color: orange;">Shipped</span></p>
             <p><a href="orders.jsp" style="color: #4b1e83; font-weight: bold;">View All Orders</a></p>
+        </div>
+        <div class="account-card">
+            <h3>Saved Addresses</h3>
+
+            <ul style="padding-left: 18px;">
+                <% for (AddressModel addr : savedAddresses) { %>
+                <li><%= addr.getFullname() %>, <%= addr.getStreet() %>, <%= addr.getCity() %>, <%= addr.getZip() %></li>
+                <% } %>
+            </ul>
+
+
         </div>
 
         <div class="account-card account-actions">
