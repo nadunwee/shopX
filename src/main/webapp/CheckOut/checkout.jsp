@@ -8,18 +8,12 @@
 <%@ page import="java.util.HashMap" %>
 <%@ page import="org.example.shopx.Checkout.AddressModel" %>
 <%@ page import="org.example.shopx.model.CartItem" %>
+<%@ page import="java.sql.SQLException" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
     String usernameSession = (String) session.getAttribute("username");
 
-    String sql = "SELECT * FROM users where username = ?";
-
-    try(Connection conn = DBConnection.getConnection()){
-        try(PreparedStatement stmt = conn.prepareStatement(sql)){
-            stmt.setString(1, usernameSession);
-        }
-    }
 
     ArrayList<AddressModel> savedAddresses = new ArrayList<>();
     if (usernameSession != null) {
@@ -54,34 +48,53 @@
         }
     }
 
-    ArrayList<CartItem> cartDetails = new ArrayList<>();
-    if (usernameSession != null) {
+//    int userID;
+//
+//    try(Connection conn = DBConnection.getConnection()){
+//        String sql = "SELECT id FROM users where username = ?";
+//
+//        try(PreparedStatement stmt = conn.prepareStatement(sql)){
+//            stmt.setString(1, usernameSession);
+//            try(ResultSet rs = stmt.executeQuery()){
+//                userID = rs.getInt("id");
+//            }
+//
+//        }
+//    } catch (SQLException e) {
+//        e.printStackTrace();
+//    }
+    public static ArrayList<CartItem> getByUserName(String username){
+        ArrayList<CartItem> cartDetails = new ArrayList<>();
+        if (usernameSession != null) {
         try {
-            DBConnection DBUtil = null;
-            Connection conn = DBUtil.getConnection();
+        DBConnection DBUtil = null;
+        Connection conn = DBUtil.getConnection();
 
-            String sql = "SELECT id, full_name, street, city, zip FROM cart WHERE username = ?";
+        String sql = "SELECT id, user_id, quantity, price FROM cart WHERE username = ?";
 
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, usernameSession);
-            ResultSet rs = stmt.executeQuery();
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, usernameSession);
+        ResultSet rs = stmt.executeQuery();
 
-            while (rs.next()) {
-                int product_id = rs.getInt("id");
-                String userID = rs.getString("user_id");
-                String city = rs.getString("quantity");
-                int zip = rs.getInt("price");
-                AddressModel AddressData = new AddressModel(product_id, fullName, street, city, zip);
-                savedAddresses.add(AddressData);
-            }
+        while (rs.next()) {
+        int cartID = rs.getInt("id");
+        int userID = rs.getInt("user_id");
+        int product_id = rs.getInt("product_id");
+        int quantity = rs.getInt("quantity");
+        double price = rs.getInt("price");
+        CartItem cartData = new CartItem(cartID, userID, product_id, quantity, price);
+        cartDetails.add(cartData);
+        }
 
-            rs.close();
-            stmt.close();
-            conn.close();
+        rs.close();
+        stmt.close();
+        conn.close();
         } catch (Exception e) {
-            e.printStackTrace();
+        e.printStackTrace();
+        }
         }
     }
+
 
 
 %>
@@ -102,10 +115,20 @@
     <h2 class="section-title">Your Cart</h2>
     <% System.out.println("Session Username: " + usernameSession); %>
 
+    <%
+        String username = (String) request.getSession().getAttribute("username");
+        ArrayList<CartItem> cartDetails =
+        VendorProfileModel vendorInfo = null;
+
+        if (!vendorDetails.isEmpty()) {
+            vendorInfo = vendorDetails.get(0);
+        }
+    %>
+
     <% double total = 0; %>
     <div class="cart-item-card">
         <div class="item-info">
-            <h3 class="item-name"><%= CartItem.getName() %></h3>
+            <h3 class="item-name"><%= cartDetails.getName() %></h3>
             <p class="item-price">Price: Rs. <%= CartItem.getPrice() %></p>
             <p class="item-quantity">Quantity: <%= CartItem.getQuantity() %></p>
             <% total += CartItem.getPrice() * CartItem.getQuantity(); %>

@@ -7,27 +7,43 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CartItem {
-    private String name;
+    private int cartID;
+    private int userID;
+    private int productId;
     private int quantity;
     private double price;
-    private int userId;
-    private int productId;
 
-    public CartItem(String name, int quantity, double price, int userId, int productId) {
-        this.name = name;
+
+    public CartItem(int cartID, int userID, int productId, int quantity, double price) {
+        this.cartID = cartID;
+        this.userID = userID;
+        this.productId = productId;
         this.quantity = quantity;
         this.price = price;
-        this.userId = userId;
+    }
+
+    public int getCartID() {
+        return cartID;
+    }
+
+    public void setCartID(int cartID) {
+        this.cartID = cartID;
+    }
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
         this.productId = productId;
-    }
-
-    // Getters and Setters
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getQuantity() {
@@ -46,53 +62,33 @@ public class CartItem {
         this.price = price;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
-
-    public double getSubtotal() {
-        return price * quantity;
-    }
-
     // Retrieve cart items for a specific user (by username)
-    public static List<CartItem> getCartItemsForUser(String username) throws SQLException {
-        List<CartItem> cartItems = new ArrayList<>();
-
-        try (Connection conn = DBConnection.getConnection()) {
-            String sql = "SELECT c.quantity, c.price, c.product_id, p.name, u.id AS user_id FROM cart c " +
-                    "JOIN products p ON c.product_id = p.product_id " +
-                    "JOIN users u ON c.user_id = u.id " +
-                    "WHERE u.username = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setString(1, username);
-                try (ResultSet rs = stmt.executeQuery()) {
-                    while (rs.next()) {
-                        String name = rs.getString("name");
-                        int quantity = rs.getInt("quantity");
-                        double price = rs.getDouble("price");
-                        int userId = rs.getInt("user_id");
-                        int productId = rs.getInt("product_id");
-
-                        cartItems.add(new CartItem(name, quantity, price, userId, productId));
-                    }
-                }
-            }
-        }
-
-        return cartItems;
-    }
+//    public static List<CartItem> getCartItemsForUser(String username) throws SQLException {
+//        List<CartItem> cartItems = new ArrayList<>();
+//
+//        try (Connection conn = DBConnection.getConnection()) {
+//            String sql = "SELECT c.quantity, c.price, c.product_id, p.name, u.id AS user_id FROM cart c " +
+//                    "JOIN products p ON c.product_id = p.product_id " +
+//                    "JOIN users u ON c.user_id = u.id " +
+//                    "WHERE u.username = ?";
+//            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+//                stmt.setString(1, username);
+//                try (ResultSet rs = stmt.executeQuery()) {
+//                    while (rs.next()) {
+//                        String name = rs.getString("name");
+//                        int quantity = rs.getInt("quantity");
+//                        double price = rs.getDouble("price");
+//                        int userId = rs.getInt("user_id");
+//                        int productId = rs.getInt("product_id");
+//
+//                        cartItems.add(new CartItem(name, quantity, price, userId, productId));
+//                    }
+//                }
+//            }
+//        }
+//
+//        return cartItems;
+//    }
 
     //  Updated method to accept userId
     public static void addToCart(List<CartItem> cart, int productId, int userId) throws SQLException {
