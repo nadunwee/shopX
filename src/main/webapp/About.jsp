@@ -81,7 +81,7 @@
                     </div>
                     <div style="margin-bottom:1rem;">
                         <label>Email *</label><br>
-                        <input type="text" id="email" name="email" style="width:100%; padding:8px;" />
+                        <input type="email" id="email" name="email" style="width:100%; padding:8px;" />
                     </div>
                     <div style="margin-bottom:1rem;">
                         <label>Subject *</label><br>
@@ -96,7 +96,7 @@
                         <textarea id="message" name="message" rows="4" style="width:100%; padding:8px;"></textarea>
                     </div>
                     <div style="margin-bottom:1rem;">
-                        <input type="checkbox" id="agree" />
+                        <input type="checkbox" id="agree" required />
                         <label for="agree"> I agree to the terms and conditions *</label>
                     </div>
                     <div style="text-align:right;">

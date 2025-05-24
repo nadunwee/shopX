@@ -66,7 +66,7 @@ public class CartItem {
         return price * quantity;
     }
 
-    // Inside CartItem.java
+    // Retrieve cart items for a specific user (by username)
     public static List<CartItem> getCartItemsForUser(String username) throws SQLException {
         List<CartItem> cartItems = new ArrayList<>();
 
@@ -94,21 +94,19 @@ public class CartItem {
         return cartItems;
     }
 
-
-    // Method to add cart item to the database and update session cart
+    //  Updated method to accept userId
     public static void addToCart(List<CartItem> cart, int productId, int userId) throws SQLException {
         try (Connection conn = DBConnection.getConnection()) {
-            conn.setAutoCommit(false); // ✅ Disable auto-commit before starting manual transaction
+            conn.setAutoCommit(false);
 
             try {
-                // Check if the product already exists in the cart for the user
+
                 String checkQuery = "SELECT * FROM cart WHERE user_id = ? AND product_id = ?";
                 try (PreparedStatement checkStmt = conn.prepareStatement(checkQuery)) {
                     checkStmt.setInt(1, userId);
                     checkStmt.setInt(2, productId);
                     try (ResultSet rs = checkStmt.executeQuery()) {
                         if (rs.next()) {
-                            // Update quantity
                             String updateQuery = "UPDATE cart SET quantity = quantity + 1 WHERE user_id = ? AND product_id = ?";
                             try (PreparedStatement updateStmt = conn.prepareStatement(updateQuery)) {
                                 updateStmt.setInt(1, userId);
@@ -116,12 +114,11 @@ public class CartItem {
                                 updateStmt.executeUpdate();
                             }
                         } else {
-                            // Insert new record
                             String insertQuery = "INSERT INTO cart (user_id, product_id, quantity, price) VALUES (?, ?, ?, ?)";
                             try (PreparedStatement insertStmt = conn.prepareStatement(insertQuery)) {
                                 insertStmt.setInt(1, userId);
                                 insertStmt.setInt(2, productId);
-                                insertStmt.setInt(3, 1);  // Initial quantity is 1
+                                insertStmt.setInt(3, 1);
                                 double price = getProductPrice(conn, productId);
                                 insertStmt.setDouble(4, price);
                                 insertStmt.executeUpdate();
@@ -130,7 +127,7 @@ public class CartItem {
                     }
                 }
 
-                // 🔻 Reduce stock
+                // minus product stock
                 String stockUpdateQuery = "UPDATE products SET stock = stock - 1 WHERE product_id = ? AND stock > 0";
                 try (PreparedStatement stockStmt = conn.prepareStatement(stockUpdateQuery)) {
                     stockStmt.setInt(1, productId);
@@ -140,24 +137,24 @@ public class CartItem {
                     }
                 }
 
-                conn.commit(); // ✅ Commit the transaction
+                conn.commit();
+
+                // Add to session cart
                 CartItem newItem = getCartItemFromProduct(conn, productId, userId);
                 if (newItem != null) {
                     cart.add(newItem);
                 }
 
             } catch (SQLException e) {
-                conn.rollback(); // 🔁 Roll back if any error occurs
+                conn.rollback();
                 throw e;
             } finally {
-                conn.setAutoCommit(true); // ✅ Always re-enable auto-commit after you're done
+                conn.setAutoCommit(true);
             }
         }
     }
 
-
-
-    // Helper method to retrieve product price from the products table
+    //  Get product price
     private static double getProductPrice(Connection conn, int productId) throws SQLException {
         String query = "SELECT price FROM products WHERE product_id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -168,11 +165,10 @@ public class CartItem {
                 }
             }
         }
-        return 0.0; // Return 0 if product not found, but this should not happen if the product exists.
+        return 0.0;
     }
 
-
-    // Helper method to retrieve a CartItem from the product table
+    // Create CartItem object from product
     private static CartItem getCartItemFromProduct(Connection conn, int productId, int userId) throws SQLException {
         String query = "SELECT * FROM products WHERE product_id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -181,12 +177,23 @@ public class CartItem {
                 if (rs.next()) {
                     String name = rs.getString("name");
                     double price = rs.getDouble("price");
-                    // Use the setter methods to set values
-                    CartItem cartItem = new CartItem(name, 1, price, userId, productId);
-                    return cartItem;
+                    return new CartItem(name, 1, price, userId, productId);
                 }
             }
         }
         return null;
+    }
+    public static int getStockForProduct(String productName) throws SQLException {
+        try (Connection conn = DBConnection.getConnection()) {
+            String sql = "SELECT stock FROM products WHERE name = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, productName);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt("stock");
+                }
+            }
+        }
+        return 0;
     }
 }

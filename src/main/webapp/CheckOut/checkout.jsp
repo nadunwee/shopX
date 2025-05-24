@@ -12,7 +12,16 @@
 
 <%
     String usernameSession = (String) session.getAttribute("username");
-    List<AddressModel> savedAddresses = new ArrayList<>();
+
+    String sql = "SELECT * FROM users where username = ?";
+
+    try(Connection conn = DBConnection.getConnection()){
+        try(PreparedStatement stmt = conn.prepareStatement(sql)){
+            stmt.setString(1, usernameSession);
+        }
+    }
+
+    ArrayList<AddressModel> savedAddresses = new ArrayList<>();
     if (usernameSession != null) {
         try {
             DBConnection DBUtil = null;
@@ -28,18 +37,12 @@
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                AddressModel address = new AddressModel();
-//                address.setAddressId(rs.getInt("id"));
-//                address.setFullname(rs.getString("full_name"));
-//                address.setStreet(rs.getString("street"));
-//                address.setCity(rs.getString("city"));
-//                address.setZip(rs.getInt("zip"));
                 int product_id = rs.getInt("id");
                 String fullName = rs.getString("full_name");
                 String street = rs.getString("street");
                 String city = rs.getString("city");
                 int zip = rs.getInt("zip");
-                AddressModel AddressData = new AddressModel(fullName, street,city,zip);
+                AddressModel AddressData = new AddressModel(product_id, fullName, street, city, zip);
                 savedAddresses.add(AddressData);
             }
 
@@ -50,6 +53,37 @@
             e.printStackTrace();
         }
     }
+
+    ArrayList<CartItem> cartDetails = new ArrayList<>();
+    if (usernameSession != null) {
+        try {
+            DBConnection DBUtil = null;
+            Connection conn = DBUtil.getConnection();
+
+            String sql = "SELECT id, full_name, street, city, zip FROM cart WHERE username = ?";
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, usernameSession);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                int product_id = rs.getInt("id");
+                String userID = rs.getString("user_id");
+                String city = rs.getString("quantity");
+                int zip = rs.getInt("price");
+                AddressModel AddressData = new AddressModel(product_id, fullName, street, city, zip);
+                savedAddresses.add(AddressData);
+            }
+
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 %>
 
 <!DOCTYPE html>
@@ -106,7 +140,7 @@
                     <input type="hidden" name="addressId" value="<%= addr.getAddressId() %>">
                     <button type="submit">Edit</button>
                 </form>
-                <%--                //delete button--%>
+<%--                //delete button--%>
                 <form id="deleteForm-<%= addr.getAddressId() %>" action="${pageContext.request.contextPath}/deleteAddress" method="post" style="display:inline;">
                     <input type="hidden" name="addressId" value="<%= addr.getAddressId() %>">
                     <button type="button" class="btn-edge" onclick="confirmDelete(<%= addr.getAddressId() %>)">Delete</button>
