@@ -1,13 +1,10 @@
 package org.example.shopx.Checkout;
+
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import org.example.shopx.Checkout.AddressModel;
-import org.example.shopx.DBConnection;
-import org.example.shopxVendor.controller.VendorProductController;
 
-import java.io.File;
 import java.io.IOException;
-import java.sql.*;
 
 public class DeleteAddressServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -19,28 +16,26 @@ public class DeleteAddressServlet extends HttpServlet {
         if (session != null && session.getAttribute("userID") != null) {
             userId = (Integer) session.getAttribute("userID");
         } else {
-            response.getWriter().println("<script>alert('You must be logged in to delete an address.'); window.location.href='login.jsp';</script>");
+            response.getWriter().println("<script>alert('You must be logged in to delete an address.'); window.location.href='accessPages/login.jsp';</script>");
             return;
         }
 
         int addressID;
 
         try {
-            addressID = Integer.parseInt(request.getParameter("addressID"));
+            // Changed from "addressID" to "addressId" to match JSP input name
+            addressID = Integer.parseInt(request.getParameter("addressId"));
         } catch (NumberFormatException e) {
-            response.getWriter().println("<script>alert('Invalid address ID.'); window.location.href='checkout.jsp';</script>");
+            response.getWriter().println("<script>alert('Invalid address ID.'); window.location.href='CheckOut/checkout.jsp';</script>");
             return;
         }
 
         boolean isDeleted = AddressModel.deleteDeliveryAddress(addressID, userId);
 
         if (isDeleted) {
-            response.getWriter().println("<script>alert('Address deleted successfully!'); window.location.href='checkout.jsp';</script>");
+            response.getWriter().println("<script>alert('Address deleted successfully!'); window.location.href='CheckOut/checkout.jsp';</script>");
         } else {
-            response.getWriter().println("<script>alert('Failed to delete the address.'); window.location.href='checkout.jsp';</script>");
+            response.getWriter().println("<script>alert('Failed to delete the address.'); window.location.href='CheckOut/checkout.jsp';</script>");
         }
-
-
     }
-
 }

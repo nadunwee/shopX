@@ -67,8 +67,8 @@ public class CartItem {
     }
 
     // Inside CartItem.java
-    public static List<CartItem> getCartItemsForUser(String username) throws SQLException {
-        List<CartItem> cartItems = new ArrayList<>();
+    public static ArrayList<CartItem> getCartItemsForUser(String username) throws SQLException {
+        ArrayList<CartItem> cartItems = new ArrayList<>();
 
         try (Connection conn = DBConnection.getConnection()) {
             String sql = "SELECT c.quantity, c.price, c.product_id, p.name, u.id AS user_id FROM cart c " +

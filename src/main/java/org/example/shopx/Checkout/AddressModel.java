@@ -12,18 +12,11 @@ public class AddressModel {
     private String city;
     private  int zip;
 
-    public AddressModel( String fullname, String street, String city, int zip) {
+    public AddressModel(int addressId, String fullname, String street, String city, int zip) {
         this.fullname = fullname;
         this.street = street;
         this.city = city;
         this.zip = zip;
-    }
-
-    public AddressModel(String street, String city, String postalCode) {
-
-        this.street = street;
-        this.city = city;
-        this.zip = Integer.parseInt(postalCode);
     }
 
     public AddressModel() {

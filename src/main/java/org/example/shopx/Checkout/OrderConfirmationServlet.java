@@ -19,7 +19,7 @@ public class OrderConfirmationServlet extends HttpServlet {
 
             if (rs.next()) {
                 request.setAttribute("order", rs);
-                RequestDispatcher rd = request.getRequestDispatcher("orderConfirmation.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("CheckOut/orderConfirmation.jsp");
                 rd.forward(request, response);
                 return;
             }

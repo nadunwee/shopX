@@ -163,7 +163,7 @@
     <strong>Total: Rs. <%= String.format("%.2f", total) %></strong>
   </div>
 
-  <form action="CheckoutServlet" method="post">
+  <form action="../CheckOut/checkout.jsp" method="post">
     <button class="checkout-btn" type="submit"><i class='bx bx-credit-card'></i> Proceed to Checkout</button>
   </form>
 </div>
